@@ -2,6 +2,10 @@ import React from 'react'
 import { Box, Button, AppBar } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
+interface Props {
+    pageSetter: (type: string) => void;
+}
+
 const useStyles = makeStyles({
     appBar: {
         position: "static",
@@ -21,14 +25,14 @@ const useStyles = makeStyles({
     }
 })
 
-export const PageHeader = () => {
+export const PageHeader = ({ pageSetter }: Props) => {
     const styleClasses = useStyles();
 
     return (
         <AppBar className={styleClasses.appBar}>
             <Box className={styleClasses.buttonBox}>
-                <Button variant="text" className={styleClasses.appBarButton}>Pradžia</Button>
-                <Button variant="text" className={styleClasses.appBarButton}>Leksika</Button>
+                <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("landing")}>Pradžia</Button>
+                <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("lexicon")}>Leksika</Button>
                 <Button variant="text" className={styleClasses.appBarButton}>Frazės</Button>
             </Box>
         </AppBar>

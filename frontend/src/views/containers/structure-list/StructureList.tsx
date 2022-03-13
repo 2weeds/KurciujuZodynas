@@ -2,10 +2,16 @@ import { Button, List, ListItem } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 
+interface Props {
+    type: String;
+    pageSetter: (type: string) => void;
+}
+
 const useStyles = makeStyles({
     list: {
         paddingTop: "2vh",
         paddingLeft: "3vw",
+        listStyle: "disc",
     },
 
     listItem: {
@@ -22,12 +28,14 @@ const useStyles = makeStyles({
             background: "#2196f3"
         }
     },
+
+
 })
 
-export const AllLessonsList = () => {
+export const StructureList = ( { type, pageSetter }: Props) => {
     const styleClasses = useStyles();
 
-    return (
+    return type === "lessons" ? (
         <List className={styleClasses.list}>
             <ListItem className={styleClasses.listItem}>
                 <Button className={styleClasses.listItemButton}>Kas mes esame</Button>
@@ -58,6 +66,18 @@ export const AllLessonsList = () => {
             </ListItem>
             <ListItem className={styleClasses.listItem}>
                 <Button className={styleClasses.listItemButton}>Kaip rengiamės</Button>
+            </ListItem>
+        </List>
+    ) : (
+        <List className={styleClasses.list}>
+            <ListItem className={styleClasses.listItem}>
+                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("landing")}>Pamokos</Button>
+            </ListItem>
+            <ListItem className={styleClasses.listItem}>
+                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("lexicon")}>Leksika</Button>
+            </ListItem>
+            <ListItem className={styleClasses.listItem}>
+                <Button className={styleClasses.listItemButton}>Frazės</Button>
             </ListItem>
         </List>
     )
