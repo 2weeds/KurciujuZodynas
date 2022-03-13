@@ -4,7 +4,7 @@ import './App.css';
 import { theme } from './MUIThemes'
 import { PageHeader } from "./views/components/PageHeader"
 import { PageTitle } from "./views/components/PageTitle"
-import { MainWindow } from './views/containers/main-window/MainWindow';
+import { LandingWindow } from './views/containers/landing-window/LandingWindow';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Box>
         <PageHeader />
         <PageTitle />
-        <MainWindow />
+        <LandingWindow />
       </Box>
     </ThemeProvider>
   );

@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import React from "react";
+import { AllLessonsList } from "../all-lessons-list/AllLessonsList";
 
 const useStyles = makeStyles({
     bookBox: {
@@ -25,7 +26,10 @@ const useStyles = makeStyles({
         padding: "5vh",
         width: "50%",
         borderTop: "2px solid black",
-        borderBottom: "2px solid black"
+        borderBottom: "2px solid black",
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: "6px 6px 5px 0px #908C93",
     },
 
     leftPage: {
@@ -33,16 +37,17 @@ const useStyles = makeStyles({
         background: "linear-gradient(90deg, #2196f3 90%, #08569B 100%)",
         color: "#EBEBEB",
         borderLeft: "2px solid black",
+        //boxShadow: "-4px 0px 5px 0px #0A6FC2, -8px 0px 0px 0px #0087FF, -12px 0px 5px 0px #0A6FC2, -16px 0px 0px 0px #0087FF, 0px 6px 5px 0px #908C93",
     },
 
     rightPage: {
         marginRight: "2vw",
         background: "linear-gradient(90deg, #A3A3A3 0%, #EBEBEB 10%)",
         borderRight: "2px solid black",
-    }
+    },
 })
 
-export const MainWindow = () => {
+export const LandingWindow = () => {
     const styleClasses = useStyles();
 
     return (
@@ -50,23 +55,12 @@ export const MainWindow = () => {
             <Box className={styleClasses.bookBox}>
                 <Box className={styleClasses.bookPages}>
                     <Box className={clsx(styleClasses.pages, styleClasses.leftPage)}>
-                        <Typography variant="subtitle1">Šiuo metu KGMP sudaro tokios pamokos:</Typography>
-                        <ul>
-                            <li><b>Kas mes esame</b></li>
-                            <li><b>Su kuo gyvename</b></li>
-                            <li><b>Ką veikiame</b></li>
-                            <li><b>Kur gyvename</b></li>
-                            <li><b>Kaip gyvename</b></li>
-                            <li><b>Ką mėgstame veikti</b></li>
-                            <li><b>Ką valgome</b></li>
-                            <li><b>Kaip jaučiamės</b></li>
-                            <li><b>Kaip bendraujame</b></li>
-                            <li><b>Kaip rengiamės</b></li>
-                        </ul>
+                        <Typography variant="bookPageTitle">Šiuo metu KGMP sudaro tokios pamokos:</Typography>
+                        <AllLessonsList />
                     </Box>
                     <Box className={clsx(styleClasses.pages, styleClasses.rightPage)}>
-                        <Typography variant="subtitle1"><b>APIE PROGRAMĄ</b></Typography>
-                        <Typography variant="subtitle1"><strong>Kompiuterinė lietuvių gestų kalbos mokymosi programa (KGMP) </strong> 
+                        <Typography variant="bookPageTitle"><b>APIE PROGRAMĄ</b></Typography>
+                        <Typography pt="2vh" variant="aboutText"><strong>Kompiuterinė lietuvių gestų kalbos mokymosi programa (KGMP) </strong> 
                                                                 padeda norintiems mokytis gestų kalbos nuotoliniu būdu. 
                                                                 Jei norite pradėti pamoką, kitoje pusėje paspauskite „Pradėti pamoką”. 
                                                                 Jeigu jau dalyvavote pamokoje ir norite peržiūrėti, paspauskite pasirinktą temą.</Typography>
