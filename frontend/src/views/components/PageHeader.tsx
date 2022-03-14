@@ -33,7 +33,7 @@ export const PageHeader = ({ pageSetter }: Props) => {
             <Box className={styleClasses.buttonBox}>
                 <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("landing")}>Pradžia</Button>
                 <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("lexicon")}>Leksika</Button>
-                <Button variant="text" className={styleClasses.appBarButton}>Frazės</Button>
+                <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("phrases")}>Frazės</Button>
             </Box>
         </AppBar>
     )
