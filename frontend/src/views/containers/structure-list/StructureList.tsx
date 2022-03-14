@@ -77,7 +77,7 @@ export const StructureList = ( { type, pageSetter }: Props) => {
                 <Button className={styleClasses.listItemButton} onClick={() => pageSetter("lexicon")}>Leksika</Button>
             </ListItem>
             <ListItem className={styleClasses.listItem}>
-                <Button className={styleClasses.listItemButton}>Frazės</Button>
+                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("phrases")}>Frazės</Button>
             </ListItem>
         </List>
     )
