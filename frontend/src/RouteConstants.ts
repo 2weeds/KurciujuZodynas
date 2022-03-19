@@ -1,0 +1,1 @@
+export const ADMIN_AUTHORIZATION_PATH = "/system-management";

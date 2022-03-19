@@ -1,11 +1,13 @@
 import { createTheme, ThemeOptions } from '@mui/material';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
+import React from 'react';
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     pageTitle: true;
     bookPageTitle: true;
-    aboutText: true
+    aboutText: true;
+    error: true;
   }
 }
 
@@ -13,6 +15,7 @@ interface ExtendedTypographyOptions extends TypographyOptions {
   pageTitle: React.CSSProperties;
   bookPageTitle: React.CSSProperties;
   aboutText: React.CSSProperties;
+  error: React.CSSProperties;
 }
 
 export const theme = createTheme({
@@ -43,5 +46,9 @@ export const theme = createTheme({
           fontSize: "14px",
           color: 'black',
         },
+        error: {
+          fontSize: "14px",
+          color: "#FF0004",
+        }
       } as ExtendedTypographyOptions,
 } as ThemeOptions);
