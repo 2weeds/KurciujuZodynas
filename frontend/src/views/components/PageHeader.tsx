@@ -9,12 +9,22 @@ interface Props {
 const useStyles = makeStyles({
     appBar: {
         position: "static",
+        display: "flex",
+        flexDirection: "row"
     },
 
-    buttonBox: {
-        paddingRight: "20vw",
+    adminButtonsBox: {
+        display: "flex",
+        paddingLeft: "1vw",
+        width: "50%",
+        justifyContent: "flex-start",
+    },
+
+    userButtonsBox: {
         display: "flex",
         flexDirection: "row",
+        paddingRight: "20vw",
+        width: "50%",
         justifyContent: "flex-end",
     },
 
@@ -30,7 +40,10 @@ export const PageHeader = ({ pageSetter }: Props) => {
 
     return (
         <AppBar className={styleClasses.appBar}>
-            <Box className={styleClasses.buttonBox}>
+            <Box className={styleClasses.adminButtonsBox}>
+                <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("admin")}>Administracija</Button>
+            </Box>
+            <Box className={styleClasses.userButtonsBox}>
                 <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("landing")}>Pradžia</Button>
                 <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("lexicon")}>Leksika</Button>
                 <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("phrases")}>Frazės</Button>
