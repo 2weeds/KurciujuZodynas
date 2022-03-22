@@ -12,7 +12,7 @@ export class InMemoryAdminGateway implements AdminGateway {
     checkAdminCredentials(username: string, password: string): string | void {
         if (this.areCredentialsCorrect(username, password))
             return "User " + username + " access granted";
-        throw new Error("Unauthorized user");
+        throw new Error("User credentials not found");
     }
 
     private areCredentialsCorrect(username: string, password: string): boolean {

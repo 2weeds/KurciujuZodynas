@@ -15,7 +15,7 @@ export class AuthorizeAdministratorRoute {
             res.status(200).json(response);
         } catch (e) {
             const err = e as Error
-            res.status(401).json(err.message);
+            res.status(400).json(err.message);
         }
     }
 }

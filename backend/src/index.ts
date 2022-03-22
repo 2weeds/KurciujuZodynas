@@ -28,3 +28,7 @@ app.get('/', (req, resp) => {
 app.post('/system-management', (req, resp) => {
     authorizeAdministratorRoute.authorize(req, resp);
 })
+
+app.post('/lexicon-units', (req, resp) => {
+    createLexiconUnitRoute.create(req, resp);
+})

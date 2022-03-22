@@ -1,9 +1,12 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import React, { useState } from "react";
 import { adminAuthorizationController } from "../../../Configuration";
 import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 import useAdminLoginWindow from "./useAdminLoginWindow";
+import { FIELD_EMPTY, FIELD_TOO_SHORT } from "../../../constants/ErrorConstants";
 
 interface Props {
     setToken: (response: ViewAdminResponse) => void;
@@ -20,7 +23,6 @@ const useStyles = makeStyles({
     formContainer: {
         width: "30vw",
         height: "60vh",
-        background: "#fff",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -60,68 +62,83 @@ const useStyles = makeStyles({
     }
 })
 
-function isInputDataValid(username: string | undefined, password: string | undefined, setUsernameErrors: any, setPasswordErrors: any): boolean {
+function isInputDataValid(username: string | undefined, password: string | undefined, 
+                          setUsernameErrors: (error: string | undefined) => void, setPasswordErrors: (error: string | undefined) => void): boolean {
     const validationArray: boolean[] = [];
-    if (username !== undefined && username !== "" && username.length > 3)
+
+    //@ts-ignore
+    if (isInputEmpty(username) && username.length > 3)
         validationArray.push(true);
-    else {
-        setUsernameErrors("Klaidingai įvestas slapyvardis");
-    }
-    if (password !== undefined && password !== "" && password.length > 3)
+    else
+        setAppropriateErrorMessage(username, setUsernameErrors);
+
+    //@ts-ignore
+    if (isInputEmpty(password) && password.length > 3)
         validationArray.push(true);
-    else {
-        setPasswordErrors("Klaidingai įvestas slaptažodis");
-    }
+    else
+        setAppropriateErrorMessage(password, setPasswordErrors);
+
     return (validationArray[0] === true && validationArray[1] === true);
 }
+
+function isInputEmpty(input: string | undefined) {
+    return input !== undefined && input !== "";
+}
+
+function setAppropriateErrorMessage(input: string | undefined, setter: (error: string | undefined) => void) {
+    input === undefined || input === "" ? setter(FIELD_EMPTY) :
+    setter(FIELD_TOO_SHORT);
+}
+
+function submitHandlerPreset(element: any, setUsernameErrors: (error: string | undefined) => void, setPasswordErrors: (error: string | undefined) => void): void {
+    element.preventDefault();
+    setUsernameErrors(undefined);
+    setPasswordErrors(undefined);
+  }
 
 export const AdminLoginWindow = ({ setToken }: Props) => {
     const [username, updateUsername] = useState<string | undefined>(undefined);
     const [password, updatePassword] = useState<string | undefined>(undefined);
     const [usernameErrors, setUsernameErrors] = useState<string | undefined>(undefined);
     const [passwordErrors, setPasswordErrors] = useState<string | undefined>(undefined);
+    const [showPassword, setShowPassword] = useState<boolean>(false);
     const adminUser = useAdminLoginWindow(adminAuthorizationController, setToken);
     const styleClasses = useStyles();
 
-    const handleUsernameFieldChange = (element: any) => {
-        updateUsername(element.target.value.trim())
-    }
-
-    const handlePasswordFieldChange = (element: any) => {
-        updatePassword(element.target.value.trim())
-    }
-
+    const handlePasswordVisibility = () => setShowPassword(!showPassword);
+    const handleUsernameFieldChange = (element: any) => {updateUsername(element.target.value.trim())}
+    const handlePasswordFieldChange = (element: any) => {updatePassword(element.target.value.trim())}
     const handleSubmit = (element: any) => {
-        element.preventDefault();
-        setUsernameErrors(undefined);
-        setPasswordErrors(undefined);
+        submitHandlerPreset(element, setUsernameErrors, setPasswordErrors);
+        
         if (isInputDataValid(username, password, setUsernameErrors, setPasswordErrors))
             adminUser(username as string, password as string);
     }
-
     const renderUsernameErrors = () => {
         if (usernameErrors !== undefined)
-            return <Typography variant="error">Patikrinkite slapyvardžio įvedimą</Typography>
+            return <Typography variant="error">{usernameErrors}</Typography>
     }
-
     const renderPasswordErrors = () => {
         if (passwordErrors !== undefined)
-            return <Typography variant="error">Patikrinkite slaptažodžio įvedimą</Typography>
+            return <Typography variant="error">{passwordErrors}</Typography>
     }
 
     return (
-        <Box>
-            <Box className={styleClasses.formBox}>
-                <Box className={styleClasses.formContainer}>
-                    <Box className={styleClasses.form}>
-                        <TextField error={usernameErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="Slapyvardis" onChange={handleUsernameFieldChange}></TextField>
-                        {renderUsernameErrors()}
-                        <TextField error={passwordErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="Slaptažodis" onChange={handlePasswordFieldChange}></TextField>
-                        {renderPasswordErrors()}
-                        <Button className={styleClasses.submitButton} onClick={handleSubmit}>Log in</Button>
-                    </Box>
-                </Box>
-            </Box>
+        <Box className={styleClasses.form}>
+            <TextField error={usernameErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="Slapyvardis" onChange={handleUsernameFieldChange}></TextField>
+            {renderUsernameErrors()}
+            <TextField error={passwordErrors !== undefined} type={showPassword ? "text" : "password"} className={styleClasses.inputField}
+                variant="outlined" label="Slaptažodis" onChange={handlePasswordFieldChange} 
+                InputProps={{
+                    endAdornment: 
+                        <InputAdornment position="end">
+                            <IconButton aria-label="toggle password visibility" onClick={handlePasswordVisibility}>
+                                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                            </IconButton>
+                        </InputAdornment>}}>
+            </TextField>
+            {renderPasswordErrors()}
+            <Button className={styleClasses.submitButton} onClick={handleSubmit}>Log in</Button>
         </Box>
     )
 }
