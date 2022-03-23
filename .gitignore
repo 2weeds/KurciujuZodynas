@@ -81,7 +81,6 @@ typings/
 # Nuxt.js build / generate output
 .nuxt
 build
-lexiconUnits
 
 # Gatsby files
 .cache/
@@ -103,3 +102,6 @@ lexiconUnits
 
 # TernJS port file
 .tern-port
+
+# Database output file
+lexiconUnits.txt
