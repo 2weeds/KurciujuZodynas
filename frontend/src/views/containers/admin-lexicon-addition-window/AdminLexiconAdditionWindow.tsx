@@ -69,9 +69,11 @@ function submitHandlerPreset(element: any, setWordErrors: (error: string | undef
 
 export const AdminLexiconAdditionWindow = () => {
   const [word, updateWord] = useState<string | undefined>(undefined);
-  const [abbr, updateAbbr] = useState<string | undefined>(undefined);
   const [wordErrors, setWordErrors] = useState<string | undefined>(undefined);
+  const [wordShrink, setWordShrink] = useState<boolean>(false);
+  const [abbr, updateAbbr] = useState<string | undefined>(undefined);
   const [abbrErrors, setAbbrErrors] = useState<string | undefined>(undefined);
+  const [passShrink, setPassShrink] = useState<boolean>(false);
   const lexiconUnit = useAdminLexiconAdditionWindow(newLexiconUnitCreationController);
   const styleClasses = useStyles();
 
@@ -82,6 +84,8 @@ export const AdminLexiconAdditionWindow = () => {
 
       if (isInputDataValid(word, abbr, setWordErrors, setAbbrErrors))
         lexiconUnit(word as string, abbr as string);
+      updateWord("");
+      updateAbbr("");
   }
   const renderWordErrors = () => {
     if (wordErrors !== undefined)
@@ -94,9 +98,9 @@ export const AdminLexiconAdditionWindow = () => {
 
   return (
           <Box className={styleClasses.form}>
-            <TextField error={wordErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="Žodis/vienetas" size="small" onChange={handleWordFieldChange}></TextField>
+            <TextField value={word} error={wordErrors !== undefined} className={styleClasses.inputField} onFocus={() => setWordShrink(true)} onBlur={() => setWordShrink(false)} InputLabelProps={{shrink: isInputEmpty(word) || wordShrink ? true : false}} variant="outlined" label="Žodis/vienetas" size="small" onChange={handleWordFieldChange}></TextField>
             {renderWordErrors()}
-            <TextField error={abbrErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="Trumpinys" size="small" onChange={handleAbbrFieldChange}></TextField>
+            <TextField value={abbr} error={abbrErrors !== undefined} className={styleClasses.inputField} onFocus={() => setPassShrink(true)} onBlur={() => setPassShrink(false)} InputLabelProps={{shrink: isInputEmpty(abbr) || passShrink ? true : false}} variant="outlined" label="Trumpinys" size="small" onChange={handleAbbrFieldChange}></TextField>
             {renderAbbrErrors()}
             <Button className={styleClasses.submitButton} onClick={handleSubmit}>Pridėti leksikos elementą</Button>
           </Box>
