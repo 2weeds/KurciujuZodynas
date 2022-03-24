@@ -9,9 +9,9 @@ export class InMemoryAdminGateway implements AdminGateway {
         this.adminAccounts.push(new Admin());
     }
 
-    checkAdminCredentials(username: string, password: string): string | void {
+    checkAdminCredentials(username: string, password: string): string {
         if (this.areCredentialsCorrect(username, password))
-            return "User " + username + " access granted";
+            return this.generateRandomSessionToken();
         throw new Error("User credentials not found");
     }
 
@@ -20,5 +20,9 @@ export class InMemoryAdminGateway implements AdminGateway {
             if (this.adminAccounts[i].getUsername() === username && this.adminAccounts[i].getPassword() === password)
                 return true;
         return false;
+    }
+
+    private generateRandomSessionToken() {
+        return Math.random().toString(36).replace(/[^a-z]+/g, '');
     }
 }

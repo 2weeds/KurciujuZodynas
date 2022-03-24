@@ -1,3 +1,5 @@
+import { BoundaryAdmin } from "./entity/BoundaryAdmin";
+
 export interface AuthorizeAdministratorUseCase {
-    authorize(username: string, password: string): string | void;
+    authorize(username: string, password: string): BoundaryAdmin;
 }

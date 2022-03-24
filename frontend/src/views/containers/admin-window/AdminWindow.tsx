@@ -1,9 +1,14 @@
 import { Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React, { useState } from "react";
+import React from "react";
 import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 import { AdminLexiconAdditionWindow } from "../admin-lexicon-addition-window/AdminLexiconAdditionWindow";
 import { AdminLoginWindow } from "../admin-login-window/AdminLoginWindow";
+
+interface Props {
+  setToken: (response: ViewAdminResponse) => void;
+  token: ViewAdminResponse | undefined
+}
 
 const useStyles = makeStyles({
   formBox: {
@@ -23,8 +28,7 @@ formContainer: {
 },
 });
 
-export const AdminWindow = () => {
-    const [token, setToken] = useState<ViewAdminResponse | undefined>(undefined);
+export const AdminWindow = ({setToken, token}: Props) => {
     const styleClasses = useStyles();
 
     const renderWindow = () => {
