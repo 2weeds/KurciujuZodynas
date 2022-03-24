@@ -82,10 +82,11 @@ export const AdminLexiconAdditionWindow = () => {
   const handleSubmit = (element: any) => {
       submitHandlerPreset(element, setWordErrors, setAbbrErrors);
 
-      if (isInputDataValid(word, abbr, setWordErrors, setAbbrErrors))
+      if (isInputDataValid(word, abbr, setWordErrors, setAbbrErrors)) {
         lexiconUnit(word as string, abbr as string);
-      updateWord("");
-      updateAbbr("");
+        updateWord("");
+        updateAbbr("");
+      }
   }
   const renderWordErrors = () => {
     if (wordErrors !== undefined)

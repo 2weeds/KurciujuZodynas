@@ -1,5 +1,6 @@
 import { AdminGateway } from "../../gateway/api/AdminGateway";
 import { AuthorizeAdministratorUseCase } from "../api/AuthorizeAdministratorUseCase";
+import { BoundaryAdmin } from "../api/entity/BoundaryAdmin";
 
 export class AuthorizeAdministratorInteractor implements AuthorizeAdministratorUseCase {
     private readonly adminGW: AdminGateway;
@@ -8,7 +9,7 @@ export class AuthorizeAdministratorInteractor implements AuthorizeAdministratorU
         this.adminGW = adminGW;
     }
 
-    authorize(username: string, password: string): string | void {
-        return this.adminGW.checkAdminCredentials(username, password);
+    authorize(username: string, password: string): BoundaryAdmin {
+        return new BoundaryAdmin(this.adminGW.checkAdminCredentials(username, password));
     }
 }
