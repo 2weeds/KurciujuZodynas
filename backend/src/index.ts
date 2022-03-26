@@ -6,6 +6,9 @@ import { InMemoryLexiconUnitGateway } from './gateway/implementation/InMemoryLex
 import { InMemoryAdminGateway } from './gateway/implementation/InMemoryAdminGateway';
 import { AuthorizeAdministratorInteractor } from './use_case/implementation/AuthorizeAdministratorInteractor';
 import { AuthorizeAdministratorRoute } from './rest/implementation/AuthorizeAdministratorRoute';
+import { InMemoryPhraseGateway } from './gateway/implementation/InMemoryPhraseGateway';
+import { CreateNewPhraseRoute } from './rest/implementation/CreateNewPhraseRoute';
+import { CreateNewPhraseInteractor } from './use_case/implementation/CreateNewPhraseInteractor';
 const app = express();
 
 app.listen(8000, () => console.log("Listening to app at 8000"));
@@ -21,6 +24,10 @@ const adminGW = new InMemoryAdminGateway();
 const authorizeAdministratorUC = new AuthorizeAdministratorInteractor(adminGW);
 const authorizeAdministratorRoute = new AuthorizeAdministratorRoute(authorizeAdministratorUC);
 
+const phraseGW = new InMemoryPhraseGateway();
+const createPhraseUC = new CreateNewPhraseInteractor(phraseGW);
+const createPhraseRoute = new CreateNewPhraseRoute(createPhraseUC);
+
 app.get('/', (req, resp) => {
     resp.send("Hello world");
 })
@@ -31,4 +38,8 @@ app.post('/system-management', (req, resp) => {
 
 app.post('/lexicon-units', (req, resp) => {
     createLexiconUnitRoute.create(req, resp);
+})
+
+app.post('/phrases', (req, resp) => {
+    createPhraseRoute.create(req, resp);
 })

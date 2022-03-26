@@ -13,37 +13,40 @@ import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 export const MainWindow = () => {
   const [page, setPage] = useState<string>("landing");
   const [token, setToken] = useState<ViewAdminResponse | undefined>(undefined);
-  console.log(token?.token);
+
+  const renderHeader = () => {
+    return token === undefined ? <PageHeader pageSetter={setPage} type="user" /> : <PageHeader pageSetter={setPage} type="admin" />
+  }
 
   return page === "landing" ? (
     <Box>
-        <PageHeader pageSetter={setPage} />
+        {renderHeader()}
         <PageTitle pageType="user" />
         <LandingWindow pageSetter={setPage} />
     </Box>
   ) : page === "lexicon" ? (
       <Box>
-        <PageHeader pageSetter={setPage} />
+        {renderHeader()}
         <PageTitle pageType="user" />
         <LexiconWindow pageSetter={setPage} />
       </Box>
   ) : page === "phrases" ? (
     <Box>
-      <PageHeader pageSetter={setPage} />
+      {renderHeader()}
       <PageTitle pageType="user" />
       <PhrasesWindow pageSetter={setPage} />
     </Box>
-  ) : page === "admin" ? (
+  ) : page === "lesson" ? (
     <Box>
-      <PageHeader pageSetter={setPage} />
-      <PageTitle pageType="admin" />
-      <AdminWindow setToken={setToken} token={token} />
-    </Box>
-  ) : (
-    <Box>
-      <PageHeader pageSetter={setPage} />
+      {renderHeader()}
       <PageTitle pageType="user" />
       <LessonWindow pageSetter={setPage} />
     </Box>
+  ) : (
+    <Box>
+    {renderHeader()}
+    <PageTitle pageType="admin" />
+    <AdminWindow setToken={setToken} token={token} page={page} pageSetter={setPage} />
+  </Box>
   );
 };

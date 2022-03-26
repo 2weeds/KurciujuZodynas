@@ -2,7 +2,7 @@ import { useSnackbar } from "notistack";
 import { Observer } from "rxjs";
 import { AjaxError } from "rxjs/ajax";
 
-export function useLexiconAdditionObserver<T>(): Observer<T> {
+export function useAdminAdditionObserver<T>(): Observer<T> {
   const { enqueueSnackbar } = useSnackbar();
 
   return {

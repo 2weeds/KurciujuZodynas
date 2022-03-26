@@ -1,10 +1,10 @@
 import { CreateNewLexiconUnitController } from "../../../controller/CreateNewLexiconUnitController";
-import { useLexiconAdditionObserver } from "../observer/useLexiconAdditionObserver";
+import { useAdminAdditionObserver } from "../observer/useAdminAdditionObserver";
 
 export default function useAdminLexiconAdditionWindow(
   newLexiconUnitCreationController: CreateNewLexiconUnitController,
-  ): (username: string, password: string) => void {
-    const observer = useLexiconAdditionObserver();
+  ): (word: string, abbreviation: string) => void {
+    const observer = useAdminAdditionObserver();
     const authorize = (word: string, abbreviation: string) => {
       newLexiconUnitCreationController.create(word, abbreviation).subscribe(observer);
     };

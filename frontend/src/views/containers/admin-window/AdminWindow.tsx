@@ -2,12 +2,14 @@ import { Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
-import { AdminLexiconAdditionWindow } from "../admin-lexicon-addition-window/AdminLexiconAdditionWindow";
+import { AdminAdditionWindow } from "../admin-addition-window/AdminAdditionWindow";
 import { AdminLoginWindow } from "../admin-login-window/AdminLoginWindow";
 
 interface Props {
   setToken: (response: ViewAdminResponse) => void;
   token: ViewAdminResponse | undefined
+  page: string
+  pageSetter: (type: string) => void
 }
 
 const useStyles = makeStyles({
@@ -28,11 +30,11 @@ formContainer: {
 },
 });
 
-export const AdminWindow = ({setToken, token}: Props) => {
+export const AdminWindow = ({setToken, token, page, pageSetter}: Props) => {
     const styleClasses = useStyles();
 
     const renderWindow = () => {
-      return token === undefined ? <AdminLoginWindow setToken={setToken} /> : <AdminLexiconAdditionWindow />
+      return token === undefined ? <AdminLoginWindow setToken={setToken} /> : <AdminAdditionWindow token={token} page={page} pageSetter={pageSetter} />
     }
 
     return (
