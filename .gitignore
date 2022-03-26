@@ -104,4 +104,5 @@ build
 .tern-port
 
 # Database output file
-lexiconUnits.txt
+LexiconUnits.txt
+Phrases.txt

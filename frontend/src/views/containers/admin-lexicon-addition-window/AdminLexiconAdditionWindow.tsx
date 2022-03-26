@@ -39,26 +39,22 @@ submitButton: {
 }
 })
 
-function isInputDataValid(word: string | undefined, abbr: string | undefined, setWordErrors: (error: string) => void, setAbbrErrors: (error: string) => void): boolean {
-  const validationArray: boolean[] = [];
+function isInputDataValid(input: string | undefined, setErrors: (error: string) => void): boolean {
 
-  if (isInputEmpty(word))
-    validationArray.push(true);
+  if (isInputEmpty(input))
+    return true;
   else {
-    setWordErrors(FIELD_EMPTY);
+    setErrors(FIELD_EMPTY);
   }
-  
-  if (isInputEmpty(abbr))
-    validationArray.push(true);
-  else {
-    setAbbrErrors(FIELD_EMPTY);
-  }
-
-  return (validationArray[0] === true && validationArray[1] === true);
+  return false;
 }
 
 function isInputEmpty(input: string | undefined) {
   return input !== undefined && input !== "";
+}
+
+function removeExtraWhitespaces(element: string) {
+  return element.trim().split(/ +/).join(' ');
 }
 
 function submitHandlerPreset(element: any, setWordErrors: (error: string | undefined) => void, setAbbrErrors: (error: string | undefined) => void): void {
@@ -77,13 +73,15 @@ export const AdminLexiconAdditionWindow = () => {
   const lexiconUnit = useAdminLexiconAdditionWindow(newLexiconUnitCreationController);
   const styleClasses = useStyles();
 
-  const handleWordFieldChange = (element: any) => {updateWord(element.target.value.trim())}
-  const handleAbbrFieldChange = (element: any) => {updateAbbr(element.target.value.trim())}
+  const handleWordFieldChange = (element: any) => {updateWord(element.target.value)}
+  const handleAbbrFieldChange = (element: any) => {updateAbbr(element.target.value)}
   const handleSubmit = (element: any) => {
       submitHandlerPreset(element, setWordErrors, setAbbrErrors);
 
-      if (isInputDataValid(word, abbr, setWordErrors, setAbbrErrors)) {
-        lexiconUnit(word as string, abbr as string);
+      if (isInputDataValid(word?.trim(), setWordErrors) && isInputDataValid(abbr?.trim(), setAbbrErrors)) {
+        const trimmedWord = removeExtraWhitespaces(word as string);
+        const trimmedAbbr = removeExtraWhitespaces(abbr as string);
+        lexiconUnit(trimmedWord, trimmedAbbr);
         updateWord("");
         updateAbbr("");
       }

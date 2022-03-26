@@ -36,7 +36,7 @@ export const StructureList = ( { type, pageSetter }: Props) => {
     return type === "lessons" ? (
         <List className={styleClasses.list}>
             <ListItem className={styleClasses.listItem}>
-                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("lessonWhoAreWe")}>Kas mes esame</Button>
+                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("lesson")}>Kas mes esame</Button>
             </ListItem>
             <ListItem className={styleClasses.listItem}>
                 <Button className={styleClasses.listItemButton}>Su kuo gyvename</Button>
