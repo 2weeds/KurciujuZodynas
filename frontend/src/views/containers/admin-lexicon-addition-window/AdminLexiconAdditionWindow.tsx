@@ -5,6 +5,10 @@ import { newLexiconUnitCreationController } from "../../../Configuration";
 import { FIELD_EMPTY } from "../../../constants/ErrorConstants";
 import useAdminLexiconAdditionWindow from "./useAdminLexiconAdditionWindow";
 
+interface Props {
+  token: string | undefined
+}
+
 const useStyles = makeStyles({
 form: {
     display: "flex",
@@ -39,14 +43,21 @@ submitButton: {
 }
 })
 
-function isInputDataValid(input: string | undefined, setErrors: (error: string) => void): boolean {
+function isInputDataValid(word: string | undefined, setWordErrors: (error: string) => void, abbr: string | undefined, setAbbrErrors: (error: string) => void): boolean {
+  const validInputs: boolean[] = [];
 
-  if (isInputEmpty(input))
-    return true;
+  if (isInputEmpty(word))
+    validInputs.push(true)
   else {
-    setErrors(FIELD_EMPTY);
+    setWordErrors(FIELD_EMPTY);
   }
-  return false;
+
+  if (isInputEmpty(abbr))
+    validInputs.push(true)
+  else {
+    setAbbrErrors(FIELD_EMPTY);
+  }
+  return validInputs[0] === true && validInputs[1] === true;
 }
 
 function isInputEmpty(input: string | undefined) {
@@ -63,11 +74,11 @@ function submitHandlerPreset(element: any, setWordErrors: (error: string | undef
   setAbbrErrors(undefined);
 }
 
-export const AdminLexiconAdditionWindow = () => {
-  const [word, updateWord] = useState<string | undefined>(undefined);
+export const AdminLexiconAdditionWindow = ({token}: Props) => {
+  const [word, updateWord] = useState<string | undefined>("");
   const [wordErrors, setWordErrors] = useState<string | undefined>(undefined);
   const [wordShrink, setWordShrink] = useState<boolean>(false);
-  const [abbr, updateAbbr] = useState<string | undefined>(undefined);
+  const [abbr, updateAbbr] = useState<string | undefined>("");
   const [abbrErrors, setAbbrErrors] = useState<string | undefined>(undefined);
   const [passShrink, setPassShrink] = useState<boolean>(false);
   const lexiconUnit = useAdminLexiconAdditionWindow(newLexiconUnitCreationController);
@@ -78,10 +89,10 @@ export const AdminLexiconAdditionWindow = () => {
   const handleSubmit = (element: any) => {
       submitHandlerPreset(element, setWordErrors, setAbbrErrors);
 
-      if (isInputDataValid(word?.trim(), setWordErrors) && isInputDataValid(abbr?.trim(), setAbbrErrors)) {
+      if (isInputDataValid(word?.trim(), setWordErrors, abbr?.trim(), setAbbrErrors)) {
         const trimmedWord = removeExtraWhitespaces(word as string);
         const trimmedAbbr = removeExtraWhitespaces(abbr as string);
-        lexiconUnit(trimmedWord, trimmedAbbr);
+        lexiconUnit(trimmedWord, trimmedAbbr, token);
         updateWord("");
         updateAbbr("");
       }

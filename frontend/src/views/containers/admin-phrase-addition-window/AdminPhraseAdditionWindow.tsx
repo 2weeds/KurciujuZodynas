@@ -5,6 +5,10 @@ import { newPhraseCreationController } from "../../../Configuration";
 import { FIELD_EMPTY } from "../../../constants/ErrorConstants";
 import useAdminPhraseAdditionWindow from "./useAdminPhraseAdditionWindow";
 
+interface Props {
+  token: string | undefined
+}
+
 const useStyles = makeStyles({
 form: {
     display: "flex",
@@ -62,8 +66,8 @@ function submitHandlerPreset(element: any, setErrors: (error: string | undefined
   setErrors(undefined);
 }
 
-export const AdminPhraseAdditionWindow = () => {
-  const [phrase, updatePhrase] = useState<string | undefined>(undefined);
+export const AdminPhraseAdditionWindow = ({token}: Props) => {
+  const [phrase, updatePhrase] = useState<string | undefined>("");
   const [phraseErrors, setPhraseErrors] = useState<string | undefined>(undefined);
   const [phraseShrink, setPhraseShrink] = useState<boolean>(false);
   const phraseUnit = useAdminPhraseAdditionWindow(newPhraseCreationController);
@@ -75,7 +79,7 @@ export const AdminPhraseAdditionWindow = () => {
 
       if (isInputDataValid(phrase?.trim(), setPhraseErrors)) {
         const trimmedPhrase = removeExtraWhitespaces(phrase as string);
-        phraseUnit(trimmedPhrase);
+        phraseUnit(trimmedPhrase, token);
         updatePhrase("");
       }
   }

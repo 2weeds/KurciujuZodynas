@@ -1,13 +1,12 @@
 import { Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 import { AdminAdditionWindow } from "../admin-addition-window/AdminAdditionWindow";
 import { AdminLoginWindow } from "../admin-login-window/AdminLoginWindow";
 
 interface Props {
-  setToken: (response: ViewAdminResponse) => void;
-  token: ViewAdminResponse | undefined
+  setToken: (response: string) => void;
+  token: string | undefined
   page: string
   pageSetter: (type: string) => void
 }

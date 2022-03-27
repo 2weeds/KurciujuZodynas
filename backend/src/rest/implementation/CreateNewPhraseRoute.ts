@@ -11,11 +11,11 @@ export class CreateNewPhraseRoute {
     create(req: Request, res: Response): void {
         const data = req.body;
         try {
-            this.useCase.create(data.phrase);
+            this.useCase.create(data.phrase, data.token);
             res.sendStatus(201);
         } catch (e) {
             const err = e as Error;
-            res.send(400).json(err.message)
+            res.status(400).json(err.message);
         }
     }
 }

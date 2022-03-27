@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.static('src'));
 app.use(express.json());
 
+const loggedIn: string[] = new Array();
 const lexiconGW = new InMemoryLexiconUnitGateway();
 const createLexiconUnitUC = new CreateNewLexiconUnitInteractor(lexiconGW);
 const createLexiconUnitRoute = new CreateNewLexiconUnitRoute(createLexiconUnitUC);

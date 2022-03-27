@@ -4,12 +4,11 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import React, { useState } from "react";
 import { adminAuthorizationController } from "../../../Configuration";
-import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 import useAdminLoginWindow from "./useAdminLoginWindow";
 import { FIELD_EMPTY, FIELD_TOO_SHORT } from "../../../constants/ErrorConstants";
 
 interface Props {
-    setToken: (response: ViewAdminResponse) => void;
+    setToken: (response: string) => void;
 }
 
 const useStyles = makeStyles({

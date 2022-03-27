@@ -8,7 +8,7 @@ export class CreateNewLexiconUnitInteractor implements CreateNewLexiconUnitUseCa
     constructor(lexiconGW: LexiconGateway) {
         this.lexiconGW = lexiconGW;
     }
-    create(word: string, abbreviation: string): Observable<void> {
-        return this.lexiconGW.createNewLexiconUnit(word, abbreviation);
+    create(word: string, abbreviation: string, token: string | undefined): Observable<void> {
+        return this.lexiconGW.createNewLexiconUnit(word, abbreviation, token);
     }
 }

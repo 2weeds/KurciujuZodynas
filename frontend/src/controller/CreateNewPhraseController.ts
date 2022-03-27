@@ -8,7 +8,7 @@ export class CreateNewPhraseController {
     this.uc = uc;
   }
 
-  create(phrase: string): Observable<void> {
-    return this.uc.create(phrase);
+  create(phrase: string, token: string | undefined): Observable<void> {
+    return this.uc.create(phrase, token);
   }
 }
