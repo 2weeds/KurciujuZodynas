@@ -3,10 +3,10 @@ import { useAdminAdditionObserver } from "../observer/useAdminAdditionObserver";
 
 export default function useAdminPhraseAdditionWindow(
   newPhraseCreationController: CreateNewPhraseController,
-  ): (phrase: string) => void {
+  ): (phrase: string, token: string | undefined) => void {
     const observer = useAdminAdditionObserver();
-    const authorize = (phrase: string) => {
-      newPhraseCreationController.create(phrase).subscribe(observer);
+    const authorize = (phrase: string, token: string | undefined) => {
+      newPhraseCreationController.create(phrase, token).subscribe(observer);
     };
   
     return authorize;

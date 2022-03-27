@@ -8,7 +8,7 @@ export class CreateNewLexiconUnitController {
     this.uc = uc;
   }
 
-  create(word: string, abbreviation: string): Observable<void> {
-    return this.uc.create(word, abbreviation);
+  create(word: string, abbreviation: string, token: string | undefined): Observable<void> {
+    return this.uc.create(word, abbreviation, token);
   }
 }

@@ -9,9 +9,10 @@ export class RestPhraseGateway implements PhraseGateway {
   constructor(client: Client) {
     this.client = client;
   }
-    createNewPhrase(phrase: string): Observable<void> {
+    createNewPhrase(phrase: string, token: string | undefined): Observable<void> {
         const body = {
-            phrase: phrase
+            phrase: phrase,
+            token: token
         };
 
     return this.client.post<void>(PHRASE_CREATION_PATH, body);

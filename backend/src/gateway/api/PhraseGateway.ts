@@ -1,3 +1,3 @@
 export interface PhraseGateway {
-    createPhrase(phrase: string): void;
+    createPhrase(phrase: string, token: string | undefined): void;
 }

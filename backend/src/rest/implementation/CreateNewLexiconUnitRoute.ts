@@ -11,11 +11,11 @@ export class CreateNewLexiconUnitRoute {
     create(req: Request, res: Response): void {
         const data = req.body;
         try {
-            this.useCase.create(data.word, data.abbreviation);
+            this.useCase.create(data.word, data.abbreviation, data.token);
             res.sendStatus(201);
         } catch (e) {
             const err = e as Error;
-            res.send(400).json(err.message)
+            res.status(400).json(err.message);
         }
     }
 }

@@ -8,7 +8,7 @@ export class CreateNewPhraseInteractor implements CreateNewPhraseUseCase {
     constructor(phraseGW: PhraseGateway) {
         this.phraseGW = phraseGW;
     }
-    create(phrase: string): Observable<void> {
-        return this.phraseGW.createNewPhrase(phrase);
+    create(phrase: string, token: string | undefined): Observable<void> {
+        return this.phraseGW.createNewPhrase(phrase, token);
     }
 }

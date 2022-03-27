@@ -9,10 +9,11 @@ export class RestLexiconGateway implements LexiconGateway {
   constructor(client: Client) {
     this.client = client;
   }
-    createNewLexiconUnit(word: string, abbreviation: string): Observable<void> {
+    createNewLexiconUnit(word: string, abbreviation: string, token: string | undefined): Observable<void> {
         const body = {
             word: word,
             abbreviation: abbreviation,
+            token: token
         };
 
     return this.client.post<void>(LEXICON_UNIT_CREATION_PATH, body);

@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
 
 export interface PhraseGateway {
-  createNewPhrase(phrase: string): Observable<void>;
+  createNewPhrase(phrase: string, token: string | undefined): Observable<void>;
 }

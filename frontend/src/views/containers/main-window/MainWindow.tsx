@@ -8,11 +8,10 @@ import { LexiconWindow } from "../lexicon-window/LexiconWindow";
 import { PhrasesWindow } from "../phrases-window/PhrasesWindow";
 import { LessonWindow } from "../lesson-window/LessonWindow";
 import { AdminWindow } from "../admin-window/AdminWindow";
-import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 
 export const MainWindow = () => {
   const [page, setPage] = useState<string>("landing");
-  const [token, setToken] = useState<ViewAdminResponse | undefined>(undefined);
+  const [token, setToken] = useState<string | undefined>(undefined);
 
   const renderHeader = () => {
     return token === undefined ? <PageHeader pageSetter={setPage} type="user" /> : <PageHeader pageSetter={setPage} type="admin" />
