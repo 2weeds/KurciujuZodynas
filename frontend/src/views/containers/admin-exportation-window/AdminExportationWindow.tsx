@@ -1,7 +1,7 @@
 import { Box, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import * as React from 'react';
-import {borderRadius, styled } from '@mui/system';
+import { borderRadius, styled } from '@mui/system';
 import TablePaginationUnstyled from '@mui/base/TablePaginationUnstyled';
 import AddIcon from '@mui/icons-material/Add';
 import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
@@ -12,7 +12,7 @@ interface Props {
   pageSetter: (type: string) => void
 }
 function createData(word: string) {
-  return { word};
+  return { word };
 }
 
 const rows = [
@@ -33,47 +33,47 @@ const rows = [
 
 const useStyles = makeStyles({
   form: {
-      display: "flex",
-      flexDirection: "column",
-      paddingLeft: "5vh",
-      paddingRight: "5vh",
-      width: "100%",
-      height: "max-content",
-      alignItems: "center",
-      background: "#EBEBEB",
-      boxShadow: "0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93",
-      borderRadius: 10,
-      clear:"both",
-      overflow:"auto"
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft: "5vh",
+    paddingRight: "5vh",
+    width: "100%",
+    height: "max-content",
+    alignItems: "center",
+    background: "#EBEBEB",
+    boxShadow: "0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93",
+    borderRadius: 10,
+    clear: "both",
+    overflow: "auto"
   },
-  
+
   inputField: {
     marginTop: "5vh",
-    paddingBottom:"5vh",
+    paddingBottom: "5vh",
     width: "15vw",
     "& label.Mui-focused": {
-        color: "black"
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          borderColor: "black"
-        }
+      color: "black"
+    },
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        borderColor: "black"
       }
-},
-  
-  addWordButton:{
-    color:"green",
+    }
+  },
+
+  addWordForExportationButton: {
+    color: "green",
     backgroundColor: '#EBEBEB',
-    border:"1px solid",
-    borderRadius:"5px",
-    borderColor:"black",
+    border: "1px solid",
+    borderRadius: "5px",
+    borderColor: "black",
     '&:hover': {
       backgroundColor: '#fff',
-    '&:active':{
-      backgroundColor: '#a8a8a8',
+      '&:active': {
+        backgroundColor: '#a8a8a8',
+      }
     }
   }
-}
 })
 
 
@@ -132,9 +132,10 @@ const CustomTablePagination = styled(TablePaginationUnstyled)`
 `;
 
 
-export const AdminExportationWindow = ({token, page, pageSetter}: Props) => {
+export const AdminExportationWindow = ({ token, page, pageSetter }: Props) => {
   const [tablePage, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [searchTerm, setSearchTerm] = React.useState("");
   const emptyRows =
     tablePage > 0 ? Math.max(0, (1 + tablePage) * rowsPerPage - rows.length) : 0;
 
@@ -153,63 +154,76 @@ export const AdminExportationWindow = ({token, page, pageSetter}: Props) => {
   };
   const styleClasses = useStyles();
   return (
-    
+
     <Box className={styleClasses.form}>
       <Root sx={{ maxWidth: '100%', width: 500 }}>
-      <TextField className={styleClasses.inputField}
-       variant="outlined" label="Paieška" size="small"  onChange={() => {}}>
-       </TextField>
-      <table aria-label="custom pagination table">
-        <thead>
-          <tr>
-            <th>Žodis</th>
-            <th>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {(rowsPerPage > 0
-            ? rows.slice(tablePage * rowsPerPage, tablePage * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
-            <tr key={row.word}>
-              <td style={{ width: 500 }} align="right">
-                {row.word}
-              </td>
-              <td><AddIcon className={styleClasses.addWordButton} onClick={()=>{}}></AddIcon></td>
+        <TextField className={styleClasses.inputField}
+          variant="outlined"
+          label="Paieška"
+          size="small"
+          onChange={(event) => {
+            setSearchTerm(event.target.value);
+           }}>
+        </TextField>
+        <table aria-label="custom pagination table">
+          <thead>
+            <tr>
+              <th>Žodis</th>
+              <th>
+              </th>
             </tr>
-          ))}
-          {emptyRows > 0 && (
-            <tr style={{ height: 41 * emptyRows }}>
-              <td colSpan={3} />
+          </thead>
+          <tbody>
+            {(rowsPerPage > 0
+                ? rows.slice(tablePage * rowsPerPage, tablePage * rowsPerPage + rowsPerPage)
+                : rows)
+              .filter((val)=>{
+                if(searchTerm==""){
+                  return val
+                }
+                else if(val.word.toLowerCase().includes(searchTerm.toLowerCase())){
+                  return val
+                }
+              }).map((row) => (
+                <tr key={row.word}>
+                  <td style={{ width: 500 }} align="right">
+                    {row.word}
+                  </td>
+                  <td><AddIcon className={styleClasses.addWordForExportationButton} onClick={() => { }}></AddIcon></td>
+                </tr>
+              ))
+            }
+            {emptyRows > 0 && (
+              <tr style={{ height: 41 * emptyRows }}>
+                <td colSpan={3} />
+              </tr>
+            )}
+          </tbody>
+          <tfoot>
+            <tr>
+              <CustomTablePagination
+                labelRowsPerPage="Rodyti po:"
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={3}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={tablePage}
+                componentsProps={{
+                  select: {
+                    'aria-label': 'rows per tablePage',
+                  },
+                  actions: {
+                    showFirstButton: true,
+                    showLastButton: true,
+                  } as any,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
             </tr>
-          )}
-        </tbody>
-        <tfoot>
-          <tr>
-            <CustomTablePagination
-              labelRowsPerPage = "Rodyti po:"
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={tablePage}
-              componentsProps={{
-                select: {
-                  'aria-label': 'rows per tablePage',
-                },
-                actions: {
-                  showFirstButton: true,
-                  showLastButton: true,
-                } as any,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </tr>
-        </tfoot>
-      </table>
-    </Root>
+          </tfoot>
+        </table>
+      </Root>
     </Box>
   );
 }

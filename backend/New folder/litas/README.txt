@@ -1,1 +1,0 @@
-Žodis: litas
