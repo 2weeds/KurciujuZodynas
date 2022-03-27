@@ -34,7 +34,7 @@ export const AdminWindow = ({setToken, token, page, pageSetter}: Props) => {
     const styleClasses = useStyles();
 
     const renderWindow = () => {
-      return token === undefined ? <AdminLoginWindow setToken={setToken} /> : <AdminFunctionsWindow page={page} pageSetter={pageSetter} />
+      return token === undefined ? <AdminLoginWindow setToken={setToken} /> : <AdminFunctionsWindow token={token} page={page} pageSetter={pageSetter} />
     }
 
     return (

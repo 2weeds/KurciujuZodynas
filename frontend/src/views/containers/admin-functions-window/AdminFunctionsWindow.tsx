@@ -4,14 +4,14 @@ import { AdminAdditionWindow } from "../admin-addition-window/AdminAdditionWindo
 import {AdminExportationWindow} from "../admin-exportation-window/AdminExportationWindow"
 
 interface Props {
+token: ViewAdminResponse | undefined
   page: string
   pageSetter: (type: string) => void;
 }
 
-export const AdminFunctionsWindow = ({page, pageSetter}: Props) => {
-    const viewAdminResponse = new ViewAdminResponse("remove");
+export const AdminFunctionsWindow = ({token, page, pageSetter}: Props) => {
     const renderWindow = () => {
-    return page === "exportation" ? <AdminExportationWindow page={page} pageSetter={pageSetter} /> : <AdminAdditionWindow page={page} pageSetter={pageSetter} token={viewAdminResponse}/>
+    return page === "exportation" ? <AdminExportationWindow token={token} page={page} pageSetter={pageSetter} /> : <AdminAdditionWindow page={page} pageSetter={pageSetter} token={token}/>
     }
 
     return (

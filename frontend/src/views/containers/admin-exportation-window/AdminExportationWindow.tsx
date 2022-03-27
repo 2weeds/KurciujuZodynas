@@ -1,11 +1,13 @@
 import { Box, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import * as React from 'react';
-import { borderRadius, styled } from '@mui/system';
+import {borderRadius, styled } from '@mui/system';
 import TablePaginationUnstyled from '@mui/base/TablePaginationUnstyled';
 import AddIcon from '@mui/icons-material/Add';
+import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 
 interface Props {
+  token: ViewAdminResponse | undefined
   page: string
   pageSetter: (type: string) => void
 }
@@ -130,10 +132,9 @@ const CustomTablePagination = styled(TablePaginationUnstyled)`
 `;
 
 
-export const AdminExportationWindow = ({page, pageSetter}: Props) => {
+export const AdminExportationWindow = ({token, page, pageSetter}: Props) => {
   const [tablePage, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     tablePage > 0 ? Math.max(0, (1 + tablePage) * rowsPerPage - rows.length) : 0;
 
@@ -155,7 +156,9 @@ export const AdminExportationWindow = ({page, pageSetter}: Props) => {
     
     <Box className={styleClasses.form}>
       <Root sx={{ maxWidth: '100%', width: 500 }}>
-      <TextField value={""} className={styleClasses.inputField}  onFocus={() => {}} onBlur={() =>{}} variant="outlined" label="Paieška" size="small"  multiline maxRows={5} onChange={() => {}}></TextField>
+      <TextField className={styleClasses.inputField}
+       variant="outlined" label="Paieška" size="small"  onChange={() => {}}>
+       </TextField>
       <table aria-label="custom pagination table">
         <thead>
           <tr>
@@ -168,7 +171,6 @@ export const AdminExportationWindow = ({page, pageSetter}: Props) => {
           {(rowsPerPage > 0
             ? rows.slice(tablePage * rowsPerPage, tablePage * rowsPerPage + rowsPerPage)
             : rows
-            
           ).map((row) => (
             <tr key={row.word}>
               <td style={{ width: 500 }} align="right">
