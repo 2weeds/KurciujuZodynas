@@ -6,4 +6,10 @@ export interface Client {
     body?: any,
     headers?: Record<string, string>
   ): Observable<T>;
+
+  get<T>(
+    url: string,
+    body?: any,
+    headers?: Record<string, string>
+  ): Observable<T>;
 }

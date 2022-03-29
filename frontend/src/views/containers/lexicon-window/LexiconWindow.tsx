@@ -1,8 +1,12 @@
 import { Box, Typography, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { lexiconUnitsRetrievalController } from "../../../Configuration";
+import { ViewLexiconUnit } from "../../../controller/model/ViewLexiconUnit";
+import { LexiconUnitList } from "../../components/LexiconUnitList";
 import { StructureList } from "../structure-list/StructureList";
+import useLexiconWindow from "./useLexiconWindow";
 
 interface Props {
     pageSetter: (type: string) => void;
@@ -67,7 +71,15 @@ const useStyles = makeStyles({
 })
 
 export const LexiconWindow = ({ pageSetter }: Props) => {
+    const [allUnits, setAllUnits] = useState<ViewLexiconUnit[]>([]);
+    const lexiconUnit = useLexiconWindow(lexiconUnitsRetrievalController, setAllUnits);
     const styleClasses = useStyles();
+
+    useEffect(() => {
+        lexiconUnit();
+    }, []);
+
+    console.log(allUnits);
 
     return (
         <Box>
@@ -80,10 +92,7 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>LEKSIKA</b></Typography>
                         <TextField className={styleClasses.searchField} variant="outlined" label="Žodžio paieška" size="small"></TextField>
-                        <Typography pt="2vh" variant="aboutText">1 litas</Typography>
-                        <Typography pt="1vh" variant="aboutText">1 mėnuo</Typography>
-                        <Typography pt="1vh" variant="aboutText">1 metai</Typography>
-                        <Typography pt="1vh" variant="aboutText">10 litų</Typography>
+                        <LexiconUnitList units={allUnits}/>
                     </Box>
                 </Box>
             </Box>
