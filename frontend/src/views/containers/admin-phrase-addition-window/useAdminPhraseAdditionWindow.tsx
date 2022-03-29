@@ -5,9 +5,9 @@ export default function useAdminPhraseAdditionWindow(
   newPhraseCreationController: CreateNewPhraseController,
   ): (phrase: string, token: string | undefined) => void {
     const observer = useAdminAdditionObserver();
-    const authorize = (phrase: string, token: string | undefined) => {
+    const add = (phrase: string, token: string | undefined) => {
       newPhraseCreationController.create(phrase, token).subscribe(observer);
     };
   
-    return authorize;
+    return add;
   }

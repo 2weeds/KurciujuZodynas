@@ -1,4 +1,4 @@
-export class ViewLexiconUnitResponse {
+export class BoundaryLexiconUnit {
     readonly word: string;
     readonly abbreviation: string;
 

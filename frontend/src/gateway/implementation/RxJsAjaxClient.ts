@@ -18,4 +18,10 @@ export class RxJsAjaxClient implements Client {
       .post<T>(this.url + url, body, headers)
       .pipe(map((t) => t.response));
   }
+
+  get<T>(url: string, headers?: Record<string, string>): Observable<T> {
+    return ajax
+      .get<T>(this.url + url, headers)
+      .pipe(map((t) => t.response));
+  }
 }
