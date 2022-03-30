@@ -11,6 +11,8 @@ import { CreateNewPhraseRoute } from './rest/implementation/CreateNewPhraseRoute
 import { CreateNewPhraseInteractor } from './use_case/implementation/CreateNewPhraseInteractor';
 import { RetrieveAllLexiconUnitsRoute } from './rest/implementation/RetrieveAllLexiconUnitsRoute';
 import { RetrieveAllLexiconUnitsInteractor } from './use_case/implementation/RetrieveAllLexiconUnitsInteractor';
+import { RetrieveAllPhrasesInteractor } from './use_case/implementation/RetrieveAllPhrasesInteractor';
+import { RetrieveAllPhrasesRoute } from './rest/implementation/RetrieveAllPhrasesRoute';
 const app = express();
 
 app.listen(8000, () => console.log("Listening to app at 8000"));
@@ -31,6 +33,8 @@ const authorizeAdministratorRoute = new AuthorizeAdministratorRoute(authorizeAdm
 const phraseGW = new InMemoryPhraseGateway();
 const createPhraseUC = new CreateNewPhraseInteractor(phraseGW);
 const createPhraseRoute = new CreateNewPhraseRoute(createPhraseUC);
+const retrieveAllPhrasesInteractor = new RetrieveAllPhrasesInteractor(phraseGW);
+const retrieveAllPhrasesRoute = new RetrieveAllPhrasesRoute(retrieveAllPhrasesInteractor);
 
 app.post('/system-management', (req, resp) => {
     authorizeAdministratorRoute.authorize(req, resp);
@@ -46,4 +50,8 @@ app.get('/lexicon-units', (req, resp) => {
 
 app.post('/phrases', (req, resp) => {
     createPhraseRoute.create(req, resp);
+})
+
+app.get('/phrases', (req, resp) => {
+    retrieveAllPhrasesRoute.retrieve(req, resp);
 })

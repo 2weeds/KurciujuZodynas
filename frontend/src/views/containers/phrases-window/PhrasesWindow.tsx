@@ -1,8 +1,12 @@
 import { Box, Typography, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { phrasesRetrievalController } from "../../../Configuration";
+import { ViewPhrase } from "../../../controller/model/ViewPhrase";
+import { PhraseList } from "../../components/PhraseList";
 import { StructureList } from "../structure-list/StructureList";
+import usePhraseWindow from "./usePhraseWindow";
 
 interface Props {
     pageSetter: (type: string) => void;
@@ -67,7 +71,13 @@ const useStyles = makeStyles({
 })
 
 export const PhrasesWindow = ({ pageSetter }: Props) => {
+    const [allPhrases, setAllPhrases] = useState<ViewPhrase[]>([]);
+    const phrase = usePhraseWindow(phrasesRetrievalController, setAllPhrases);
     const styleClasses = useStyles();
+
+    useEffect(() => {
+        phrase();
+    }, []);
 
     return (
         <Box>
@@ -80,10 +90,7 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>FRAZĖS</b></Typography>
                         <TextField className={styleClasses.searchField} variant="outlined" label="Frazės paieška" size="small"></TextField>
-                        <Typography pt="2vh" variant="aboutText">12 val. aš jau pietavau.</Typography>
-                        <Typography pt="1vh" variant="aboutText">Anksčiau aš gyvenau bute</Typography>
-                        <Typography pt="1vh" variant="aboutText">Ar mes galime bendrauti web kameromis?</Typography>
-                        <Typography pt="1vh" variant="aboutText">Ar tavo brolis turi žmoną?</Typography>
+                        <PhraseList phrases={allPhrases} />
                     </Box>
                 </Box>
             </Box>

@@ -1,4 +1,4 @@
-export class Phrase {
+export class RestPhrase {
     private readonly phrase: string;
 
     constructor(phrase: string) {

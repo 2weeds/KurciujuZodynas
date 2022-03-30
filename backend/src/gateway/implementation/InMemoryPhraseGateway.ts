@@ -1,23 +1,26 @@
+import { Phrase } from "../../domain/Phrase";
 import { PhraseGateway } from "../api/PhraseGateway";
 
 export class InMemoryPhraseGateway implements PhraseGateway
 {
     private readonly fs = require('fs');
+
     createPhrase(phrase: string, token: string | undefined): void {
         if (token === undefined)
             throw new Error("Unauthorized user");
 
         this.fs.stat("Phrases.json", (err: any) => {
+            const newPhrase = new Phrase(phrase);
             if (err) {
-                const obj: { phrases: string[] } = {
+                const obj: { phrases: Phrase[] } = {
                     phrases: []
                 };
-                obj.phrases.push(phrase)
+                obj.phrases.push(newPhrase)
                 const json = JSON.stringify(obj);
                 this.writeToFile(json);
             }
             else {
-                this.appendToFile(phrase);
+                this.appendToFile(newPhrase);
             }
         });
     }
@@ -29,7 +32,7 @@ export class InMemoryPhraseGateway implements PhraseGateway
         })
     }
 
-    private appendToFile(phrase: string): void {
+    private appendToFile(phrase: Phrase): void {
         this.fs.readFile('Phrases.json', 'utf8', (err: any, data: any) => {
             if (err) {
                 throw new Error("Cannot read from an existing file");
@@ -39,5 +42,22 @@ export class InMemoryPhraseGateway implements PhraseGateway
             const json = JSON.stringify(obj);
             this.writeToFile(json);
         }});
+    }
+
+    retrieveAll(): Phrase[] {
+        const readLines = this.fs.readFileSync('Phrases.json','utf8');
+        const allPhrases = JSON.parse(readLines).phrases;
+
+        return this.transformToPhrasesArray(allPhrases);
+    }
+
+    private transformToPhrasesArray(phrases: any): Phrase[] {
+        const allPhrases: Phrase[] = [];
+        phrases.forEach((element: any) => {
+            const phrase = new Phrase(element.phrase);
+            allPhrases.push(phrase);
+        });
+
+        return allPhrases;
     }
 }

@@ -79,8 +79,6 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
         lexiconUnit();
     }, []);
 
-    console.log(allUnits);
-
     return (
         <Box>
             <Box className={styleClasses.formContainer}>
