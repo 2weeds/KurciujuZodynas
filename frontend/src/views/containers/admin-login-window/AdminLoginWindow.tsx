@@ -3,9 +3,9 @@ import { makeStyles } from "@mui/styles";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import React, { useState } from "react";
-import { adminAuthorizationController } from "../../../Configuration";
-import useAdminLoginWindow from "./useAdminLoginWindow";
 import { FIELD_EMPTY, FIELD_TOO_SHORT } from "../../../constants/ErrorConstants";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useSnackbar } from "notistack";
 
 interface Props {
     setToken: (response: string) => void;
@@ -101,7 +101,7 @@ export const AdminLoginWindow = ({ setToken }: Props) => {
     const [usernameErrors, setUsernameErrors] = useState<string | undefined>(undefined);
     const [passwordErrors, setPasswordErrors] = useState<string | undefined>(undefined);
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const adminUser = useAdminLoginWindow(adminAuthorizationController, setToken);
+    const { enqueueSnackbar } = useSnackbar();
     const styleClasses = useStyles();
 
     const handlePasswordVisibility = () => setShowPassword(!showPassword);
@@ -110,8 +110,17 @@ export const AdminLoginWindow = ({ setToken }: Props) => {
     const handleSubmit = (element: any) => {
         submitHandlerPreset(element, setUsernameErrors, setPasswordErrors);
         
-        if (isInputDataValid(username, password, setUsernameErrors, setPasswordErrors))
-            adminUser(username as string, password as string);
+        if (isInputDataValid(username, password, setUsernameErrors, setPasswordErrors)) {
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, username as string, password as string).then((userCredential) => {
+                if (userCredential)
+                    userCredential.user.getIdToken().then((token) => setToken(token));
+            }).catch((err) => {
+                enqueueSnackbar("Error: Invalid user credentials", {
+                variant: "error",
+                preventDuplicate: true,
+              })});
+        }
     }
     const renderUsernameErrors = () => {
         if (usernameErrors !== undefined)
@@ -124,7 +133,7 @@ export const AdminLoginWindow = ({ setToken }: Props) => {
 
     return (
         <Box className={styleClasses.form}>
-            <TextField error={usernameErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="Slapyvardis" onChange={handleUsernameFieldChange}></TextField>
+            <TextField error={usernameErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="El. Paštas" onChange={handleUsernameFieldChange}></TextField>
             {renderUsernameErrors()}
             <TextField error={passwordErrors !== undefined} type={showPassword ? "text" : "password"} className={styleClasses.inputField}
                 variant="outlined" label="Slaptažodis" onChange={handlePasswordFieldChange} 

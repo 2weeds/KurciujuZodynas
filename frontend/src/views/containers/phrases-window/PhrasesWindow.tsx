@@ -2,7 +2,7 @@ import { Box, Typography, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { phrasesRetrievalController } from "../../../Configuration";
+import { phrasesRetrievalController } from "../../../config/ControllerConfiguration";
 import { ViewPhrase } from "../../../controller/model/ViewPhrase";
 import { PhraseList } from "../../components/PhraseList";
 import { StructureList } from "../structure-list/StructureList";

@@ -2,7 +2,7 @@ import { Box, Typography, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { lexiconUnitsRetrievalController } from "../../../Configuration";
+import { lexiconUnitsRetrievalController } from "../../../config/ControllerConfiguration";
 import { ViewLexiconUnit } from "../../../controller/model/ViewLexiconUnit";
 import { LexiconUnitList } from "../../components/LexiconUnitList";
 import { StructureList } from "../structure-list/StructureList";

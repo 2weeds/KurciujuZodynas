@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CreateNewPhraseUseCase } from "../../use_case/api/CreateNewPhraseUseCase";
+import { tokenDecoder } from "../tokenDecoder";
 
 export class CreateNewPhraseRoute {
     private readonly useCase: CreateNewPhraseUseCase;
@@ -8,11 +9,16 @@ export class CreateNewPhraseRoute {
         this.useCase = useCase;
     }
 
-    create(req: Request, res: Response): void {
+    async create(req: Request, res: Response): Promise<void> {
         const data = req.body;
+        const headers = req.headers;
         try {
-            this.useCase.create(data.phrase, data.token);
-            res.sendStatus(201);
+            if (await tokenDecoder(headers.authorization)) {
+                this.useCase.create(data.phrase);
+                res.sendStatus(201);
+            } else {
+                res.status(400).json("Unauthorized");
+            }
         } catch (e) {
             const err = e as Error;
             res.status(400).json(err.message);

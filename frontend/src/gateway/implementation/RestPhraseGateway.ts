@@ -16,8 +16,12 @@ export class RestPhraseGateway implements PhraseGateway {
             phrase: phrase,
             token: token
         };
+        
+        const headers = {
+          Authorization: 'Bearer ' + token,
+        };
 
-    return this.client.post<void>(PHRASES_PATH, body);
+    return this.client.post<void>(PHRASES_PATH, body, headers);
     }
 
     retrieveAllPhrases(): Observable<Phrase[]> {

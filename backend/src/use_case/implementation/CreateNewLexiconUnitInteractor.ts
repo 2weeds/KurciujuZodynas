@@ -8,7 +8,7 @@ export class CreateNewLexiconUnitInteractor implements CreateNewLexiconUnitUseCa
         this.gateway = gateway;
     }
 
-    create(unit: string, abbreviation: string, token: string | undefined): void {
-        this.gateway.createUnit(unit, abbreviation, token);
+    create(unit: string, abbreviation: string): void {
+        this.gateway.createUnit(unit, abbreviation);
     }
 }

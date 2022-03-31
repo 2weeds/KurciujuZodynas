@@ -15,10 +15,13 @@ export class RestLexiconGateway implements LexiconGateway {
       const body = {
           word: word,
           abbreviation: abbreviation,
-          token: token
       };
 
-    return this.client.post<void>(LEXICON_UNITS_PATH, body);
+      const headers = {
+        Authorization: 'Bearer ' + token,
+      };
+
+    return this.client.post<void>(LEXICON_UNITS_PATH, body, headers);
   }
 
   retrieveAllLexiconUnits(): Observable<LexiconUnit[]> {
