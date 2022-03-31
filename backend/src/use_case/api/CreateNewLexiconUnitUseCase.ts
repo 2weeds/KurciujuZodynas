@@ -1,3 +1,3 @@
 export interface CreateNewLexiconUnitUseCase {
-    create(unit: string, abbreviation: string, token: string | undefined): void;
+    create(unit: string, abbreviation: string): void;
 }

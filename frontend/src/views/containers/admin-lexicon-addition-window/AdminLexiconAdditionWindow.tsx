@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React, { useState } from "react";
-import { newLexiconUnitCreationController } from "../../../Configuration";
+import { newLexiconUnitCreationController } from "../../../config/ControllerConfiguration";
 import { FIELD_EMPTY } from "../../../constants/ErrorConstants";
 import useAdminLexiconAdditionWindow from "./useAdminLexiconAdditionWindow";
 

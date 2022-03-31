@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import { CreateNewLexiconUnitRoute } from './rest/implementation/CreateNewLexiconUnitRoute';
 import { CreateNewLexiconUnitInteractor } from './use_case/implementation/CreateNewLexiconUnitInteractor';
 import { InMemoryLexiconUnitGateway } from './gateway/implementation/InMemoryLexiconUnitGateway';
@@ -13,10 +12,11 @@ import { RetrieveAllLexiconUnitsRoute } from './rest/implementation/RetrieveAllL
 import { RetrieveAllLexiconUnitsInteractor } from './use_case/implementation/RetrieveAllLexiconUnitsInteractor';
 import { RetrieveAllPhrasesInteractor } from './use_case/implementation/RetrieveAllPhrasesInteractor';
 import { RetrieveAllPhrasesRoute } from './rest/implementation/RetrieveAllPhrasesRoute';
+const cors = require('cors')({origin: true});
 const app = express();
 
 app.listen(8000, () => console.log("Listening to app at 8000"));
-app.use(cors());
+app.use(cors);
 app.use(express.static('src'));
 app.use(express.json());
 

@@ -5,10 +5,7 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway
 {
     private readonly fs = require('fs');
 
-    createUnit(unit: string, abbreviation: string, token: string | undefined): void {
-        if (token === undefined)
-            throw new Error("Unauthorized user");
-
+    createUnit(unit: string, abbreviation: string): void {
         this.fs.stat("LexiconUnits.json", (err: any) => {
             const lexiconUnit = new LexiconUnit(unit, abbreviation);
             if (err) {

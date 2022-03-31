@@ -5,10 +5,7 @@ export class InMemoryPhraseGateway implements PhraseGateway
 {
     private readonly fs = require('fs');
 
-    createPhrase(phrase: string, token: string | undefined): void {
-        if (token === undefined)
-            throw new Error("Unauthorized user");
-
+    createPhrase(phrase: string): void {
         this.fs.stat("Phrases.json", (err: any) => {
             const newPhrase = new Phrase(phrase);
             if (err) {

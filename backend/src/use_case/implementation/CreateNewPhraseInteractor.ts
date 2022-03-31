@@ -8,7 +8,7 @@ export class CreateNewPhraseInteractor implements CreateNewPhraseUseCase {
         this.gateway = gateway;
     }
 
-    create(phrase: string, token: string | undefined): void {
-        this.gateway.createPhrase(phrase, token);
+    create(phrase: string): void {
+        this.gateway.createPhrase(phrase);
     }
 }
