@@ -6,46 +6,34 @@ export class InMemoryPhraseGateway implements PhraseGateway
     private readonly fs = require('fs');
 
     createPhrase(phrase: string): void {
-        this.fs.stat("Phrases.json", (err: any) => {
-            const newPhrase = new Phrase(phrase);
-            if (err) {
-                const obj: { phrases: Phrase[] } = {
-                    phrases: []
-                };
-                obj.phrases.push(newPhrase)
-                const json = JSON.stringify(obj);
-                this.writeToFile(json);
-            }
-            else {
-                this.appendToFile(newPhrase);
-            }
-        });
-    }
-
-    private writeToFile(json: string): void {
-        this.fs.writeFile("Phrases.json", json, (err: any) => {
-            if (err)
-                throw new Error("Writing to file failed");
-        })
-    }
-
-    private appendToFile(phrase: Phrase): void {
-        this.fs.readFile('Phrases.json', 'utf8', (err: any, data: any) => {
-            if (err) {
-                throw new Error("Cannot read from an existing file");
+        const jsonObj = this.readFromFileOrCreateIfFileNotFound();
+        const newPhrase = new Phrase(phrase);
+        try {
+            if (this.isPhraseAlreadyInFile(newPhrase, jsonObj.phrases)) {
+                    throw new Error("Phrase already exists");
             } else {
-            const obj = JSON.parse(data);
-            obj.phrases.push(phrase);
-            const json = JSON.stringify(obj);
-            this.writeToFile(json);
-        }});
+                jsonObj.phrases.push(newPhrase);
+                const json = JSON.stringify(jsonObj);
+                this.fs.writeFileSync('Phrases.json', json);
+            }
+        } catch (err) {
+            const error = err as Error;
+            throw new Error(error.message);
+        }
+    }
+
+    private isPhraseAlreadyInFile(phrase: Phrase, allPhrases: any): boolean {
+        for (let i = 0; i < allPhrases.length; i++) {
+            if (allPhrases[i].phrase.toLocaleLowerCase() === phrase.getPhrase().toLocaleLowerCase())
+                return true;
+        }
+        return false;
     }
 
     retrieveAll(): Phrase[] {
-        const readLines = this.fs.readFileSync('Phrases.json','utf8');
-        const allPhrases = JSON.parse(readLines).phrases;
+        const jsonObj = this.readFromFileOrCreateIfFileNotFound();
 
-        return this.transformToPhrasesArray(allPhrases);
+        return this.transformToPhrasesArray(jsonObj.phrases);
     }
 
     private transformToPhrasesArray(phrases: any): Phrase[] {
@@ -56,5 +44,20 @@ export class InMemoryPhraseGateway implements PhraseGateway
         });
 
         return allPhrases;
+    }
+
+    private readFromFileOrCreateIfFileNotFound(): any {
+        let obj: { phrases: Phrase[] } = {
+            phrases: []
+        };
+        try {
+            const readLines = this.fs.readFileSync('Phrases.json','utf8');
+            obj = JSON.parse(readLines);
+        } catch (err) {
+            const json = JSON.stringify(obj);
+            this.fs.writeFileSync('Phrases.json', json);
+        }
+
+        return obj;
     }
 }
