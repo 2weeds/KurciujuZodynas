@@ -1,11 +1,9 @@
-import { Box, Typography, TextField } from "@mui/material";
+import { Box, Typography, TextField, List, ListItem, Button, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { lexiconUnitsRetrievalController } from "../../../config/ControllerConfiguration";
 import { ViewLexiconUnit } from "../../../controller/model/ViewLexiconUnit";
-import { LexiconUnitList } from "../../components/LexiconUnitList";
-import { StructureList } from "../structure-list/StructureList";
 import useLexiconWindow from "./useLexiconWindow";
 
 interface Props {
@@ -67,7 +65,28 @@ const useStyles = makeStyles({
               borderColor: "black"
             }
           }
-    }
+    },
+
+    list: {
+        paddingTop: "2vh",
+        paddingLeft: "3vw",
+        listStyle: "disc",
+    },
+
+    listItem: {
+        display: "list-item"
+    },
+
+    listItemButton: {
+        paddingTop: "2px",
+        paddingBottom: "2px",
+        fontWeight: 600,
+        fontSize: "11px",
+        "&:hover": {
+            paddingLeft: "0vw",
+            background: "#2196f3"
+        }
+    },
 })
   
 function removeExtraWhitespaces(element: string) {
@@ -116,12 +135,35 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
                 <Box className={styleClasses.form}>
                     <Box className={clsx(styleClasses.sides, styleClasses.leftSide)}>
                         <Typography variant="bookPageTitle">KGMP struktūra:</Typography>
-                        <StructureList type="structure" pageSetter={pageSetter} />
+                        <List className={styleClasses.list}>
+                            <ListItem className={styleClasses.listItem}>
+                                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("landing")}>Pamokos</Button>
+                            </ListItem>
+                            <ListItem className={styleClasses.listItem}>
+                                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("lexicon")}>Leksika</Button>
+                            </ListItem>
+                            <ListItem className={styleClasses.listItem}>
+                                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("phrases")}>Frazės</Button>
+                            </ListItem>
+                        </List>
                     </Box>
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>LEKSIKA</b></Typography>
                         <TextField className={styleClasses.searchField} variant="outlined" label="Žodžio paieška" size="small" onChange={handleSearchBarChange}></TextField>
-                        <LexiconUnitList units={unitsToDisplay}/>
+                        <Table>
+                            <TableBody>
+                                {unitsToDisplay.map((unit, index) => (
+                                    <TableRow key={index + "-row"}>
+                                        <TableCell key={index + "-cellWord"}>
+                                            <Typography key={index + "-word"} pt="1vh" variant="aboutText">{unit.word}</Typography>
+                                        </TableCell>
+                                        <TableCell key={index + "-cellAbbr"}>
+                                            <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
                     </Box>
                 </Box>
             </Box>
