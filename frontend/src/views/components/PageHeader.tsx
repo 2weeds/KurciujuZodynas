@@ -45,6 +45,7 @@ export const PageHeader = ({ pageSetter, type }: Props) => {
             <Box>
                 <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("lexiconAddition")}>Leksikos pridėjimas</Button>
                 <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("phraseAddition")}>Frazių pridėjimas</Button>
+                <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("exportation")}>Eksportavimas</Button>
             </Box> )
         else
             return <Button variant="text" className={styleClasses.appBarButton} onClick={() => pageSetter("admin")}>Administracija</Button>

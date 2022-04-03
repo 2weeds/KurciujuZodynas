@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import { AdminAdditionWindow } from "../admin-addition-window/AdminAdditionWindow";
+import { AdminFunctionsWindow } from "../admin-functions-window/AdminFunctionsWindow";
 import { AdminLoginWindow } from "../admin-login-window/AdminLoginWindow";
 
 interface Props {
@@ -33,7 +33,7 @@ export const AdminWindow = ({setToken, token, page, pageSetter}: Props) => {
     const styleClasses = useStyles();
 
     const renderWindow = () => {
-      return token === undefined ? <AdminLoginWindow setToken={setToken} /> : <AdminAdditionWindow token={token} page={page} pageSetter={pageSetter} />
+      return token === undefined ? <AdminLoginWindow setToken={setToken} /> : <AdminFunctionsWindow token={token} page={page} pageSetter={pageSetter} />
     }
 
     return (
