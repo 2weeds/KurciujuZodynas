@@ -70,14 +70,45 @@ const useStyles = makeStyles({
     }
 })
 
+function removeExtraWhitespaces(element: string) {
+    return element.trim().split(/\s\s+/g).join(' ');
+}
+
+function filterUnits(searchValue: string, allPhrases: ViewPhrase[], setPhrasesToDisplay: (phrases: ViewPhrase[]) => void): void {
+    const filteredPhrases: ViewPhrase[] = [];
+
+    allPhrases.forEach(phrase => {
+        if (isIncluded(phrase, searchValue))
+        filteredPhrases.push(phrase);
+    });
+
+    setPhrasesToDisplay(filteredPhrases);
+}
+
+function isIncluded(phrase: ViewPhrase, searchValue: string) {
+    return phrase.phrase.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
+}
+
 export const PhrasesWindow = ({ pageSetter }: Props) => {
     const [allPhrases, setAllPhrases] = useState<ViewPhrase[]>([]);
+    const [phrasesToDisplay, setPhrasesToDisplay] = useState<ViewPhrase[]>([]);
     const phrase = usePhraseWindow(phrasesRetrievalController, setAllPhrases);
+    const [searchValue, setSearchValue] = useState<string>('');
     const styleClasses = useStyles();
 
     useEffect(() => {
         phrase();
     }, []);
+
+    useEffect(() => {
+        filterUnits(searchValue, allPhrases, setPhrasesToDisplay);
+    }, [allPhrases, searchValue])
+
+    const handleSearchBarChange = (element: any) => {
+        const inputValue = element.target.value.trim();
+        const trimmedValue = removeExtraWhitespaces(inputValue);
+        setSearchValue(trimmedValue);
+    }
 
     return (
         <Box>
@@ -89,8 +120,8 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
                     </Box>
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>FRAZĖS</b></Typography>
-                        <TextField className={styleClasses.searchField} variant="outlined" label="Frazės paieška" size="small"></TextField>
-                        <PhraseList phrases={allPhrases} />
+                        <TextField className={styleClasses.searchField} variant="outlined" label="Frazės paieška" size="small" onChange={handleSearchBarChange}></TextField>
+                        <PhraseList phrases={phrasesToDisplay} />
                     </Box>
                 </Box>
             </Box>

@@ -58,7 +58,7 @@ function isInputEmpty(input: string | undefined) {
 }
 
 function removeExtraWhitespaces(element: string) {
-  return element.trim().split(/ +/).join(' ');
+  return element.trim().split(/\s\s+/g).join(' ');
 }
 
 function submitHandlerPreset(element: any, setErrors: (error: string | undefined) => void): void {

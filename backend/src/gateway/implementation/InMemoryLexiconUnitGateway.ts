@@ -6,46 +6,20 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway
     private readonly fs = require('fs');
 
     createUnit(unit: string, abbreviation: string): void {
-        this.fs.stat("LexiconUnits.json", (err: any) => {
-            const lexiconUnit = new LexiconUnit(unit, abbreviation);
-            if (err) {
-                const obj: { lexiconUnits: LexiconUnit[] } = {
-                    lexiconUnits: []
-                };
-                obj.lexiconUnits.push(lexiconUnit)
-                const json = JSON.stringify(obj);
-                this.writeToFile(json);
-            }
-            else {
-                this.appendToFile(lexiconUnit);
-            }
-        });
-    }
-
-    private writeToFile(json: string): void {
-        this.fs.writeFile("LexiconUnits.json", json, (err: any) => {
-            if (err)
-                throw new Error("Writing to file failed");
-        })
-    }
-
-    private appendToFile(lexiconUnit: LexiconUnit): void {
-
-        this.fs.readFile('LexiconUnits.json', 'utf8', (err: any, data: any) => {
-            if (err){
-                throw new Error("Cannot read from an existing file");
-            } else {
-            try {
-                const obj = JSON.parse(data);
-                if (this.isWordAlreadyInFile(lexiconUnit, obj.lexiconUnits))
+        const jsonObj = this.readFromFileOrCreateIfFileNotFound();
+        const lexiconUnit = new LexiconUnit(unit, abbreviation);
+        try {
+            if (this.isWordAlreadyInFile(lexiconUnit, jsonObj.lexiconUnits)) {
                     throw new Error("Word already exists");
-                obj.lexiconUnits.push(lexiconUnit);
-                const json = JSON.stringify(obj);
-                this.writeToFile(json);
-            } catch (e) {
-                console.log(e);
+            } else {
+                jsonObj.lexiconUnits.push(lexiconUnit);
+                const json = JSON.stringify(jsonObj);
+                this.fs.writeFileSync('LexiconUnits.json', json);
             }
-        }});
+        } catch (err) {
+            const error = err as Error;
+            throw new Error(error.message);
+        }
     }
 
     private isWordAlreadyInFile(lexiconUnit: LexiconUnit, allUnits: any): boolean {
@@ -57,10 +31,9 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway
     }
 
     retrieveAll(): LexiconUnit[] {
-        const readLines = this.fs.readFileSync('LexiconUnits.json','utf8');
-        const allUnits = JSON.parse(readLines).lexiconUnits;
+        const jsonObj = this.readFromFileOrCreateIfFileNotFound();
 
-        return this.transformToLexiconUnitArray(allUnits);
+        return this.transformToLexiconUnitArray(jsonObj.lexiconUnits);
     }
 
     private transformToLexiconUnitArray(units: any): LexiconUnit[] {
@@ -71,5 +44,20 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway
         });
 
         return lexiconUnits;
+    }
+
+    private readFromFileOrCreateIfFileNotFound(): any {
+        let obj: { lexiconUnits: LexiconUnit[] } = {
+            lexiconUnits: []
+        };
+        try {
+            const readLines = this.fs.readFileSync('LexiconUnits.json','utf8');
+            obj = JSON.parse(readLines);
+        } catch (err) {
+            const json = JSON.stringify(obj);
+            this.fs.writeFileSync('LexiconUnits.json', json);
+        }
+
+        return obj;
     }
 }

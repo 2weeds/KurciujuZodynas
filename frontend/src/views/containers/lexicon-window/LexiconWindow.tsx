@@ -69,15 +69,46 @@ const useStyles = makeStyles({
           }
     }
 })
+  
+function removeExtraWhitespaces(element: string) {
+    return element.trim().split(/\s\s+/g).join(' ');
+}
+
+function filterUnits(searchValue: string, allUnits: ViewLexiconUnit[], setUnitsToDisplay: (units: ViewLexiconUnit[]) => void): void {
+    const filteredUnits: ViewLexiconUnit[] = [];
+
+    allUnits.forEach(unit => {
+        if (isIncluded(unit, searchValue))
+            filteredUnits.push(unit);
+    });
+
+    setUnitsToDisplay(filteredUnits);
+}
+
+function isIncluded(unit: ViewLexiconUnit, searchValue: string) {
+    return unit.word.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) || unit.abbreviation.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
+}
 
 export const LexiconWindow = ({ pageSetter }: Props) => {
     const [allUnits, setAllUnits] = useState<ViewLexiconUnit[]>([]);
+    const [unitsToDisplay, setUnitsToDisplay] = useState<ViewLexiconUnit[]>([]);
     const lexiconUnit = useLexiconWindow(lexiconUnitsRetrievalController, setAllUnits);
+    const [searchValue, setSearchValue] = useState<string>('');
     const styleClasses = useStyles();
 
     useEffect(() => {
         lexiconUnit();
     }, []);
+
+    useEffect(() => {
+        filterUnits(searchValue, allUnits, setUnitsToDisplay);
+    }, [allUnits, searchValue])
+
+    const handleSearchBarChange = (element: any) => {
+        const inputValue = element.target.value.trim();
+        const trimmedValue = removeExtraWhitespaces(inputValue);
+        setSearchValue(trimmedValue);
+    }
 
     return (
         <Box>
@@ -89,8 +120,8 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
                     </Box>
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>LEKSIKA</b></Typography>
-                        <TextField className={styleClasses.searchField} variant="outlined" label="Žodžio paieška" size="small"></TextField>
-                        <LexiconUnitList units={allUnits}/>
+                        <TextField className={styleClasses.searchField} variant="outlined" label="Žodžio paieška" size="small" onChange={handleSearchBarChange}></TextField>
+                        <LexiconUnitList units={unitsToDisplay}/>
                     </Box>
                 </Box>
             </Box>

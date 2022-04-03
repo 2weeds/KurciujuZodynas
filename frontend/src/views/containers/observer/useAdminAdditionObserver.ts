@@ -15,7 +15,7 @@ export function useAdminAdditionObserver<T>(): Observer<T> {
         });
     },
     complete: () => {
-        enqueueSnackbar("Successfully added a new unit", {
+        enqueueSnackbar("Successfully added a new entry", {
             variant: "success",
             preventDuplicate: true,
         })
