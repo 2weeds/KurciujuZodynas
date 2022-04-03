@@ -4,10 +4,9 @@ import * as React from 'react';
 import { borderRadius, styled } from '@mui/system';
 import TablePaginationUnstyled from '@mui/base/TablePaginationUnstyled';
 import AddIcon from '@mui/icons-material/Add';
-import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 
 interface Props {
-  token: ViewAdminResponse | undefined
+  token: string | undefined
   page: string
   pageSetter: (type: string) => void
 }

@@ -5,6 +5,7 @@ import { LexiconWindow } from "../lexicon-window/LexiconWindow";
 import { PhrasesWindow } from "../phrases-window/PhrasesWindow";
 import { LessonWindow } from "../lesson-window/LessonWindow";
 import { AdminWindow } from "../admin-window/AdminWindow";
+import { setSourceMapRange } from "typescript";
 
 const appBar = {
   position: "static",
@@ -50,6 +51,7 @@ export const MainWindow = () => {
         <Box>
             <Button sx={appBarButton} variant="text" onClick={() => setPage("lexiconAddition")}>Leksikos pridėjimas</Button>
             <Button sx={appBarButton} variant="text" onClick={() => setPage("phraseAddition")}>Frazių pridėjimas</Button>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("exportation")}>Eksportavimas</Button>
         </Box> )
     else
         return <Button sx={appBarButton} variant="text" onClick={() => setPage("admin")}>Administracija</Button>

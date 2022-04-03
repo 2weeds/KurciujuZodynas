@@ -1,10 +1,9 @@
 import React from "react";
-import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
 import { AdminAdditionWindow } from "../admin-addition-window/AdminAdditionWindow";
 import {AdminExportationWindow} from "../admin-exportation-window/AdminExportationWindow"
 
 interface Props {
-token: ViewAdminResponse | undefined
+token: string | undefined
   page: string
   pageSetter: (type: string) => void;
 }
