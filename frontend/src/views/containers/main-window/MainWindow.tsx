@@ -5,7 +5,11 @@ import { LexiconWindow } from "../lexicon-window/LexiconWindow";
 import { PhrasesWindow } from "../phrases-window/PhrasesWindow";
 import { LessonWindow } from "../lesson-window/LessonWindow";
 import { AdminWindow } from "../admin-window/AdminWindow";
-import { setSourceMapRange } from "typescript";
+import { ViewLesson } from "../../../controller/model/ViewLesson";
+import { GrammarWindow } from "../grammar-window/GrammarWindow";
+import { ViewLessonPart } from "../../../controller/model/ViewLessonPart";
+import { LexiconSubtopicWindow } from "../lexicon-subtopic-window/LexiconSubtopicWindow";
+import { PhrasesSubtopicWindow } from "../phrases-subtopic-window/PhrasesSubtopicWindow";
 
 const appBar = {
   position: "static",
@@ -44,6 +48,8 @@ const pageTitle = {
 export const MainWindow = () => {
   const [page, setPage] = useState<string>("landing");
   const [token, setToken] = useState<string | undefined>(undefined);
+  const [lessonToDisplay, setLessonToDisplay] = useState<ViewLesson | undefined>(undefined);
+  const [partToDisplay, setPartToDisplay] = useState<ViewLessonPart | undefined>(undefined);
 
   const renderAdminButtons = () => {
     if (token !== undefined)
@@ -51,6 +57,7 @@ export const MainWindow = () => {
         <Box>
             <Button sx={appBarButton} variant="text" onClick={() => setPage("lexiconAddition")}>Leksikos pridėjimas</Button>
             <Button sx={appBarButton} variant="text" onClick={() => setPage("phraseAddition")}>Frazių pridėjimas</Button>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("lessonAddition")}>Pamokų pridėjimas</Button>
             <Button sx={appBarButton} variant="text" onClick={() => setPage("exportation")}>Eksportavimas</Button>
         </Box> )
     else
@@ -74,7 +81,7 @@ export const MainWindow = () => {
           Kompiuterinė lietuvių gestų kalbos mokymosi programa
         </Typography>
       </Box>
-      <LandingWindow pageSetter={setPage} />
+      <LandingWindow pageSetter={setPage} lessonSetter={setLessonToDisplay} />
     </Box>
   ) : page === "lexicon" ? (
       <Box>
@@ -131,8 +138,65 @@ export const MainWindow = () => {
           Kompiuterinė lietuvių gestų kalbos mokymosi programa
         </Typography>
       </Box>
-      <LessonWindow pageSetter={setPage} />
+      <LessonWindow pageSetter={setPage} lessonToDisplay={lessonToDisplay} partSetter={setPartToDisplay} />
     </Box>
+  ) : page === "grammar" ? (
+    <Box>
+        <AppBar sx={appBar}>
+          <Box sx={adminButtonsBox}>
+            {renderAdminButtons()}
+          </Box>
+          <Box sx={userButtonsBox}>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+          </Box>
+        </AppBar>
+        <Box sx={pageTitle}>
+          <Typography variant="pageTitle">
+            Kompiuterinė lietuvių gestų kalbos mokymosi programa
+          </Typography>
+        </Box>
+        <GrammarWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} />
+      </Box>
+  ) : page === "lexiconSubtopic" ? (
+    <Box>
+        <AppBar sx={appBar}>
+          <Box sx={adminButtonsBox}>
+            {renderAdminButtons()}
+          </Box>
+          <Box sx={userButtonsBox}>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+          </Box>
+        </AppBar>
+        <Box sx={pageTitle}>
+          <Typography variant="pageTitle">
+            Kompiuterinė lietuvių gestų kalbos mokymosi programa
+          </Typography>
+        </Box>
+        <LexiconSubtopicWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} />
+      </Box>
+  ) : page === "phrasesSubtopic" ? (
+    <Box>
+        <AppBar sx={appBar}>
+          <Box sx={adminButtonsBox}>
+            {renderAdminButtons()}
+          </Box>
+          <Box sx={userButtonsBox}>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+          </Box>
+        </AppBar>
+        <Box sx={pageTitle}>
+          <Typography variant="pageTitle">
+            Kompiuterinė lietuvių gestų kalbos mokymosi programa
+          </Typography>
+        </Box>
+        <PhrasesSubtopicWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} />
+      </Box>
   ) : (
     <Box>
       <AppBar sx={appBar}>

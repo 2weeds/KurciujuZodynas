@@ -15,6 +15,6 @@ export class RetrieveAllPhrasesInteractor implements RetrieveAllPhrasesUseCase {
     }
 
     private convertD2BPhrase(phrase: Phrase): BoundaryPhrase {
-        return new BoundaryPhrase(phrase.getPhrase())
+        return new BoundaryPhrase(phrase.getPhrase(), phrase.getFile())
     }
 }

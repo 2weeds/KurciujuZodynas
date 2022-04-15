@@ -15,6 +15,6 @@ export class RetrieveAllLexiconUnitsInteractor implements RetrieveAllLexiconUnit
     }
 
     private convertD2BUnit(unit: LexiconUnit): BoundaryLexiconUnit {
-        return new BoundaryLexiconUnit(unit.getWord(), unit.getAbbreviation())
+        return new BoundaryLexiconUnit(unit.getWord(), unit.getAbbreviation(), unit.getFile())
     }
 }

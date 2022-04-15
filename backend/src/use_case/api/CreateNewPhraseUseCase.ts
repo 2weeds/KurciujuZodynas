@@ -1,3 +1,3 @@
 export interface CreateNewPhraseUseCase {
-    create(phrase: string): void;
+    create(phrase: string, file: any): void;
 }

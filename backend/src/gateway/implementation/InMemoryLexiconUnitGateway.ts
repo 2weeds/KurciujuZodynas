@@ -5,9 +5,9 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway
 {
     private readonly fs = require('fs');
 
-    createUnit(unit: string, abbreviation: string): void {
+    createUnit(unit: string, abbreviation: string, file: any): void {
         const jsonObj = this.readFromFileOrCreateIfFileNotFound();
-        const lexiconUnit = new LexiconUnit(unit, abbreviation);
+        const lexiconUnit = new LexiconUnit(unit, abbreviation, file);
         try {
             if (this.isWordAlreadyInFile(lexiconUnit, jsonObj.lexiconUnits)) {
                     throw new Error("Word already exists");
@@ -39,7 +39,7 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway
     private transformToLexiconUnitArray(units: any): LexiconUnit[] {
         const lexiconUnits: LexiconUnit[] = [];
         units.forEach((element: any) => {
-            const unit = new LexiconUnit(element.word, element.abbreviation);
+            const unit = new LexiconUnit(element.word, element.abbreviation, element.file);
             lexiconUnits.push(unit);
         });
 

@@ -5,9 +5,9 @@ export class InMemoryPhraseGateway implements PhraseGateway
 {
     private readonly fs = require('fs');
 
-    createPhrase(phrase: string): void {
+    createPhrase(phrase: string, file: any): void {
         const jsonObj = this.readFromFileOrCreateIfFileNotFound();
-        const newPhrase = new Phrase(phrase);
+        const newPhrase = new Phrase(phrase, file);
         try {
             if (this.isPhraseAlreadyInFile(newPhrase, jsonObj.phrases)) {
                     throw new Error("Phrase already exists");
@@ -39,7 +39,7 @@ export class InMemoryPhraseGateway implements PhraseGateway
     private transformToPhrasesArray(phrases: any): Phrase[] {
         const allPhrases: Phrase[] = [];
         phrases.forEach((element: any) => {
-            const phrase = new Phrase(element.phrase);
+            const phrase = new Phrase(element.phrase, element.file);
             allPhrases.push(phrase);
         });
 

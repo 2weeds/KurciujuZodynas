@@ -8,6 +8,8 @@ declare module '@mui/material/Typography' {
     bookPageTitle: true;
     aboutText: true;
     error: true;
+    tableHeadTitle: true;
+    tableBodyTitle: true;
   }
 }
 
@@ -16,6 +18,8 @@ interface ExtendedTypographyOptions extends TypographyOptions {
   bookPageTitle: React.CSSProperties;
   aboutText: React.CSSProperties;
   error: React.CSSProperties;
+  tableHeadTitle: React.CSSProperties;
+  tableBodyTitle: React.CSSProperties;
 }
 
 export const theme = createTheme({
@@ -49,6 +53,15 @@ export const theme = createTheme({
         error: {
           fontSize: "14px",
           color: "#FF0004",
+        },
+        tableHeadTitle: {
+          fontSize: '20px',
+          fontWeight: 800,
+        },
+
+        tableBodyTitle: {
+          fontSize: '18px',
+          fontWeight: 500
         }
       } as ExtendedTypographyOptions,
 } as ThemeOptions);

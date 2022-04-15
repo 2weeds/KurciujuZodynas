@@ -11,11 +11,10 @@ export class RestPhraseGateway implements PhraseGateway {
     this.client = client;
   }
 
-    createNewPhrase(phrase: string, token: string | undefined): Observable<void> {
-        const body = {
-            phrase: phrase,
-            token: token
-        };
+    createNewPhrase(phrase: string, file: File, token: string | undefined): Observable<void> {
+        const body = new FormData();
+        body.append('phrase', phrase);
+        body.append('file', file);
         
         const headers = {
           Authorization: 'Bearer ' + token,

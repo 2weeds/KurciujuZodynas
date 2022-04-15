@@ -2,9 +2,13 @@ import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import React from "react";
+import { ViewLesson } from "../../../controller/model/ViewLesson";
+import { ViewLessonPart } from "../../../controller/model/ViewLessonPart";
 
 interface Props {
     pageSetter: (type: string) => void;
+    lessonToDisplay: ViewLesson | undefined;
+    partSetter: (type: ViewLessonPart | undefined) => void;
 }
 
 const useStyles = makeStyles({
@@ -16,7 +20,7 @@ const useStyles = makeStyles({
     },
 
     bookPages: {
-        width: "55vw",
+        width: "60vw",
         height: "80vh",
         background: "#fff",
         display: "flex",
@@ -41,6 +45,7 @@ const useStyles = makeStyles({
         borderBottom: "1px solid #074E88",
         borderLeft: "1px solid #074E88",
         boxShadow: "-4px 0px 5px 0px #0A6FC2, -8px 0px 0px 0px #0087FF, -12px 0px 5px 0px #0A6FC2, -16px 0px 0px 0px #0087FF, 0px 6px 5px 0px #908C93",
+        overflow: 'auto'
     },
 
     rightPage: {
@@ -72,59 +77,99 @@ const useStyles = makeStyles({
             background: "#2196f3"
         }
     },
+
+    buttonContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    submitButton: {
+        marginTop: "5vh",
+        width: "15vw",
+        background: "linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%)",
+        color: "#EBEBEB",
+        fontWeight: 600,
+    },
 })
 
-export const LessonWindow = ({ pageSetter }: Props) => {
+export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props) => {
     const styleClasses = useStyles();
 
-    return (
-        <Box>
-            <Box className={styleClasses.formBox}>
-                <Box className={styleClasses.bookPages}>
-                    <Box className={clsx(styleClasses.pages, styleClasses.leftPage)}>
-                        <Typography variant="bookPageTitle">Šiuo metu KGMP sudaro tokios pamokos:</Typography>
-                        <List className={styleClasses.list}>
+    const transformToLithuanian = (key: string) => {
+        if (key === "grammar")
+            return "Gramatika";
+        else if (key === "lexicon")
+            return "Leksika";
+        else if (key === "phrases")
+            return "Frazės";
+        else if (key === "information")
+            return "Socialinė informacija";
+    }
+
+    const renderLessonSubtopic = (part: ViewLessonPart, subtopic: any) => {
+        if (subtopic === "grammar") {
+            pageSetter("grammar");
+            partSetter(part);
+        } else if (subtopic === "lexicon") {
+            pageSetter("lexiconSubtopic");
+            partSetter(part);
+        } else if (subtopic === "phrases") {
+            pageSetter("phrasesSubtopic");
+            partSetter(part);
+        } else if (subtopic === "information") {
+            pageSetter("information");
+            partSetter(part);
+        }
+    }
+
+    const renderLessonPartButtons = (part: ViewLessonPart) => {
+        return (
+            <ListItem className={styleClasses.listItem}>
+                <Button className={styleClasses.listItemButton} onClick={() => renderLessonSubtopic(part, Array.from(part.subTopics)[0][0])}>{part.name}</Button>
+                <List className={styleClasses.list}>
+                    {
+                        Array.from(part.subTopics).map((arrayObject: any) => (
                             <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("lesson")}>Kas mes esame</Button>
+                                <Button className={styleClasses.listItemButton} onClick={() => renderLessonSubtopic(part, arrayObject[0])}>
+                                    {transformToLithuanian(arrayObject[0])}
+                                </Button>
                             </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Su kuo gyvename</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Ką veikiame</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kur gyvename</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kaip gyvename</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Ką mėgstame veikti</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Ką valgome</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kaip jaučiamės</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kaip bendraujame</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kaip rengiamės</Button>
-                            </ListItem>
-                        </List>
-                    </Box>
+                        ))
+                }
+                </List>
+            </ListItem>
+        )
+    }
+
+    if (lessonToDisplay !== undefined)
+        return (
+            <Box>
+                <Box className={styleClasses.formBox}>
+                    <Box className={styleClasses.bookPages}>
+                        <Box className={clsx(styleClasses.pages, styleClasses.leftPage)}>
+                            <Typography variant="bookPageTitle">Pamokos dalių sаrašas - Jei norite pradėti pamoką, kitoje pusėje paspauskite „Pradėti pamoką". Jeigu jau dalyvavote pamokoje ir norite peržiūrėti, paspauskite pasirinktą temą. Baigę uždarykite langą ir pamoką tęskite toliau.:</Typography>
+                            <List className={styleClasses.list}>
+                                {
+                                    lessonToDisplay.parts.map((part: ViewLessonPart, index: number) => (
+                                        renderLessonPartButtons(part)
+                                    ))
+                                }
+                            </List>
+                        </Box>
                     <Box className={clsx(styleClasses.pages, styleClasses.rightPage)}>
-                        <Typography variant="bookPageTitle"><b>APIE PROGRAMĄ</b></Typography>
-                        <Typography pt="2vh" variant="aboutText"><strong>Kompiuterinė lietuvių gestų kalbos mokymosi programa (KGMP) </strong> 
-                                                                padeda norintiems mokytis gestų kalbos nuotoliniu būdu. 
-                                                                Jei norite pradėti pamoką, kitoje pusėje paspauskite „Pradėti pamoką”. 
-                                                                Jeigu jau dalyvavote pamokoje ir norite peržiūrėti, paspauskite pasirinktą temą.</Typography>
+                        <Typography variant="bookPageTitle"><b>{lessonToDisplay.name}</b></Typography>
+                        <Typography pt="2vh" variant="aboutText">Pamokos tikslas - {lessonToDisplay.goal}</Typography>
+                        <Box className={styleClasses.buttonContainer}>
+                            <Button className={styleClasses.submitButton} onClick={() => renderLessonSubtopic(lessonToDisplay.parts[0], Array.from(lessonToDisplay.parts[0].subTopics)[0][0])}>Pradėti pamoką</Button>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
         </Box>
     )
+    else
+        return (
+            <Typography variant="h1">Pamoka nerasta</Typography>
+        )
 }
