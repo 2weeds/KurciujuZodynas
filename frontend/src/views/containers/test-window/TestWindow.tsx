@@ -1,11 +1,9 @@
-import { Box, Typography, List, ListItem, Button, Divider, Table, TableBody, TableRow, TableCell, Modal } from "@mui/material";
+import { Box, Typography, List, ListItem, Button, Divider } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React from "react";
 import { ViewLesson } from "../../../controller/model/ViewLesson";
 import { ViewLessonPart } from "../../../controller/model/ViewLessonPart";
-import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import ReactPlayer from "react-player";
 
 interface Props {
     pageSetter: (type: string) => void;
@@ -114,30 +112,24 @@ const useStyles = makeStyles({
         "&:hover": {
             background: "#D5D7D7"
         }
-    }
+    },
+
+    buttonContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    submitButton: {
+        marginTop: "5vh",
+        width: "15vw",
+        background: "linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%)",
+        color: "#EBEBEB",
+        fontWeight: 600,
+    },
 })
 
-const videoModal = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "background.paper",
-    border: "2px #000",
-    borderRadius: 5,
-    boxShadow: 24,
-    p: 4,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: 'auto',
-    width: 'fit-content',
-    height: 'fit-content',
-  }
-
-export const LexiconSubtopicWindow = ({ pageSetter, lesson, part, partSetter, lessonSetter }: Props) => {
-    const [file, setFile] = useState<any>(new File([], 'empty'));
+export const TestWindow = ({ pageSetter, lesson, part, partSetter, lessonSetter }: Props) => {
     const styleClasses = useStyles();
 
     const transformToLithuanian = (key: string) => {
@@ -176,21 +168,6 @@ export const LexiconSubtopicWindow = ({ pageSetter, lesson, part, partSetter, le
         )
     }
 
-    const handleOutsideClick = () => {
-        setFile(new File([], 'empty'));
-    }
-
-    const renderVideoViewer = () => {
-        if (file.name !== 'empty')
-            return (
-                <ReactPlayer controls url={`//localhost:8000/fileStorage/lexicon/${file.filename}`} />
-            )
-        else
-            return (
-                <Typography variant='pageTitle'>Video not found</Typography>
-            )
-    }
-
     const moveBackToDifferentLessonPartIfExists = () => {
         lesson?.parts.forEach((lessonPart, index) => {
             if (part === lessonPart && index === 0) {
@@ -216,7 +193,17 @@ export const LexiconSubtopicWindow = ({ pageSetter, lesson, part, partSetter, le
     }
 
     const handleBackClick = () => {
-        moveBackToDifferentLessonPartIfExists()
+        if (part?.subTopics.has('information')) {
+            pageSetter('information');
+        } else if (part?.subTopics.has('grammar') && !part?.subTopics.has('information')) {
+            pageSetter('grammar');
+        } else if (part?.subTopics.has('phrases') && !part?.subTopics.has('information') && !part?.subTopics.has('grammar')) {
+            pageSetter('phrasesSubtopic');
+        } else if (part?.subTopics.has('lexicon') && !part?.subTopics.has('information') && !part?.subTopics.has('grammar') && !part?.subTopics.has('phrases')) {
+            pageSetter('lexiconSubtopic');
+        } else {
+            moveBackToDifferentLessonPartIfExists()
+        }
     }
 
     const moveForwardToDifferentLessonPartIfExists = () => {
@@ -245,17 +232,11 @@ export const LexiconSubtopicWindow = ({ pageSetter, lesson, part, partSetter, le
     }
 
     const handleForwardClick = () => {
-        if (part?.subTopics.has('phrases')) {
-            pageSetter('phrasesSubtopic');
-        } else if (part?.subTopics.has('grammar') && !part?.subTopics.has('phrases')) {
-            pageSetter('grammar');
-        } else if (part?.subTopics.has('information') && !part?.subTopics.has('phrases') && !part?.subTopics.has('grammar')) {
-            pageSetter('information');
-        } else if (part?.subTopics.has('test') && !part?.subTopics.has('phrases') && !part?.subTopics.has('grammar') && !part?.subTopics.has('information')) {
-            pageSetter('test');
-        } else {
-            moveForwardToDifferentLessonPartIfExists()
-        }
+        moveForwardToDifferentLessonPartIfExists()
+    }
+
+    const openUpExerciseWindow = () => {
+        window.open(part?.subTopics.get('test').text, '','height=800,width=800');
     }
 
     return (
@@ -268,37 +249,13 @@ export const LexiconSubtopicWindow = ({ pageSetter, lesson, part, partSetter, le
                             {renderLessonPartSubtopics()}
                         </List>
                     </Box>
-                    <Modal
-                    data-testid="videoModal"
-                    open={file.name !== 'empty'}
-                    closeAfterTransition
-                    onClose={handleOutsideClick}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description">
-                        <Box sx={videoModal}>
-                            {renderVideoViewer()}
-                        </Box>
-                    </Modal>
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
-                        <Typography variant="bookPageTitle"><b>LEKSIKA</b></Typography>
+                        <Typography variant="bookPageTitle"><b>UŽDUOTIS</b></Typography>
                         <Divider sx={{paddingTop: '3vh'}} />
-                        <Table>
-                            <TableBody>
-                                {part?.subTopics.get('lexicon').map((unit: any, index: number) => (
-                                    <TableRow key={index + "-row"}>
-                                        <TableCell key={index + "-cellWord"}>
-                                            <Typography key={index + "-word"} pt="1vh" variant="aboutText">{unit.word}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellAbbr"}>
-                                            <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellPlay"}>
-                                            <PlayArrowRoundedIcon className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                        <Typography sx={{paddingTop: '3vh'}}>Jei norite atlikti užduotis, spauskite „Pradėti užduotį“. Baigę uždarykite užduočių langą ir pamoką tęskite toliau.</Typography>
+                        <Box className={styleClasses.buttonContainer}>
+                            <Button className={styleClasses.submitButton} onClick={() => openUpExerciseWindow()}>Pradėti užduotį</Button>
+                        </Box>
                         <Box className={styleClasses.lessonButtonContainer}>
                             <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
                             <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>

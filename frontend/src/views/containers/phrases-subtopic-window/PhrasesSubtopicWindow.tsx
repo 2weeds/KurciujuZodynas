@@ -11,6 +11,8 @@ interface Props {
     pageSetter: (type: string) => void;
     lesson: ViewLesson | undefined;
     part: ViewLessonPart | undefined;
+    partSetter: (type: ViewLessonPart | undefined) => void;
+    lessonSetter: (type: ViewLesson | undefined) => void;
 }
 
 const useStyles = makeStyles({
@@ -73,7 +75,7 @@ const useStyles = makeStyles({
 
     list: {
         paddingTop: "2vh",
-        paddingLeft: "3vw",
+        paddingLeft: "2vw",
         listStyle: "disc",
     },
 
@@ -134,7 +136,7 @@ const videoModal = {
     height: 'fit-content',
   }
 
-export const PhrasesSubtopicWindow = ({ pageSetter, lesson, part }: Props) => {
+export const PhrasesSubtopicWindow = ({ pageSetter, lesson, part, partSetter, lessonSetter }: Props) => {
     const [file, setFile] = useState<any>(new File([], 'empty'));
     const styleClasses = useStyles();
 
@@ -147,6 +149,8 @@ export const PhrasesSubtopicWindow = ({ pageSetter, lesson, part }: Props) => {
             return "Frazės";
         else if (key === "information")
             return "Sociokultūrinė informacija";
+        else if (key === 'test')
+            return "Užduotis";
     }
 
     const handleOnClick = (key: string) => {
@@ -158,6 +162,8 @@ export const PhrasesSubtopicWindow = ({ pageSetter, lesson, part }: Props) => {
             pageSetter("grammar");
         if (key === "information")
             pageSetter("information");
+        if (key === "test")
+            pageSetter("test");
     }
 
     const renderLessonPartSubtopics = () => {
@@ -172,6 +178,75 @@ export const PhrasesSubtopicWindow = ({ pageSetter, lesson, part }: Props) => {
 
     const handleOutsideClick = () => {
         setFile(new File([], 'empty'));
+    }
+
+    const moveBackToDifferentLessonPartIfExists = () => {
+        lesson?.parts.forEach((lessonPart, index) => {
+            if (part === lessonPart && index === 0) {
+                partSetter(undefined);
+                pageSetter('landing');
+                lessonSetter(undefined);
+            } else if (part === lessonPart) {
+                const newPart = lesson.parts[index - 1];
+                if (newPart.subTopics.has('test')) {
+                    pageSetter('test')
+                } else if (newPart.subTopics.has('information') && !newPart.subTopics.has('test')) {
+                    pageSetter('information');
+                } else if (newPart.subTopics.has('grammar') && !newPart.subTopics.has('test') && !newPart.subTopics.has('information')) {
+                    pageSetter('grammar');
+                } else if (newPart.subTopics.has('phrases') && !newPart.subTopics.has('test') && !newPart.subTopics.has('information') && !newPart.subTopics.has('grammar')) {
+                    pageSetter('phrasesSubtopic');
+                } else if (newPart.subTopics.has('lexicon') && !newPart.subTopics.has('test') && !newPart.subTopics.has('information') && !newPart.subTopics.has('grammar') && !newPart.subTopics.has('phrases')) {
+                    pageSetter('lexiconSubtopic');
+                }
+                partSetter(newPart);
+            }
+        })
+    }
+
+    const handleBackClick = () => {
+        if (part?.subTopics.has('lexicon')) {
+            pageSetter('lexiconSubtopic');
+        } else {
+            moveBackToDifferentLessonPartIfExists()
+        }
+    }
+
+    const moveForwardToDifferentLessonPartIfExists = () => {
+        const totalLessonParts = lesson?.parts.length;
+        lesson?.parts.forEach((lessonPart, index) => {
+            if (part === lessonPart && index === (totalLessonParts! - 1)) {
+                partSetter(undefined);
+                pageSetter('landing');
+                lessonSetter(undefined);
+            } else if (part === lessonPart) {
+                const newPart = lesson.parts[index + 1];
+                if (newPart.subTopics.has('lexicon')) {
+                    pageSetter('lexiconSubtopic');
+                } else if (newPart.subTopics.has('phrases') && !newPart.subTopics.has('lexicon')) {
+                    pageSetter('phrasesSubtopic');
+                } else if (newPart.subTopics.has('grammar') && !newPart.subTopics.has('lexicon') && !newPart.subTopics.has('phrases')) {
+                    pageSetter('grammar');
+                } else if (newPart.subTopics.has('information') && !newPart.subTopics.has('lexicon') && !newPart.subTopics.has('phrases') && !newPart.subTopics.has('grammar')) {
+                    pageSetter('information');
+                } else if (newPart.subTopics.has('test') && !newPart.subTopics.has('lexicon') && !newPart.subTopics.has('phrases') && !newPart.subTopics.has('grammar') && !newPart.subTopics.has('information')) {
+                    pageSetter('test');
+                }
+                partSetter(newPart);
+            }
+        })
+    }
+
+    const handleForwardClick = () => {
+        if (part?.subTopics.has('grammar')) {
+            pageSetter('grammar');
+        } else if (part?.subTopics.has('information') && !part?.subTopics.has('grammar')) {
+            pageSetter('information');
+        } else if (part?.subTopics.has('test') && !part?.subTopics.has('grammar') && !part?.subTopics.has('information')) {
+            pageSetter('test');
+        } else {
+            moveForwardToDifferentLessonPartIfExists()
+        }
     }
 
     const renderVideoViewer = () => {
@@ -224,8 +299,8 @@ export const PhrasesSubtopicWindow = ({ pageSetter, lesson, part }: Props) => {
                             </TableBody>
                         </Table>
                         <Box className={styleClasses.lessonButtonContainer}>
-                            <Button className={styleClasses.lessonButtons} variant="text">Atgal</Button>
-                            <Button className={styleClasses.lessonButtons} variant="text">Pirmyn</Button>
+                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
+                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>
                             <Button className={styleClasses.lessonButtons} variant="text" onClick={() => pageSetter("lesson")}>Į pamoką</Button>
                         </Box>
                     </Box>

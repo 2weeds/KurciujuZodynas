@@ -317,6 +317,14 @@ const partAdditionModal = {
   overflow: 'auto'
 }
 
+const textModalHeight = {
+  height: {
+    xs: '210vh',
+    sm: '120vh',
+    md: '75vh'
+  }
+}
+
 function isInputDataValid(word: string | undefined, setWordErrors: (error: string) => void,
                           abbr: string | undefined, setAbbrErrors: (error: string) => void,
                           parts: ViewLessonPart[], setPartsRequiredErrors: (error: string | undefined) => void,
@@ -412,6 +420,14 @@ function areSubtopicsValid(subtopics: Map<string, any>,
       if (key === 'information') {
         const infoExplanation = subtopic as ViewExplanation;
         if (infoExplanation.text !== undefined && removeExtraWhitespaces(infoExplanation.text.trim()).length > 0)
+          validInputs.push(true);
+        else
+          validInputs.push(false)
+      }
+
+      if (key === 'test') {
+        const test = subtopic as ViewExplanation;
+        if (test.text !== undefined && removeExtraWhitespaces(test.text.trim()).length > 0)
           validInputs.push(true);
         else
           validInputs.push(false)
@@ -654,6 +670,10 @@ export const AdminLessonAdditionWindow = ({token}: Props) => {
       const information = "";
       partBeingEdited.subTopics.set(selectValue, information);
     }
+    if (partBeingEdited !== undefined && selectValue === 'test') {
+      const test = "";
+      partBeingEdited.subTopics.set(selectValue, test);
+    }
     
     setIsSubtopicBeingAdded(false);
     setSelectValue(null);
@@ -685,6 +705,13 @@ export const AdminLessonAdditionWindow = ({token}: Props) => {
     if (partBeingEdited === undefined || !partBeingEdited.subTopics.has('information'))
       return (
         <StyledOption value="information">Sociokultūrinė informacija</StyledOption>
+      )
+  }
+
+  const renderTestOption = () => {
+    if (partBeingEdited === undefined || !partBeingEdited.subTopics.has('test'))
+      return (
+        <StyledOption value="test">Užduotis</StyledOption>
       )
   }
 
@@ -739,6 +766,17 @@ export const AdminLessonAdditionWindow = ({token}: Props) => {
           <TableCell className={styleClasses.nameTableCells}><Typography variant="tableBodyTitle">Sociokultūrinė informacija</Typography></TableCell>
           <TableCell className={styleClasses.btnTableCells}><EditIcon onClick={() => handleTextSubtopicEdit('information')}></EditIcon></TableCell>
           <TableCell className={styleClasses.btnTableCells}><RemoveIcon className={styleClasses.removeBtn} onClick={() => setSubtopicToRemove('information')}></RemoveIcon></TableCell>
+        </TableRow>
+      )
+  }
+
+  const renderTestAddition = () => {
+    if (partBeingEdited !== undefined && partBeingEdited.subTopics.has("test"))
+      return (
+        <TableRow>
+          <TableCell className={styleClasses.nameTableCells}><Typography variant="tableBodyTitle">Užduotis</Typography></TableCell>
+          <TableCell className={styleClasses.btnTableCells}><EditIcon onClick={() => handleTextSubtopicEdit('test')}></EditIcon></TableCell>
+          <TableCell className={styleClasses.btnTableCells}><RemoveIcon className={styleClasses.removeBtn} onClick={() => setSubtopicToRemove('test')}></RemoveIcon></TableCell>
         </TableRow>
       )
   }
@@ -914,6 +952,15 @@ export const AdminLessonAdditionWindow = ({token}: Props) => {
     )
   }
 
+  const renderTextModalTitle = () => {
+    return textSubtopicBeingModified === 'test' ? <Box sx={{textAlign: 'center'}}><Typography variant="h3" component="h2">Įkelkite užduoties nuorodą</Typography></Box>
+                                                : <Typography variant="h3" component="h2">Įveskite norimą tekstą</Typography>
+  }
+
+  const pickMinRows = textSubtopicBeingModified === 'test' ? 5 : 25;
+
+  const pickMaxRows = textSubtopicBeingModified === 'test' ? 10 : 40;
+
   const renderLessonPartEditForm = () => {
     if (partBeingEdited !== undefined)
       return (
@@ -933,6 +980,7 @@ export const AdminLessonAdditionWindow = ({token}: Props) => {
                     {renderPhrasesOption()}
                     {renderGrammarOption()}
                     {renderInformationOption()}
+                    {renderTestOption()}
                   </CustomSelect>
                 </Box>
                   <Button className={styleClasses.submitButton} onClick={() => handleSubtopicAddition()}>Pridėti</Button>
@@ -960,6 +1008,7 @@ export const AdminLessonAdditionWindow = ({token}: Props) => {
                   {renderPhrasesAddition()}
                   {renderGrammarAddition()}
                   {renderInformationAddition()}
+                  {renderTestAddition()}
                 </TableBody>
               </Table>
             </Box>
@@ -971,10 +1020,10 @@ export const AdminLessonAdditionWindow = ({token}: Props) => {
               closeAfterTransition
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description">
-              <Box sx={partAdditionModal} height={{xs: '210vh', sm: '120vh', md: '75vh'}} width={{ xs: "70vw", sm: "40vw", md: "25vw" }}>
-                <Typography variant="h3" component="h2">Įveskite norimą tekstą</Typography>
+              <Box sx={partAdditionModal} height={textSubtopicBeingModified === 'test' ? {xs: '140vh', sm: '80vh', md: '50vh'} : {xs: '210vh', sm: '120vh', md: '75vh'}} width={{ xs: "70vw", sm: "40vw", md: "25vw" }}>
+                {renderTextModalTitle()}
                 <Box pt="3vh">
-                  <TextareaAutosize style={{ width: '20vw' }} value={textMaterial} minRows={25} maxRows={40} onChange={handleSubtopicTextFieldChange}></TextareaAutosize>
+                  <TextareaAutosize style={{ width: '20vw' }} value={textMaterial} minRows={pickMinRows} maxRows={pickMaxRows} onChange={handleSubtopicTextFieldChange}></TextareaAutosize>
                 </Box>
                   <Button className={styleClasses.submitButton} onClick={() => handleTextSubtopicModification()}>Išsaugoti</Button>
               </Box>

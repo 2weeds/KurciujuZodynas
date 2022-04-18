@@ -18,6 +18,7 @@ export class CreateNewLessonRoute {
             if (await tokenDecoder(headers.authorization)) {
                 const boundaryLessonParts: BoundaryLessonPart[] = data.lesson.parts.map((part: any) => new BoundaryLessonPart(part.name, new Map(Object.entries(part.subTopics))))
                 this.useCase.create(new BoundaryLesson(data.lesson.name, data.lesson.goal, boundaryLessonParts));
+                res.sendStatus(201);
             } else {
                 res.status(400).json("Unauthorized");
             }

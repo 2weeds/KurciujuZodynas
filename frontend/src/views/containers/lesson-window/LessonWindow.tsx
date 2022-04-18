@@ -91,6 +91,10 @@ const useStyles = makeStyles({
         color: "#EBEBEB",
         fontWeight: 600,
     },
+
+    lessonGoal: {
+        overflowWrap: 'break-word'
+    }
 })
 
 export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props) => {
@@ -105,6 +109,8 @@ export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props)
             return "Frazės";
         else if (key === "information")
             return "Socialinė informacija";
+        else if (key === 'test')
+            return "Užduotis";
     }
 
     const renderLessonSubtopic = (part: ViewLessonPart, subtopic: any) => {
@@ -119,6 +125,9 @@ export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props)
             partSetter(part);
         } else if (subtopic === "information") {
             pageSetter("information");
+            partSetter(part);
+        } else if (subtopic === "test") {
+            pageSetter("test");
             partSetter(part);
         }
     }
@@ -159,7 +168,9 @@ export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props)
                         </Box>
                     <Box className={clsx(styleClasses.pages, styleClasses.rightPage)}>
                         <Typography variant="bookPageTitle"><b>{lessonToDisplay.name}</b></Typography>
-                        <Typography pt="2vh" variant="aboutText">Pamokos tikslas - {lessonToDisplay.goal}</Typography>
+                        <Box className={styleClasses.lessonGoal}>
+                            <Typography pt="2vh" variant="aboutText">Pamokos tikslas - {lessonToDisplay.goal}</Typography>
+                        </Box>
                         <Box className={styleClasses.buttonContainer}>
                             <Button className={styleClasses.submitButton} onClick={() => renderLessonSubtopic(lessonToDisplay.parts[0], Array.from(lessonToDisplay.parts[0].subTopics)[0][0])}>Pradėti pamoką</Button>
                         </Box>

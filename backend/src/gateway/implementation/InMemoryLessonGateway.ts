@@ -1,4 +1,5 @@
 import { Lesson } from "../../domain/Lesson";
+import { LessonPart } from "../../domain/LessonPart";
 import { LessonGateway } from "../api/LessonGateway";
 
 export class InMemoryLessonGateway implements LessonGateway {

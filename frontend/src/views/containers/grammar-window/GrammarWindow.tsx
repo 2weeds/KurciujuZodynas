@@ -9,6 +9,8 @@ interface Props {
     pageSetter: (type: string) => void;
     lesson: ViewLesson | undefined;
     part: ViewLessonPart | undefined;
+    partSetter: (type: ViewLessonPart | undefined) => void;
+    lessonSetter: (type: ViewLesson | undefined) => void;
 }
 
 const useStyles = makeStyles({
@@ -71,7 +73,7 @@ const useStyles = makeStyles({
 
     list: {
         paddingTop: "2vh",
-        paddingLeft: "3vw",
+        paddingLeft: "2vw",
         listStyle: "disc",
     },
 
@@ -110,10 +112,15 @@ const useStyles = makeStyles({
         "&:hover": {
             background: "#D5D7D7"
         }
+    },
+
+    grammarText: {
+        overflow: 'auto',
+        marginBottom: '3vh'
     }
 })
 
-export const GrammarWindow = ({ pageSetter, lesson, part }: Props) => {
+export const GrammarWindow = ({ pageSetter, lesson, part, partSetter, lessonSetter }: Props) => {
     const styleClasses = useStyles();
 
     const transformToLithuanian = (key: string) => {
@@ -124,7 +131,9 @@ export const GrammarWindow = ({ pageSetter, lesson, part }: Props) => {
         else if (key === "phrases")
             return "Frazės";
         else if (key === "information")
-            return "Socialinė informacija";
+            return "Sociokultūrinė informacija";
+        else if (key === 'test')
+            return "Užduotis";
     }
 
     const handleOnClick = (key: string) => {
@@ -136,6 +145,8 @@ export const GrammarWindow = ({ pageSetter, lesson, part }: Props) => {
             pageSetter("grammar");
         if (key === "information")
             pageSetter("information");
+        if (key === "test")
+            pageSetter("test");
     }
 
     const renderLessonPartSubtopics = () => {
@@ -146,6 +157,75 @@ export const GrammarWindow = ({ pageSetter, lesson, part }: Props) => {
                 </ListItem>
             ))
         )
+    }
+
+    const moveBackToDifferentLessonPartIfExists = () => {
+        lesson?.parts.forEach((lessonPart, index) => {
+            if (part === lessonPart && index === 0) {
+                partSetter(undefined);
+                pageSetter('landing');
+                lessonSetter(undefined);
+            } else if (part === lessonPart) {
+                const newPart = lesson.parts[index - 1];
+                if (newPart.subTopics.has('test')) {
+                    pageSetter('test')
+                } else if (newPart.subTopics.has('information') && !newPart.subTopics.has('test')) {
+                    pageSetter('information');
+                } else if (newPart.subTopics.has('grammar') && !newPart.subTopics.has('test') && !newPart.subTopics.has('information')) {
+                    pageSetter('grammar');
+                } else if (newPart.subTopics.has('phrases') && !newPart.subTopics.has('test') && !newPart.subTopics.has('information') && !newPart.subTopics.has('grammar')) {
+                    pageSetter('phrasesSubtopic');
+                } else if (newPart.subTopics.has('lexicon') && !newPart.subTopics.has('test') && !newPart.subTopics.has('information') && !newPart.subTopics.has('grammar') && !newPart.subTopics.has('phrases')) {
+                    pageSetter('lexiconSubtopic');
+                }
+                partSetter(newPart);
+            }
+        })
+    }
+
+    const handleBackClick = () => {
+        if (part?.subTopics.has('phrases')) {
+            pageSetter('phrasesSubtopic');
+        } else if (part?.subTopics.has('lexicon') && !part?.subTopics.has('phrases')) {
+            pageSetter('lexiconSubtopic');
+        } else {
+            moveBackToDifferentLessonPartIfExists()
+        }
+    }
+
+    const moveForwardToDifferentLessonPartIfExists = () => {
+        const totalLessonParts = lesson?.parts.length;
+        lesson?.parts.forEach((lessonPart, index) => {
+            if (part === lessonPart && index === (totalLessonParts! - 1)) {
+                partSetter(undefined);
+                pageSetter('landing');
+                lessonSetter(undefined);
+            } else if (part === lessonPart) {
+                const newPart = lesson.parts[index + 1];
+                if (newPart.subTopics.has('lexicon')) {
+                    pageSetter('lexiconSubtopic');
+                } else if (newPart.subTopics.has('phrases') && !newPart.subTopics.has('lexicon')) {
+                    pageSetter('phrasesSubtopic');
+                } else if (newPart.subTopics.has('grammar') && !newPart.subTopics.has('lexicon') && !newPart.subTopics.has('phrases')) {
+                    pageSetter('grammar');
+                } else if (newPart.subTopics.has('information') && !newPart.subTopics.has('lexicon') && !newPart.subTopics.has('phrases') && !newPart.subTopics.has('grammar')) {
+                    pageSetter('information');
+                } else if (newPart.subTopics.has('test') && !newPart.subTopics.has('lexicon') && !newPart.subTopics.has('phrases') && !newPart.subTopics.has('grammar') && !newPart.subTopics.has('information')) {
+                    pageSetter('test');
+                }
+                partSetter(newPart);
+            }
+        })
+    }
+
+    const handleForwardClick = () => {
+        if (part?.subTopics.has('information')) {
+            pageSetter('information');
+        } else if (part?.subTopics.has('test') && !part?.subTopics.has('information')) {
+            pageSetter('test');
+        } else {
+            moveForwardToDifferentLessonPartIfExists()
+        }
     }
 
     return (
@@ -161,10 +241,12 @@ export const GrammarWindow = ({ pageSetter, lesson, part }: Props) => {
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>GRAMATIKA</b></Typography>
                         <Divider sx={{paddingTop: '3vh'}} />
-                        <Typography sx={{paddingTop: '3vh'}}>{part?.subTopics.get('grammar').text}</Typography>
+                        <Box className={styleClasses.grammarText}>
+                            <Typography sx={{paddingTop: '3vh', overflowWrap: 'anywhere'}}>{part?.subTopics.get('grammar').text}</Typography>
+                        </Box>
                         <Box className={styleClasses.lessonButtonContainer}>
-                            <Button className={styleClasses.lessonButtons} variant="text">Atgal</Button>
-                            <Button className={styleClasses.lessonButtons} variant="text">Pirmyn</Button>
+                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
+                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>
                             <Button className={styleClasses.lessonButtons} variant="text" onClick={() => pageSetter("lesson")}>Į pamoką</Button>
                         </Box>
                     </Box>
