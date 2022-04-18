@@ -1,9 +1,11 @@
-import { Box, Typography, TextField, List, ListItem, Button, Table, TableBody, TableRow, TableCell } from "@mui/material";
+import { Box, Typography, TextField, List, ListItem, Button, Table, TableBody, TableRow, TableCell, Modal } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
+import ReactPlayer from 'react-player';
 import { phrasesRetrievalController } from "../../../config/ControllerConfiguration";
 import { ViewPhrase } from "../../../controller/model/ViewPhrase";
+import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import usePhraseWindow from "./usePhraseWindow";
 
 interface Props {
@@ -87,7 +89,31 @@ const useStyles = makeStyles({
             background: "#2196f3"
         }
     },
+
+    playButton: {
+        color: 'green',
+        fontSize: '36px',
+    },
 })
+
+const videoModal = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.paper",
+    border: "2px #000",
+    borderRadius: 5,
+    boxShadow: 24,
+    p: 4,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: 'auto',
+    width: 'fit-content',
+    height: 'fit-content',
+  }
 
 function removeExtraWhitespaces(element: string) {
     return element.trim().split(/\s\s+/g).join(' ');
@@ -113,6 +139,7 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
     const [phrasesToDisplay, setPhrasesToDisplay] = useState<ViewPhrase[]>([]);
     const phrase = usePhraseWindow(phrasesRetrievalController, setAllPhrases);
     const [searchValue, setSearchValue] = useState<string>('');
+    const [file, setFile] = useState<any>(new File([], 'empty'));
     const styleClasses = useStyles();
 
     useEffect(() => {
@@ -129,10 +156,36 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
         setSearchValue(trimmedValue);
     }
 
+    const handleOutsideClick = () => {
+        setFile(new File([], 'empty'));
+      }
+
+    const renderVideoViewer = () => {
+        if (file.name !== 'empty')
+            return (
+                <ReactPlayer controls url={`//localhost:8000/fileStorage/phrases/${file.filename}`} />
+            )
+        else
+            return (
+                <Typography variant='pageTitle'>Video not found</Typography>
+            )
+    }
+
     return (
         <Box>
             <Box className={styleClasses.formContainer}>
                 <Box className={styleClasses.form}>
+                    <Modal
+                    data-testid="videoModal"
+                    open={file.name !== 'empty'}
+                    closeAfterTransition
+                    onClose={handleOutsideClick}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description">
+                        <Box sx={videoModal} width={{ xs: "70vw", sm: "40vw", md: "25vw" }} height={{xs: '100vh', sm: '60vh', md: '40vh'}}>
+                            {renderVideoViewer()}
+                        </Box>
+                    </Modal>
                     <Box className={clsx(styleClasses.sides, styleClasses.leftSide)}>
                         <Typography variant="bookPageTitle">KGMP struktūra:</Typography>
                         <List className={styleClasses.list}>
@@ -156,6 +209,9 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
                                     <TableRow key={index + "-row"}>
                                         <TableCell key={index + "-cell"}>
                                             <Typography key={index + "-phrase"} pt="1vh" variant="aboutText">{phrase.phrase}</Typography>
+                                        </TableCell>
+                                        <TableCell key={index + "-cellPlay"}>
+                                            <PlayArrowRoundedIcon className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(phrase.file)}></PlayArrowRoundedIcon>
                                         </TableCell>
                                     </TableRow>
                                 ))}

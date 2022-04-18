@@ -1,10 +1,14 @@
-import { Box, Button, List, AppBar, ListItem, Typography } from "@mui/material";
+import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { lessonsRetrievalController } from "../../../config/ControllerConfiguration";
+import { ViewLesson } from "../../../controller/model/ViewLesson";
+import useLandingWindow from "./useLandingWindow";
 
 interface Props {
     pageSetter: (type: string) => void;
+    lessonSetter: (type: ViewLesson | undefined) => void;
 }
 
 const useStyles = makeStyles({
@@ -16,7 +20,7 @@ const useStyles = makeStyles({
     },
 
     bookPages: {
-        width: "55vw",
+        width: "60vw",
         height: "80vh",
         background: "#fff",
         display: "flex",
@@ -74,8 +78,19 @@ const useStyles = makeStyles({
     },
 })
 
-export const LandingWindow = ({ pageSetter }: Props) => {
+export const LandingWindow = ({ pageSetter, lessonSetter }: Props) => {
+    const [allLessons, setAllLessons] = useState<ViewLesson[]>([]);
+    const lesson = useLandingWindow(lessonsRetrievalController, setAllLessons);
     const styleClasses = useStyles();
+
+    useEffect(() => {
+        lesson();
+    }, [])
+
+    const handleLessonClick = (lesson: ViewLesson) => {
+        lessonSetter(lesson);
+        pageSetter("lesson");
+    }
 
     return (
         <Box>
@@ -84,36 +99,13 @@ export const LandingWindow = ({ pageSetter }: Props) => {
                     <Box className={clsx(styleClasses.pages, styleClasses.leftPage)}>
                         <Typography variant="bookPageTitle">Šiuo metu KGMP sudaro tokios pamokos:</Typography>
                         <List className={styleClasses.list}>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("lesson")}>Kas mes esame</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Su kuo gyvename</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Ką veikiame</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kur gyvename</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kaip gyvename</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Ką mėgstame veikti</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Ką valgome</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kaip jaučiamės</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kaip bendraujame</Button>
-                            </ListItem>
-                            <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton}>Kaip rengiamės</Button>
-                            </ListItem>
+                            {
+                                allLessons.map((lesson: ViewLesson, index: number) => (
+                                    <ListItem className={styleClasses.listItem} key={index + '-listItem'}>
+                                        <Button key={index + '-lessonBtn'} className={styleClasses.listItemButton} onClick={() => handleLessonClick(lesson)}>{lesson.name}</Button>
+                                    </ListItem>
+                                ))
+                            }
                         </List>
                     </Box>
                     <Box className={clsx(styleClasses.pages, styleClasses.rightPage)}>

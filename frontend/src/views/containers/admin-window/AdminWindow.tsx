@@ -20,7 +20,8 @@ const useStyles = makeStyles({
 },
 
 formContainer: {
-    width: "30vw",
+    minWidth: "30vw",
+    maxWidth: "70vw",
     height: "60vh",
     display: "flex",
     flexDirection: "column",

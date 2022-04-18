@@ -1,8 +1,8 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { newLexiconUnitCreationController } from "../../../config/ControllerConfiguration";
-import { FIELD_EMPTY } from "../../../constants/ErrorConstants";
+import { FIELD_EMPTY, FILE_REQUIRED } from "../../../constants/ErrorConstants";
 import useAdminLexiconAdditionWindow from "./useAdminLexiconAdditionWindow";
 
 interface Props {
@@ -40,11 +40,31 @@ submitButton: {
     background: "linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%)",
     color: "#EBEBEB",
     fontWeight: 600,
-}
+},
+
+fileUploadContainer: {
+  display: 'flex',
+  flexDirection: 'column',
+  marginTop: '3vh',
+  alignItems: 'center'
+},
+
+uploadButton: {
+  marginTop: '1vh',
+  background: "#3B429F",
+  color: "#EBEBEB",
+  fontWeight: 600,
+  "&:hover": {
+    background: "#6A70C8",
+  }
+},
 })
 
-function isInputDataValid(word: string | undefined, setWordErrors: (error: string) => void, abbr: string | undefined, setAbbrErrors: (error: string) => void): boolean {
+function isInputDataValid(word: string | undefined, setWordErrors: (error: string) => void,
+                          abbr: string | undefined, setAbbrErrors: (error: string) => void,
+                          file: File | undefined, setFileErrors: (error: string) => void): boolean {
   const validInputs: boolean[] = [];
+  const allowedFileTypes: string[] = ['video/mp4', 'audio/ogg', 'video/webm'];
 
   if (isInputEmpty(word))
     validInputs.push(true)
@@ -57,7 +77,14 @@ function isInputDataValid(word: string | undefined, setWordErrors: (error: strin
   else {
     setAbbrErrors(FIELD_EMPTY);
   }
-  return validInputs[0] === true && validInputs[1] === true;
+
+  if (file !== undefined && allowedFileTypes.includes(file.type))
+    validInputs.push(true);
+  else {
+    setFileErrors(FILE_REQUIRED);
+  }
+
+  return validInputs[0] === true && validInputs[1] === true && validInputs[2] === true;
 }
 
 function isInputEmpty(input: string | undefined) {
@@ -68,10 +95,13 @@ function removeExtraWhitespaces(element: string) {
   return element.trim().split(/\s\s+/g).join(' ');
 }
 
-function submitHandlerPreset(element: any, setWordErrors: (error: string | undefined) => void, setAbbrErrors: (error: string | undefined) => void): void {
+function submitHandlerPreset(element: any, setWordErrors: (error: string | undefined) => void,
+                                           setAbbrErrors: (error: string | undefined) => void,
+                                           setFileErrors: (error: string | undefined) => void): void {
   element.preventDefault();
   setWordErrors(undefined);
   setAbbrErrors(undefined);
+  setFileErrors(undefined);
 }
 
 export const AdminLexiconAdditionWindow = ({token}: Props) => {
@@ -81,20 +111,29 @@ export const AdminLexiconAdditionWindow = ({token}: Props) => {
   const [abbr, updateAbbr] = useState<string | undefined>("");
   const [abbrErrors, setAbbrErrors] = useState<string | undefined>(undefined);
   const [passShrink, setPassShrink] = useState<boolean>(false);
+  const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined);
+  const [fileErrors, setFileErrors] = useState<string | undefined>(undefined);
   const lexiconUnit = useAdminLexiconAdditionWindow(newLexiconUnitCreationController);
   const styleClasses = useStyles();
 
+  useEffect(() => {
+  }, [uploadedFile])
+
   const handleWordFieldChange = (element: any) => {updateWord(element.target.value)}
   const handleAbbrFieldChange = (element: any) => {updateAbbr(element.target.value)}
+  const onFileInputChange = (element: any) => {
+    setUploadedFile(element.target.files[0]);
+  }
   const handleSubmit = (element: any) => {
-      submitHandlerPreset(element, setWordErrors, setAbbrErrors);
+      submitHandlerPreset(element, setWordErrors, setAbbrErrors, setFileErrors);
 
-      if (isInputDataValid(word?.trim(), setWordErrors, abbr?.trim(), setAbbrErrors)) {
+      if (isInputDataValid(word?.trim(), setWordErrors, abbr?.trim(), setAbbrErrors, uploadedFile, setFileErrors)) {
         const trimmedWord = removeExtraWhitespaces(word as string);
         const trimmedAbbr = removeExtraWhitespaces(abbr as string);
-        lexiconUnit(trimmedWord, trimmedAbbr, token);
+        lexiconUnit(trimmedWord, trimmedAbbr, uploadedFile as File, token);
         updateWord("");
         updateAbbr("");
+        setUploadedFile(undefined);
       }
   }
   const renderWordErrors = () => {
@@ -105,6 +144,18 @@ export const AdminLexiconAdditionWindow = ({token}: Props) => {
     if (abbrErrors !== undefined)
         return <Typography variant="error">{abbrErrors}</Typography>
   }
+  const renderFileErrors = () => {
+    if (fileErrors !== undefined)
+        return <Typography variant="error">{fileErrors}</Typography>
+  }
+
+  const renderUploadedFileName = () => {
+    if (uploadedFile !== undefined) {
+      return <Typography variant="aboutText">{uploadedFile.name}</Typography>
+    } else {
+      return <Typography variant="aboutText">Galimi failų formatai: .mp4 .ogg .webm</Typography>
+    }
+  }
 
   return (
           <Box className={styleClasses.form}>
@@ -112,6 +163,11 @@ export const AdminLexiconAdditionWindow = ({token}: Props) => {
             {renderWordErrors()}
             <TextField value={abbr} error={abbrErrors !== undefined} className={styleClasses.inputField} onFocus={() => setPassShrink(true)} onBlur={() => setPassShrink(false)} InputLabelProps={{shrink: isInputEmpty(abbr) || passShrink ? true : false}} variant="outlined" label="Trumpinys" size="small" onChange={handleAbbrFieldChange}></TextField>
             {renderAbbrErrors()}
+            <Box className={styleClasses.fileUploadContainer}>
+              {renderUploadedFileName()}
+              <Button variant="contained" component="label" className={styleClasses.uploadButton}>Įkelti failą<input type="file" hidden onChange={onFileInputChange}/></Button>
+              {renderFileErrors()}
+            </Box>
             <Button className={styleClasses.submitButton} onClick={handleSubmit}>Pridėti leksikos elementą</Button>
           </Box>
   )

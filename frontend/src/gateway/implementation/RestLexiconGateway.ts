@@ -11,11 +11,11 @@ export class RestLexiconGateway implements LexiconGateway {
     this.client = client;
   }
 
-  createNewLexiconUnit(word: string, abbreviation: string, token: string | undefined): Observable<void> {
-      const body = {
-          word: word,
-          abbreviation: abbreviation,
-      };
+  createNewLexiconUnit(word: string, abbreviation: string, file: File, token: string | undefined): Observable<void> {
+      const body = new FormData();
+      body.append('word', word);
+      body.append('abbreviation', abbreviation);
+      body.append('file', file);
 
       const headers = {
         Authorization: 'Bearer ' + token,

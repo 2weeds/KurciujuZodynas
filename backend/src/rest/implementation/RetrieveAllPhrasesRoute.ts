@@ -22,6 +22,6 @@ export class RetrieveAllPhrasesRoute {
     }
 
     private convertB2R(phrase: BoundaryPhrase): RestPhrase {
-        return new RestPhrase(phrase.getPhrase());
+        return new RestPhrase(phrase.getPhrase(), phrase.getFile());
     }
 }

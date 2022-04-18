@@ -22,6 +22,6 @@ export class RetrieveAllLexiconUnitsRoute {
     }
 
     private convertB2R(unit: BoundaryLexiconUnit): RestLexiconUnit {
-        return new RestLexiconUnit(unit.getWord(), unit.getAbbreviation());
+        return new RestLexiconUnit(unit.getWord(), unit.getAbbreviation(), unit.getFile());
     }
 }

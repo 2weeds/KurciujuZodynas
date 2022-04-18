@@ -1,7 +1,7 @@
 import { Phrase } from "../../domain/Phrase";
 
 export interface PhraseGateway {
-    createPhrase(phrase: string): void;
+    createPhrase(phrase: string, file: any): void;
 
     retrieveAll(): Phrase[];
 }

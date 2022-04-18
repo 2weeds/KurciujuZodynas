@@ -9,6 +9,11 @@ import { RetrieveAllLexiconUnitsRoute } from './rest/implementation/RetrieveAllL
 import { RetrieveAllLexiconUnitsInteractor } from './use_case/implementation/RetrieveAllLexiconUnitsInteractor';
 import { RetrieveAllPhrasesInteractor } from './use_case/implementation/RetrieveAllPhrasesInteractor';
 import { RetrieveAllPhrasesRoute } from './rest/implementation/RetrieveAllPhrasesRoute';
+import { InMemoryLessonGateway } from './gateway/implementation/InMemoryLessonGateway';
+import { CreateNewLessonInteractor } from './use_case/implementation/CreateNewLessonInteractor';
+import { CreateNewLessonRoute } from './rest/implementation/CreateNewLessonRoute';
+import { RetrieveAllLessonsInteractor } from './use_case/implementation/RetrieveAllLessonsInteractor';
+import { RetrieveAllLessonsRoute } from './rest/implementation/RetrieveAllLessonsRoute';
 const cors = require('cors')({origin: true});
 const app = express();
 
@@ -29,8 +34,14 @@ const createPhraseRoute = new CreateNewPhraseRoute(createPhraseUC);
 const retrieveAllPhrasesInteractor = new RetrieveAllPhrasesInteractor(phraseGW);
 const retrieveAllPhrasesRoute = new RetrieveAllPhrasesRoute(retrieveAllPhrasesInteractor);
 
+const lessonGW = new InMemoryLessonGateway();
+const createLessonUC = new CreateNewLessonInteractor(lessonGW);
+const createLessonRoute = new CreateNewLessonRoute(createLessonUC);
+const retrieveAllLessonsUC = new RetrieveAllLessonsInteractor(lessonGW);
+const retrieveAllLessonsRoute = new RetrieveAllLessonsRoute(retrieveAllLessonsUC);
+
 app.post('/lexicon-units', (req, resp) => {
-    createLexiconUnitRoute.create(req, resp);
+    createLexiconUnitRoute.create(req as RequestWithFile, resp);
 })
 
 app.get('/lexicon-units', (req, resp) => {
@@ -38,9 +49,21 @@ app.get('/lexicon-units', (req, resp) => {
 })
 
 app.post('/phrases', (req, resp) => {
-    createPhraseRoute.create(req, resp);
+    createPhraseRoute.create(req as RequestWithFile, resp);
 })
 
 app.get('/phrases', (req, resp) => {
     retrieveAllPhrasesRoute.retrieve(req, resp);
 })
+
+app.post('/lessons', (req, resp) => {
+    createLessonRoute.create(req, resp);
+})
+
+app.get('/lessons', (req, resp) => {
+    retrieveAllLessonsRoute.retrieve(req, resp);
+})
+
+interface RequestWithFile extends express.Request {
+    file: any,
+}
