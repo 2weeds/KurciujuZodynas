@@ -8,7 +8,44 @@ import { LexiconWindow } from "../lexicon-window/LexiconWindow";
 import { PhrasesWindow } from "../phrases-window/PhrasesWindow";
 import { LessonWindow } from "../lesson-window/LessonWindow";
 import { AdminWindow } from "../admin-window/AdminWindow";
+<<<<<<< Updated upstream
 import { ViewAdminResponse } from "../../../controller/model/ViewAdminResponse";
+=======
+
+const appBar = {
+  position: "static",
+  display: "flex",
+  flexDirection: "row"
+}
+
+const adminButtonsBox = {
+  display: "flex",
+  paddingLeft: "1vw",
+  width: "50%",
+  justifyContent: "flex-start",
+}
+
+const userButtonsBox = {
+  display: "flex",
+  flexDirection: "row",
+  paddingRight: "20vw",
+  width: "50%",
+  justifyContent: "flex-end",
+}
+
+const appBarButton = {
+  fontSize: "11px",
+  fontWeight: 100,
+  color: 'black',
+}
+
+const pageTitle = {
+  paddingTop: "3vh",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}
+>>>>>>> Stashed changes
 
 export const MainWindow = () => {
   const [page, setPage] = useState<string>("landing");
