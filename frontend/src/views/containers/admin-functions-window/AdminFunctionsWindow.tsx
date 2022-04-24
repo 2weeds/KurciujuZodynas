@@ -1,6 +1,8 @@
 import React from "react";
 import { AdminAdditionWindow } from "../admin-addition-window/AdminAdditionWindow";
-import {AdminExportationWindow} from "../admin-exportation-window/AdminExportationWindow"
+import {AdminExportationWindow} from "../admin-exportation-window/AdminExportationWindow";
+import {AdminExportLexiconWindow} from "../admin-exportation-window/AdminExportLexiconWindow";
+import {AdminExportPhraseWindow} from "../admin-exportation-window/AdminExportPhraseWindow";
 
 interface Props {
 token: string | undefined
@@ -10,7 +12,17 @@ token: string | undefined
 
 export const AdminFunctionsWindow = ({token, page, pageSetter}: Props) => {
     const renderWindow = () => {
-    return page === "exportation" ? <AdminExportationWindow token={token} page={page} pageSetter={pageSetter} /> : <AdminAdditionWindow page={page} pageSetter={pageSetter} token={token}/>
+      if(page === "exportation"){
+        return  <AdminExportationWindow token={token} page={page} pageSetter={pageSetter} />
+      }
+      else if (page ==="exportLexicon"){
+      return <AdminExportLexiconWindow page={page} pageSetter={pageSetter} token={token}/>
+      }
+      else if (page ==="exportPhrase"){
+        return <AdminExportPhraseWindow page={page} pageSetter={pageSetter} token={token}/>
+        }
+      else
+      return <AdminAdditionWindow page={page} pageSetter={pageSetter} token={token}/>
     }
 
     return (

@@ -14,7 +14,7 @@ interface Props {
 
 const useStyles = makeStyles({
     formContainer: {
-        paddingTop: "3vh",
+        paddingTop: "10vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center"
@@ -26,6 +26,7 @@ const useStyles = makeStyles({
         background: "#fff",
         display: "flex",
         flexDirection: "row",
+        
     },
 
     sides: {
