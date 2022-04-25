@@ -21,6 +21,7 @@ const useStyles = makeStyles({
     },
 
     form: {
+        marginTop:'6vh',
         width: "60vw",
         height: "80vh",
         background: "#fff",

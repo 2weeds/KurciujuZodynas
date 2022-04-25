@@ -1,17 +1,28 @@
-<!-- saved from url=(0041)file:///C:/Users/dovyd/Desktop/index.html -->
 <html lang="en">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-  <link rel="icon" href="file:///C:/favicon.ico">
+  <meta charset="utf-8">
+  <link rel="icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
   <meta name="description" content="Web site created using create-react-app">
-  <link rel="apple-touch-icon" href="file:///C:/logo192.png">
-  <link rel="manifest" href="file:///C:/manifest.json">
+  <link rel="apple-touch-icon" href="/logo192.png">
+  <!--
+    manifest.json provides metadata used when your web app is installed on a
+    user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+  -->
+  <link rel="manifest" href="/manifest.json">
+  <!--
+    Notice the use of  in the tags above.
+    It will be replaced with the URL of the `public` folder during the build.
+    Only files inside the `public` folder can be referenced from the HTML.
+
+    Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+    work correctly both with client-side routing and a non-root public URL.
+    Learn how to configure a non-root public URL by running `npm run build`.
+  -->
   <title>React App</title>
-  <script defer="" src="file:///C:/static/js/bundle.js"></script>
+  <script defer="" src="/static/js/bundle.js"></script>
   <style>
     body {
       margin: 0;
@@ -2003,75 +2014,222 @@
     }
   </style>
   <style data-emotion="css" data-s="">
-    .css-rqglhn-MuiTable-root {
-      display: table;
-      width: 100%;
+    .css-ccdw65 {
+      max-width: 100%;
+      width: 400px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-ccdw65 table {
+      font-family: arial, sans-serif;
       border-collapse: collapse;
-      border-spacing: 0;
+      width: 100%;
     }
   </style>
   <style data-emotion="css" data-s="">
-    .css-rqglhn-MuiTable-root caption {
-      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-      font-weight: 400;
-      font-size: 0.875rem;
-      line-height: 1.43;
-      letter-spacing: 0.01071em;
-      padding: 16px;
-      color: rgba(0, 0, 0, 0.6);
-      text-align: left;
-      caption-side: bottom;
+    .css-ccdw65 td,
+    .css-ccdw65 th {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
     }
   </style>
   <style data-emotion="css" data-s="">
-    .css-apqrd9-MuiTableBody-root {
-      display: table-row-group;
+    .css-ccdw65 th {
+      background-color: #ddd;
     }
   </style>
   <style data-emotion="css" data-s="">
-    .css-13wgndv-MuiTableRow-root {
-      color: inherit;
-      display: table-row;
-      vertical-align: middle;
-      outline: 0;
+    .css-11342cz {}
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-11342cz .MuiTablePaginationUnstyled-toolbar {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      gap: 10px;
     }
   </style>
   <style data-emotion="css" data-s="">
-    .css-13wgndv-MuiTableRow-root.MuiTableRow-hover:hover {
-      background-color: rgba(0, 0, 0, 0.04);
+    @media (min-width: 768px) {
+      .css-11342cz .MuiTablePaginationUnstyled-toolbar {
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-align-items: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
     }
   </style>
   <style data-emotion="css" data-s="">
-    .css-13wgndv-MuiTableRow-root.Mui-selected {
-      background-color: rgba(255, 255, 255, 0.08);
-    }
-  </style>
-  <style data-emotion="css" data-s="">
-    .css-13wgndv-MuiTableRow-root.Mui-selected:hover {
-      background-color: rgba(255, 255, 255, 0.12);
-    }
-  </style>
-  <style data-emotion="css" data-s="">
-    .css-1ex1afd-MuiTableCell-root {
-      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-      font-weight: 400;
-      font-size: 0.875rem;
-      line-height: 1.43;
-      letter-spacing: 0.01071em;
-      display: table-cell;
-      vertical-align: inherit;
-      border-bottom: 1px solid rgba(224, 224, 224, 1);
-      text-align: left;
-      padding: 16px;
-      color: rgba(0, 0, 0, 0.87);
-    }
-  </style>
-  <style data-emotion="css" data-s="">
-    .css-1sosfpd-MuiTypography-root {
+    .css-11342cz .MuiTablePaginationUnstyled-selectLabel {
       margin: 0;
-      font-size: 14px;
-      color: black;
-      padding-top: 1vh;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-11342cz .MuiTablePaginationUnstyled-displayedRows {
+      margin: 0;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    @media (min-width: 768px) {
+      .css-11342cz .MuiTablePaginationUnstyled-displayedRows {
+        margin-left: auto;
+      }
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-11342cz .MuiTablePaginationUnstyled-spacer {
+      display: none;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-11342cz .MuiTablePaginationUnstyled-actions {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      gap: 0.25rem;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1mr8x7m {
+      max-width: 100%;
+      width: 500px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1mr8x7m table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1mr8x7m td,
+    .css-1mr8x7m th {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1mr8x7m th {
+      background-color: #ddd;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1jmn0qy {
+      max-width: 100%;
+      width: 5000px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1jmn0qy table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1jmn0qy td,
+    .css-1jmn0qy th {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1jmn0qy th {
+      background-color: #ddd;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-jbe29j {
+      max-width: 100%;
+      width: 1000px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-jbe29j table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-jbe29j td,
+    .css-jbe29j th {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-jbe29j th {
+      background-color: #ddd;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-j7hmbj {
+      max-width: 100%;
+      width: 700px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-j7hmbj table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-j7hmbj td,
+    .css-j7hmbj th {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-j7hmbj th {
+      background-color: #ddd;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1xw3wxs {
+      max-width: 100%;
+      width: 800px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1xw3wxs table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1xw3wxs td,
+    .css-1xw3wxs th {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+    }
+  </style>
+  <style data-emotion="css" data-s="">
+    .css-1xw3wxs th {
+      background-color: #ddd;
     }
   </style>
   <style data-jss="" data-meta="makeStyles">
@@ -2139,90 +2297,6 @@
     .makeStyles-listItemButton-8:hover {
       background: #2196f3;
       padding-left: 0vw;
-    }
-  </style>
-  <style data-jss="" data-meta="makeStyles">
-    .makeStyles-formContainer-31 {
-      display: flex;
-      align-items: center;
-      padding-top: 10vh;
-      flex-direction: column;
-    }
-
-    .makeStyles-form-32 {
-      width: 60vw;
-      height: 80vh;
-      display: flex;
-      background: #fff;
-      flex-direction: row;
-    }
-
-    .makeStyles-sides-33 {
-      display: flex;
-      padding: 5vh;
-      box-shadow: 6px 6px 5px 0px #908C93;
-      margin-top: 3vh;
-      margin-bottom: 3vh;
-      flex-direction: column;
-    }
-
-    .makeStyles-leftSide-34 {
-      color: #EBEBEB;
-      width: 20%;
-      background: linear-gradient(90deg, #2196f3 90%, #08569B 100%);
-      border-top: 1px solid #074E88;
-      border-left: 1px solid #074E88;
-      margin-left: 2vw;
-      border-bottom: 1px solid #074E88;
-    }
-
-    .makeStyles-rightSide-35 {
-      width: 70%;
-      background: linear-gradient(90deg, #A3A3A3 0%, #EBEBEB 10%);
-      border-top: 1px solid #8F8F8F;
-      border-right: 1px solid #8F8F8F;
-      margin-right: 2vw;
-      border-bottom: 1px solid #8F8F8F;
-    }
-
-    .makeStyles-searchField-36 {
-      width: 15vw;
-      margin-top: 2vh;
-    }
-
-    .makeStyles-searchField-36 label.Mui-focused {
-      color: black;
-    }
-
-    .makeStyles-searchField-36 .MuiOutlinedInput-root.Mui-focused fieldset {
-      border-color: black;
-    }
-
-    .makeStyles-list-37 {
-      list-style: disc;
-      padding-top: 2vh;
-      padding-left: 3vw;
-    }
-
-    .makeStyles-listItem-38 {
-      display: list-item;
-    }
-
-    .makeStyles-listItemButton-39 {
-      font-size: 11px;
-      font-weight: 600;
-      padding-top: 2px;
-      padding-bottom: 2px;
-    }
-
-    .makeStyles-listItemButton-39:hover {
-      background: #2196f3;
-      padding-left: 0vw;
-    }
-
-    .makeStyles-playButton-40 {
-      color: green;
-      font-size: 36px;
     }
   </style>
   <style data-jss="" data-meta="makeStyles">
@@ -2300,6 +2374,7 @@
   <style data-jss="" data-meta="makeStyles">
     .makeStyles-formContainer-23 {
       display: flex;
+      overflow: auto;
       align-items: center;
       padding-top: 10vh;
       flex-direction: column;
@@ -2319,7 +2394,22 @@
       flex-direction: row;
     }
 
-    .makeStyles-leftForm-25 {
+    .makeStyles-videoForm-25 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-26 {
       width: 35%;
       display: flex;
       padding: 5vh;
@@ -2329,7 +2419,7 @@
       flex-direction: column;
     }
 
-    .makeStyles-rightForm-26 {
+    .makeStyles-rightForm-27 {
       width: 35%;
       display: flex;
       padding: 5vh;
@@ -2339,19 +2429,19 @@
       flex-direction: column;
     }
 
-    .makeStyles-inputField-27 {
+    .makeStyles-inputField-28 {
       width: 15vw;
     }
 
-    .makeStyles-inputField-27 label.Mui-focused {
+    .makeStyles-inputField-28 label.Mui-focused {
       color: black;
     }
 
-    .makeStyles-inputField-27 .MuiOutlinedInput-root.Mui-focused fieldset {
+    .makeStyles-inputField-28 .MuiOutlinedInput-root.Mui-focused fieldset {
       border-color: black;
     }
 
-    .makeStyles-addWordForExportationButton-28 {
+    .makeStyles-addWordForExportationButton-29 {
       color: green;
       float: right;
       width: 2vh;
@@ -2362,15 +2452,15 @@
       background-color: #EBEBEB;
     }
 
-    .makeStyles-addWordForExportationButton-28:hover {
+    .makeStyles-addWordForExportationButton-29:hover {
       background-color: #fff;
     }
 
-    .makeStyles-addWordForExportationButton-28:hover:active {
+    .makeStyles-addWordForExportationButton-29:hover:active {
       background-color: #a8a8a8;
     }
 
-    .makeStyles-removeWordFromExportationButton-29 {
+    .makeStyles-removeWordFromExportationButton-30 {
       color: red;
       float: right;
       width: 2vh;
@@ -2381,15 +2471,15 @@
       background-color: #EBEBEB;
     }
 
-    .makeStyles-removeWordFromExportationButton-29:hover {
+    .makeStyles-removeWordFromExportationButton-30:hover {
       background-color: #fff;
     }
 
-    .makeStyles-removeWordFromExportationButton-29:hover:active {
+    .makeStyles-removeWordFromExportationButton-30:hover:active {
       background-color: #a8a8a8;
     }
 
-    .makeStyles-submitButton-30 {
+    .makeStyles-submitButton-31 {
       flex: row;
       color: #EBEBEB;
       width: 15vw;
@@ -2467,88 +2557,1267 @@
       justify-content: center;
     }
   </style>
-  <script src="./React App_files/js" async=""></script>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-32 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-33 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-34 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-35 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-36 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-37 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-37 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-37 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-38 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-38:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-38:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-39 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-39:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-39:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-40 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-41 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-42 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-43 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-44 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-45 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-46 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-46 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-46 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-47 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-47:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-47:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-48 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-48:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-48:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-49 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-50 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-51 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-52 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-53 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-54 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-55 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-55 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-55 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-56 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-56:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-56:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-57 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-57:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-57:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-58 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-59 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-60 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-61 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-62 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-63 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-64 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-64 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-64 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-65 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-65:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-65:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-66 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-66:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-66:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-67 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-68 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-69 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-70 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-71 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-72 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-73 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-73 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-73 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-74 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-74:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-74:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-75 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-75:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-75:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-76 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-77 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-78 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-79 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-80 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-81 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-82 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-82 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-82 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-83 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-83:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-83:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-84 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-84:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-84:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-85 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-86 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-87 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-88 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-89 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-90 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-91 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-91 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-91 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-92 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-92:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-92:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-93 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-93:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-93:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-94 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-95 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-96 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-97 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-98 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-99 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-100 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-100 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-100 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-101 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-101:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-101:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-102 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-102:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-102:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-103 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-104 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-105 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-106 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-107 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-108 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-109 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-109 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-109 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-110 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-110:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-110:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-111 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-111:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-111:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-112 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <style data-jss="" data-meta="makeStyles">
+    .makeStyles-formContainer-113 {
+      display: flex;
+      align-items: center;
+      padding-top: 10vh;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .makeStyles-form-114 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-videoForm-115 {
+      clear: both;
+      width: 100vh;
+      height: auto;
+      display: flex;
+      overflow: auto;
+      background: #EBEBEB;
+      box-shadow: 0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93;
+      align-items: center;
+      padding-left: 5vh;
+      border-radius: 10px;
+      padding-right: 5vh;
+      flex-direction: row;
+    }
+
+    .makeStyles-leftForm-116 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-right: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-rightForm-117 {
+      width: 35%;
+      display: flex;
+      padding: 5vh;
+      margin-top: 3vh;
+      margin-left: 3vh;
+      margin-bottom: 3vh;
+      flex-direction: column;
+    }
+
+    .makeStyles-inputField-118 {
+      width: 15vw;
+    }
+
+    .makeStyles-inputField-118 label.Mui-focused {
+      color: black;
+    }
+
+    .makeStyles-inputField-118 .MuiOutlinedInput-root.Mui-focused fieldset {
+      border-color: black;
+    }
+
+    .makeStyles-addWordForExportationButton-119 {
+      color: green;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-addWordForExportationButton-119:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-addWordForExportationButton-119:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-removeWordFromExportationButton-120 {
+      color: red;
+      float: right;
+      width: 2vh;
+      border: 1px solid;
+      height: 2vh;
+      border-color: black;
+      border-radius: 5px;
+      background-color: #EBEBEB;
+    }
+
+    .makeStyles-removeWordFromExportationButton-120:hover {
+      background-color: #fff;
+    }
+
+    .makeStyles-removeWordFromExportationButton-120:hover:active {
+      background-color: #a8a8a8;
+    }
+
+    .makeStyles-submitButton-121 {
+      flex: row;
+      color: #EBEBEB;
+      width: 15vw;
+      display: flex;
+      background: linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%);
+      margin-top: 2vh;
+      font-weight: 600;
+      margin-bottom: 2vh;
+    }
+  </style>
+  <script src="https://www.googletagmanager.com/gtag/js?l=dataLayer&amp;id=G-LB4312Y24T" async=""></script>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root">
-    <div class="makeStyles-sides-11 makeStyles-rightSide-13 MuiBox-root css-0"><span
-        class="MuiTypography-root MuiTypography-bookPageTitle css-19zpaxa-MuiTypography-root"><b>LEKSIKA</b></span>
-      <div
-        class="MuiFormControl-root MuiTextField-root makeStyles-searchField-14 css-1u3bzj6-MuiFormControl-root-MuiTextField-root">
-        <label
-          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-luf051-MuiFormLabel-root-MuiInputLabel-root"
-          data-shrink="false" for="mui-8" id="mui-8-label">Žodžio paieška</label>
-        <div
-          class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-13vaet-MuiInputBase-root-MuiOutlinedInput-root">
-          <input aria-invalid="false" type="text"
-            class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
-            value="" id="mui-8">
-          <fieldset aria-hidden="true"
-            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline">
-            <legend class="css-1g8cwq9"><span>Žodžio paieška</span></legend>
-          </fieldset>
+    <div class="MuiBox-root css-0">
+      <div class="MuiBox-root css-19k881g"><span
+          class="MuiTypography-root MuiTypography-pageTitle css-hrbh8c-MuiTypography-root">Lietuvių gestų kalbos
+          mokymosi programos administravimas</span></div>
+      <div class="MuiBox-root css-0">
+        <div class="makeStyles-formBox-9 MuiBox-root css-0">
+          <div class="makeStyles-formContainer-10 MuiBox-root css-0" style="justify-content: flex-start;">
+            <div class="MuiBox-root css-0">
+              <div class="makeStyles-formContainer-113 MuiBox-root css-0">
+                <div class="makeStyles-videoForm-115 MuiBox-root css-0">
+                  <div class="css-jbe29j">
+                    <table aria-label="custom pagination table">
+                      <thead>
+                        <tr>
+                          <th>Žodis</th>
+                          <th>Vaizdo įrašas</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- <tr>
+                          <td align="right" style="width: 500px;">1 litas</td>
+                          <td>
+                            <div style="width: 640px; height: 360px;"><video
+                                src="./resources/a.mp4" preload="auto"
+                                controls="" style="width: 100%; height: 100%;"></video></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td align="right" style="width: 500px;">3 litai</td>
+                          <td>
+                            <div style="width: 640px; height: 360px;"><video
+                                src="./resources/a.mp4" preload="auto"
+                                controls="" style="width: 100%; height: 100%;"></video></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td align="right" style="width: 500px;">2 litai</td>
+                          <td>
+                            <div style="width: 640px; height: 360px;"><video
+                                src="./resources/a.mp4" preload="auto"
+                                controls="" style="width: 100%; height: 100%;"></video></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td align="right" style="width: 500px;">4 litai</td>
+                          <td>
+                            <div style="width: 640px; height: 360px;"><video
+                                src="./resources/a.mp4" preload="auto"
+                                controls="" style="width: 100%; height: 100%;"></video></div>
+                          </td>
+                        </tr> -->
+                        {{CONTENT}}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <table class="MuiTable-root css-rqglhn-MuiTable-root">
-        <tbody class="MuiTableBody-root css-apqrd9-MuiTableBody-root">
-          <tr class="MuiTableRow-root css-13wgndv-MuiTableRow-root">
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><span
-                class="MuiTypography-root MuiTypography-aboutText css-1sosfpd-MuiTypography-root">1 litas</span></td>
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><span
-                class="MuiTypography-root MuiTypography-aboutText css-1sosfpd-MuiTypography-root">lit</span></td>
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><svg
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-playButton-18 css-i4bv87-MuiSvgIcon-root"
-                focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowRoundedIcon">
-                <path
-                  d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z">
-                </path>
-              </svg></td>
-          </tr>
-          <tr class="MuiTableRow-root css-13wgndv-MuiTableRow-root">
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><span
-                class="MuiTypography-root MuiTypography-aboutText css-1sosfpd-MuiTypography-root">2 litai</span></td>
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><span
-                class="MuiTypography-root MuiTypography-aboutText css-1sosfpd-MuiTypography-root">du</span></td>
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><svg
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-playButton-18 css-i4bv87-MuiSvgIcon-root"
-                focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowRoundedIcon">
-                <path
-                  d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z">
-                </path>
-              </svg></td>
-          </tr>
-          <tr class="MuiTableRow-root css-13wgndv-MuiTableRow-root">
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><span
-                class="MuiTypography-root MuiTypography-aboutText css-1sosfpd-MuiTypography-root">3 litai</span></td>
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><span
-                class="MuiTypography-root MuiTypography-aboutText css-1sosfpd-MuiTypography-root">try</span></td>
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><svg
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-playButton-18 css-i4bv87-MuiSvgIcon-root"
-                focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowRoundedIcon">
-                <path
-                  d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z">
-                </path>
-              </svg></td>
-          </tr>
-          <tr class="MuiTableRow-root css-13wgndv-MuiTableRow-root">
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><span
-                class="MuiTypography-root MuiTypography-aboutText css-1sosfpd-MuiTypography-root">4 litai</span></td>
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><span
-                class="MuiTypography-root MuiTypography-aboutText css-1sosfpd-MuiTypography-root">kū</span></td>
-            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"><svg
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-playButton-18 css-i4bv87-MuiSvgIcon-root"
-                focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowRoundedIcon">
-                <path
-                  d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z">
-                </path>
-              </svg></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
+
+
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { styled } from '@mui/system';
 import TablePaginationUnstyled from '@mui/base/TablePaginationUnstyled';
@@ -9,6 +9,7 @@ import useLexiconWindow from "../lexicon-window/useLexiconWindow";
 import { lexiconUnitsRetrievalController } from "../../../config/ControllerConfiguration";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import JSZip from "jszip";
+import ReactPlayer from "react-player";
 
 interface Props {
     token: string | undefined
@@ -21,7 +22,8 @@ const useStyles = makeStyles({
         paddingTop: "10vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent:'flex-start',
     },
 
     form: {
@@ -36,6 +38,22 @@ const useStyles = makeStyles({
         boxShadow: "0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93",
         borderRadius: 10,
         clear: "both",
+
+    },
+    videoForm: {
+        display: "flex",
+        flexDirection: "row",
+        paddingLeft: "5vh",
+        paddingRight: "5vh",
+        width: "100vh",
+        height: "auto",
+        alignItems: "center",
+        background: "#EBEBEB",
+        boxShadow: "0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93",
+        borderRadius: 10,
+        clear: "both",
+        overflow:'auto',
+        
     },
 
     leftForm: {
@@ -142,7 +160,7 @@ const CustomTablePagination = styled(TablePaginationUnstyled)`
   & .MuiTablePaginationUnstyled-toolbar {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
 
     @media (min-width: 768px) {
@@ -183,6 +201,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     const lexiconUnit = useLexiconWindow(lexiconUnitsRetrievalController, setRows);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsToExport, updateItemsToExport] = useState<ViewLexiconUnit[]>([]);
+    const [file, setFile] = useState<any>(new File([], 'empty'));
     const emptyLeftRows =
         leftTablePage > 0 ? Math.max(0, (1 + leftTablePage) * rowsPerLeftPage - rows.length) : 0;
     useEffect(() => {
@@ -193,6 +212,9 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     useEffect(() => {
         lexiconUnit();
     }, []);
+    // const handleOutsideClick = () => {
+    //     setFile(new File([], 'empty'));
+    // }
     const handleChangeLeftPage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
@@ -219,6 +241,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     };
     const handleClickAdd = (word: ViewLexiconUnit,) => {
         itemsToExport.push(word);
+        setFile(word.file);
         setRows(rows.filter(val => val !== word))
     };
     const handleClickRemove = (word: ViewLexiconUnit,) => {
@@ -234,10 +257,19 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
         zip.file("hello.txt", "Hello world\n");
         
         zip.generateAsync({type:"blob"}).then(function(content) {
-            // see FileSaver.js
             FileSaver.saveAs(content, "example.zip");
         });
     };
+    // const renderVideoViewer = () => {
+    //     if (file.name !== 'empty')
+    //         return (
+    //             <ReactPlayer controls url={`//localhost:8000/fileStorage/lexicon/${file.filename}`} />
+    //         )
+    //     else
+    //         return (
+    //             <Typography variant='pageTitle'>Video not found</Typography>
+    //         )
+    // }
     return (
         <Box>
             <Box className={styleClasses.formContainer}>
@@ -376,6 +408,37 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                 <Box className={styleClasses.form}>
                     <Button className={styleClasses.submitButton} onClick={() => { downloadZip(itemsToExport)}}>Eksportuoti</Button>
                 </Box>
+                {/* <Box className={styleClasses.videoForm}>
+                <Root sx={{ maxWidth: '100%', width: 1000 }}>
+                            <table aria-label="custom pagination table">
+                                <thead>
+                                    <tr>
+                                        <th>Žodis</th>
+                                        <th>Vaizdo įrašas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        itemsToExport.map((unit) => (
+                                            <tr key={unit.word}>
+                                                <td style={{ width: 500 }} align="right">
+                                                    {unit.word}
+                                                </td>
+                                                <td>
+                                                <ReactPlayer controls url={`//localhost:8000/fileStorage/lexicon/${file.filename}`} />
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                    {emptyRightRows > 0 && (
+                                        <tr style={{ height: 41 * emptyRightRows }}>
+                                            <td colSpan={3} />
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </Root>
+                </Box> */}
             </Box>
         </Box>
     );
