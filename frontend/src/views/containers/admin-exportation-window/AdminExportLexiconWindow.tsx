@@ -9,6 +9,7 @@ import useLexiconWindow from "../lexicon-window/useLexiconWindow";
 import { lexiconUnitsRetrievalController } from "../../../config/ControllerConfiguration";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import JSZip from "jszip";
+import * as fs from 'fs';
 import ReactPlayer from "react-player";
 
 interface Props {
@@ -250,14 +251,18 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     };
     const styleClasses = useStyles();
     const downloadZip = (data: ViewLexiconUnit[],) =>{
-        var FileSaver = require('file-saver');
-        var zip = new JSZip();
-        var text = zip.folder("HelloFolder");
-        text?.file("hello.txt", "Hello world\n");
-        zip.file("hello.txt", "Hello world\n");
+        // var FileSaver = require('file-saver');
+        // var zip = new JSZip();
+        // var text = zip.folder("HelloFolder");
+        // text?.file("hello.txt", "Hello world\n");
+        // zip.file("hello.txt", "Hello world\n");
         
-        zip.generateAsync({type:"blob"}).then(function(content) {
-            FileSaver.saveAs(content, "example.zip");
+        // zip.generateAsync({type:"blob"}).then(function(content) {
+        //     //FileSaver.saveAs(content, "example.zip");
+        // });
+        fs.readFile('Demo.txt', 'utf-8', (err, data)=>{
+            console.log(err);
+            console.log(data);
         });
     };
     // const renderVideoViewer = () => {
