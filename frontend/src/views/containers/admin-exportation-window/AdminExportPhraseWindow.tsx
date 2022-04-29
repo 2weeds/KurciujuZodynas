@@ -189,9 +189,6 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
     }, []);
     const emptyRightRows =
         rightTablePage > 0 ? Math.max(0, (1 + rightTablePage) * rowsPerRightPage - itemsToExport.length) : 0;
-    useEffect(() => {
-        phrase();
-    }, []);
     const handleChangeLeftPage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
@@ -217,12 +214,14 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
         setRightPage(0);
     };
     const handleClickAdd = (word: ViewPhrase,) => {
+        setRows(rows.filter(val => val !== word));
         itemsToExport.push(word);
-        setRows(rows.filter(val => val !== word))
+        
     };
     const handleClickRemove = (word: ViewPhrase,) => {
-        rows.push(word);
         updateItemsToExport(itemsToExport.filter(val => val !== word))
+        rows.push(word);
+        
     };
     
     

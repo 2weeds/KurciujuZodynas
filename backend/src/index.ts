@@ -16,13 +16,15 @@ import { RetrieveAllLessonsInteractor } from './use_case/implementation/Retrieve
 import { RetrieveAllLessonsRoute } from './rest/implementation/RetrieveAllLessonsRoute';
 import { SendAllLexiconUnitsInteractor } from './use_case/implementation/SendAllLexiconUnitsInteractor';
 import { SendAllLexiconUnitsRoute } from './rest/implementation/SendAllLexiconUnitsRoute';
+
 const cors = require('cors')({origin: true});
 const app = express();
 
-app.listen(8000, () => console.log("Listening to app at 8000"));
+const server = app.listen(8000, () => console.log("Listening to app at 8000"));
 app.use(cors);
 app.use(express.static('src'));
 app.use(express.json());
+
 
 const lexiconGW = new InMemoryLexiconUnitGateway();
 const createLexiconUnitUC = new CreateNewLexiconUnitInteractor(lexiconGW);
@@ -47,8 +49,17 @@ const retrieveAllLessonsRoute = new RetrieveAllLessonsRoute(retrieveAllLessonsUC
 app.post('/lexicon-units', (req, resp) => {
     createLexiconUnitRoute.create(req as RequestWithFile, resp);
 })
-app.post('/get-lexicon-units',(req,resp) => {
-    sendAllLexiconUnitsRoute.send(req, resp);
+app.post('/get-lexicon-units', (req,resp) => {
+        sendAllLexiconUnitsRoute.send(req, resp);
+})
+app.get('/zipDownload',(req,resp)=>{
+    try{
+        resp.download('./../backend/src/fileStorage/Scorm/ZipToExport.txt');
+    }
+    catch(err){
+        console.log(err);
+    }
+    
 })
 
 app.get('/lexicon-units', (req, resp) => {

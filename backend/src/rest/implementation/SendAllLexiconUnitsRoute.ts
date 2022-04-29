@@ -4,8 +4,6 @@ import express from 'express';
 import FileSaver from 'file-saver';
 import * as fs from 'fs';
 
-// import asdfad from './../../../../frontend/src/resources/'
-
 export class SendAllLexiconUnitsRoute {
     private readonly useCase: SendAllLexiconUnitsUseCase;
 
@@ -16,8 +14,9 @@ export class SendAllLexiconUnitsRoute {
     async send(req: Request, res: Response): Promise<void> {
         try {
             this.useCase.send(req.body);
+            res.sendStatus(201);
         }
-         catch (e) {
+        catch (e) {
             const err = e as Error;
             res.status(400).json(err.message);
         }

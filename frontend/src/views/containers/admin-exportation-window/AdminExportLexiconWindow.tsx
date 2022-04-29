@@ -10,7 +10,10 @@ import { lexiconUnitsRetrievalController } from "../../../config/ControllerConfi
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import useAdminExportLexiconWindow from "./useAdminExportLexiconWindow";
+// import zipFile from './../../../resources/ZipToExport.zip';
 import { lexiconUnitsSenderController } from "../../../config/ControllerConfiguration";
+import Axios from 'axios';
+import FileDownload from 'js-file-download';
 import FileSaver from 'file-saver';
 import JSZip from "jszip";
 // import fads from './../../../resources/Scorm_template/''
@@ -209,16 +212,19 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     const [itemsToExport, updateItemsToExport] = useState<ViewLexiconUnit[]>([]);
     const [file, setFile] = useState<any>(new File([], 'empty'));
     const lexiconUnitsArray = useAdminExportLexiconWindow(lexiconUnitsSenderController)
+    
     const emptyLeftRows =
         leftTablePage > 0 ? Math.max(0, (1 + leftTablePage) * rowsPerLeftPage - rows.length) : 0;
     useEffect(() => {
         lexiconUnit();
     }, []);
+    useEffect(()=>{
+        lexiconUnitsArray(itemsToExport);
+    },[itemsToExport,rows]);
     const emptyRightRows =
         rightTablePage > 0 ? Math.max(0, (1 + rightTablePage) * rowsPerRightPage - itemsToExport.length) : 0;
-    useEffect(() => {
-        lexiconUnit();
-    }, []);
+
+    
     // const handleOutsideClick = () => {
     //     setFile(new File([], 'empty'));
     // }
@@ -240,7 +246,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
         setRowsPerLeftPage(parseInt(event.target.value, 10));
         setLeftPage(0);
     };
-    const handleChangeRowsPerRightPage = (
+    const handleChangeRowsPerRightPage =  (
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
         setRowsPerRightPage(parseInt(event.target.value, 10));
@@ -248,21 +254,28 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     };
     const handleClickAdd = (word: ViewLexiconUnit,) => {
         itemsToExport.push(word);
-        
-        setFile(word.file);
         setRows(rows.filter(val => val !== word))
-        
+        console.log(itemsToExport.length)
     };
     const handleClickRemove = (word: ViewLexiconUnit,) => {
-        rows.push(word);
+        
         updateItemsToExport(itemsToExport.filter(val => val !== word));
+        rows.push(word);
+        console.log(rows.length)
     };
     const styleClasses = useStyles();
     
     const downloadZip = (data: ViewLexiconUnit[],) =>{
-        
-        lexiconUnitsArray(itemsToExport);
+        Axios({
+            url:'http://localhost:8000/zipDownload',
+            method:"GET",
+            responseType:"blob"
+        }).then((resp)=>{
+            FileDownload(resp.data,'ScormExample.zip')
+        })
+
     };
+
     return (
         <Box>
             <Box className={styleClasses.formContainer}>
@@ -295,9 +308,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                                                 return val
                                             }
                                         }).map((row) => (
-                                            <tr key={row.word}>{
-                                                itemsToExport.includes(row) ?
-                                                    null :
+                                            <tr key={row.word}>
                                                     <td style={{ width: 500 }}>
                                                         {row.word}
                                                         <AddIcon
@@ -305,7 +316,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                                                             onClick={() => handleClickAdd(row)}>
                                                         </AddIcon>
                                                     </td>
-                                            }
+                                            
                                             </tr>
                                         ))
                                     }
@@ -355,13 +366,13 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                                         : itemsToExport)
                                         .map((row) => (
                                             <tr key={row.word}>
-                                                <td style={{ width: 500 }} align="right">
-                                                    {row.word}
-                                                    <RemoveIcon
-                                                        className={styleClasses.removeWordFromExportationButton}
-                                                        onClick={() => handleClickRemove(row)}>
-                                                    </RemoveIcon>
-                                                </td>
+                                            <td style={{ width: 500 }} align="right">
+                                                {row.word}
+                                                <RemoveIcon
+                                                    className={styleClasses.removeWordFromExportationButton}
+                                                    onClick={() => handleClickRemove(row)}>
+                                                </RemoveIcon>
+                                            </td>
                                             </tr>
                                         ))
                                     }
