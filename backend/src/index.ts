@@ -14,6 +14,8 @@ import { CreateNewLessonInteractor } from './use_case/implementation/CreateNewLe
 import { CreateNewLessonRoute } from './rest/implementation/CreateNewLessonRoute';
 import { RetrieveAllLessonsInteractor } from './use_case/implementation/RetrieveAllLessonsInteractor';
 import { RetrieveAllLessonsRoute } from './rest/implementation/RetrieveAllLessonsRoute';
+import { SendAllLexiconUnitsInteractor } from './use_case/implementation/SendAllLexiconUnitsInteractor';
+import { SendAllLexiconUnitsRoute } from './rest/implementation/SendAllLexiconUnitsRoute';
 const cors = require('cors')({origin: true});
 const app = express();
 
@@ -27,6 +29,8 @@ const createLexiconUnitUC = new CreateNewLexiconUnitInteractor(lexiconGW);
 const createLexiconUnitRoute = new CreateNewLexiconUnitRoute(createLexiconUnitUC);
 const retrieveAllLexiconUnitsInteractor = new RetrieveAllLexiconUnitsInteractor(lexiconGW);
 const retrieveAllLexiconUnitsRoute = new RetrieveAllLexiconUnitsRoute(retrieveAllLexiconUnitsInteractor);
+const sendAllLexiconUnitsInteractor = new SendAllLexiconUnitsInteractor(lexiconGW);
+const sendAllLexiconUnitsRoute = new SendAllLexiconUnitsRoute(sendAllLexiconUnitsInteractor);
 
 const phraseGW = new InMemoryPhraseGateway();
 const createPhraseUC = new CreateNewPhraseInteractor(phraseGW);
@@ -42,6 +46,9 @@ const retrieveAllLessonsRoute = new RetrieveAllLessonsRoute(retrieveAllLessonsUC
 
 app.post('/lexicon-units', (req, resp) => {
     createLexiconUnitRoute.create(req as RequestWithFile, resp);
+})
+app.post('/get-lexicon-units',(req,resp) => {
+    sendAllLexiconUnitsRoute.send(req, resp);
 })
 
 app.get('/lexicon-units', (req, resp) => {

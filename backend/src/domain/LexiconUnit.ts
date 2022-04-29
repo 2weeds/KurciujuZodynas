@@ -9,7 +9,7 @@ export class LexiconUnit {
         this.file = file;
     }
 
-    getWord() { return this.word; }
+    public getWord() { return this.word; }
 
     getAbbreviation() { return this.abbreviation; }
 

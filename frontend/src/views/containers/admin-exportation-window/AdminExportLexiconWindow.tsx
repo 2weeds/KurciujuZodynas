@@ -8,9 +8,13 @@ import { ViewLexiconUnit } from "../../../controller/model/ViewLexiconUnit";
 import useLexiconWindow from "../lexicon-window/useLexiconWindow";
 import { lexiconUnitsRetrievalController } from "../../../config/ControllerConfiguration";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import JSZip from "jszip";
-import * as fs from 'fs';
 import ReactPlayer from "react-player";
+import useAdminExportLexiconWindow from "./useAdminExportLexiconWindow";
+import { lexiconUnitsSenderController } from "../../../config/ControllerConfiguration";
+import FileSaver from 'file-saver';
+import JSZip from "jszip";
+// import fads from './../../../resources/Scorm_template/''
+// import fansdif from './../../../resources/Scorm_template'
 
 interface Props {
     token: string | undefined
@@ -194,6 +198,7 @@ const CustomTablePagination = styled(TablePaginationUnstyled)`
 
 
 export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => {
+    
     const [leftTablePage, setLeftPage] = useState(0);
     const [rightTablePage, setRightPage] = useState(0);
     const [rowsPerLeftPage, setRowsPerLeftPage] = useState(5);
@@ -203,6 +208,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsToExport, updateItemsToExport] = useState<ViewLexiconUnit[]>([]);
     const [file, setFile] = useState<any>(new File([], 'empty'));
+    const lexiconUnitsArray = useAdminExportLexiconWindow(lexiconUnitsSenderController)
     const emptyLeftRows =
         leftTablePage > 0 ? Math.max(0, (1 + leftTablePage) * rowsPerLeftPage - rows.length) : 0;
     useEffect(() => {
@@ -242,39 +248,21 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     };
     const handleClickAdd = (word: ViewLexiconUnit,) => {
         itemsToExport.push(word);
+        
         setFile(word.file);
         setRows(rows.filter(val => val !== word))
+        
     };
     const handleClickRemove = (word: ViewLexiconUnit,) => {
         rows.push(word);
-        updateItemsToExport(itemsToExport.filter(val => val !== word))
+        updateItemsToExport(itemsToExport.filter(val => val !== word));
     };
     const styleClasses = useStyles();
+    
     const downloadZip = (data: ViewLexiconUnit[],) =>{
-        // var FileSaver = require('file-saver');
-        // var zip = new JSZip();
-        // var text = zip.folder("HelloFolder");
-        // text?.file("hello.txt", "Hello world\n");
-        // zip.file("hello.txt", "Hello world\n");
         
-        // zip.generateAsync({type:"blob"}).then(function(content) {
-        //     //FileSaver.saveAs(content, "example.zip");
-        // });
-        fs.readFile('Demo.txt', 'utf-8', (err, data)=>{
-            console.log(err);
-            console.log(data);
-        });
+        lexiconUnitsArray(itemsToExport);
     };
-    // const renderVideoViewer = () => {
-    //     if (file.name !== 'empty')
-    //         return (
-    //             <ReactPlayer controls url={`//localhost:8000/fileStorage/lexicon/${file.filename}`} />
-    //         )
-    //     else
-    //         return (
-    //             <Typography variant='pageTitle'>Video not found</Typography>
-    //         )
-    // }
     return (
         <Box>
             <Box className={styleClasses.formContainer}>
