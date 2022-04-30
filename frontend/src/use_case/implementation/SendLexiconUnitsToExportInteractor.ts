@@ -2,9 +2,9 @@ import { Observable } from "rxjs";
 import { LexiconUnit } from "../../domain/LexiconUnit";
 import { LexiconGateway } from "../../gateway/api/LexiconGateway";
 import { RestLexiconGateway } from "../../gateway/implementation/RestLexiconGateway";
-import { SendAllLexiconUnitsUseCase } from "../api/SendAllLexiconUnitsUseCase";
+import { SendLexiconUnitsToExportUseCase } from "../api/SendLexiconUnitsToExportUseCase";
 
-export class SendAllLexiconUnitsInteractor implements SendAllLexiconUnitsUseCase {
+export class SendLexiconUnitsToExportInteractor implements SendLexiconUnitsToExportUseCase {
     private readonly lexiconGW: LexiconGateway;
 
     constructor(lexiconGW: LexiconGateway){
@@ -13,6 +13,6 @@ export class SendAllLexiconUnitsInteractor implements SendAllLexiconUnitsUseCase
 
     send(lexiconUnitsArray:LexiconUnit[]): Observable<void> {
         return this.lexiconGW
-            .sendAllLexiconUnits(lexiconUnitsArray);
+            .sendLexiconUnitsToExport(lexiconUnitsArray);
     }
 }

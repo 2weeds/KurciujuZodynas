@@ -1,11 +1,11 @@
-import { SendAllLexiconUnitsController } from "../../../controller/SendAllLexiconUnitsController";
+import { SendLexiconUnitsToExportController } from "../../../controller/SendLexiconUnitsToExportController";
 import { LexiconUnit } from "../../../domain/LexiconUnit";
 
 export default function useAdminExportLexiconWindow(
-  SendAllLexiconUnitsController: SendAllLexiconUnitsController,
+  SendLexiconUnitsToExportController: SendLexiconUnitsToExportController,
 ): (lexiconUnitArray: LexiconUnit[]) => void {
   const send = (lexiconUnitArray: LexiconUnit[]) => {
-    SendAllLexiconUnitsController.send(lexiconUnitArray).subscribe();
+    SendLexiconUnitsToExportController.send(lexiconUnitArray).subscribe();
 
   };
   return send;

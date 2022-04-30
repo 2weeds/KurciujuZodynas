@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 import { LexiconUnit } from "../../domain/LexiconUnit";
-import { GET_LEXICON_UNITS_PATH, LEXICON_UNITS_PATH } from "../../RouteConstants";
+import { GET_LEXICON_UNITS_TO_EXPORT_PATH, LEXICON_UNITS_PATH } from "../../RouteConstants";
 import { Client } from "../api/Client";
 import { LexiconGateway } from "../api/LexiconGateway";
 
@@ -10,8 +10,8 @@ export class RestLexiconGateway implements LexiconGateway {
   constructor(client: Client) {
     this.client = client;
   }
-  sendAllLexiconUnits(lexiconUnitsArray: LexiconUnit[]): Observable<void> {
-    return this.client.post<void>(GET_LEXICON_UNITS_PATH, lexiconUnitsArray);
+  sendLexiconUnitsToExport(lexiconUnitsArray: LexiconUnit[]): Observable<void> {
+    return this.client.post<void>(GET_LEXICON_UNITS_TO_EXPORT_PATH, lexiconUnitsArray);
   }
 
   createNewLexiconUnit(word: string, abbreviation: string, file: File, token: string | undefined): Observable<void> {

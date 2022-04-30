@@ -1,5 +1,5 @@
 import { LexiconUnit } from "../../domain/LexiconUnit";
 
-export interface SendAllLexiconUnitsUseCase {
+export interface SendLexiconUnitsToExportUseCase {
     send(lexiconUnitsArray:LexiconUnit[]): void;
 }

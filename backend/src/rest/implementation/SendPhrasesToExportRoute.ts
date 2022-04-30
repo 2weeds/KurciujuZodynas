@@ -1,13 +1,10 @@
 import { Request, Response } from "express";
-import { SendAllLexiconUnitsUseCase } from "../../use_case/api/SendAllLexiconUnitsUseCase";
-import express from 'express';
-import FileSaver from 'file-saver';
-import * as fs from 'fs';
+import { SendPhrasesToExportUseCase } from "../../use_case/api/SendPhrasesToExportUseCase";
 
-export class SendAllLexiconUnitsRoute {
-    private readonly useCase: SendAllLexiconUnitsUseCase;
+export class SendPhrasesToExportRoute {
+    private readonly useCase: SendPhrasesToExportUseCase;
 
-    constructor(useCase: SendAllLexiconUnitsUseCase) {
+    constructor(useCase: SendPhrasesToExportUseCase) {
         this.useCase = useCase;
     }
 

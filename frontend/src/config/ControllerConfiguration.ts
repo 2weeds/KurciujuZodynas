@@ -4,7 +4,8 @@ import { CreateNewPhraseController } from "../controller/CreateNewPhraseControll
 import { RetrieveAllLessonsController } from "../controller/RetrieveAllLessonsController";
 import { RetrieveAllLexiconUnitsController } from "../controller/RetrieveAllLexiconUnitsController";
 import { RetrieveAllPhrasesController } from "../controller/RetrieveAllPhrasesController";
-import { SendAllLexiconUnitsController } from "../controller/SendAllLexiconUnitsController";
+import { SendLexiconUnitsToExportController } from "../controller/SendLexiconUnitsToExportController";
+import { SendPhrasesToExportController } from "../controller/SendPhrasesToExportController";
 import { RestLessonGateway } from "../gateway/implementation/RestLessonGateway";
 import { RestLexiconGateway } from "../gateway/implementation/RestLexiconGateway";
 import { RestPhraseGateway } from "../gateway/implementation/RestPhraseGateway";
@@ -15,7 +16,8 @@ import { CreateNewPhraseInteractor } from "../use_case/implementation/CreateNewP
 import { RetrieveAllLessonsInteractor } from "../use_case/implementation/RetrieveAllLessonsInteractor";
 import { RetrieveAllLexiconUnitsInteractor } from "../use_case/implementation/RetrieveAllLexiconUnitsInteractor";
 import { RetrieveAllPhrasesInteractor } from "../use_case/implementation/RetrieveAllPhrasesInteractor";
-import { SendAllLexiconUnitsInteractor } from "../use_case/implementation/SendAllLexiconUnitsInteractor";
+import { SendLexiconUnitsToExportInteractor } from "../use_case/implementation/SendLexiconUnitsToExportInteractor";
+import { SendPhrasesToExportInteractor } from "../use_case/implementation/SendPhrasesToExportInteractor";
 
 const client = new RxJsAjaxClient("http://localhost:8000");
 
@@ -25,16 +27,18 @@ const lessonGW = new RestLessonGateway(client);
 
 const lexiconUnitCreationUC = new CreateNewLexiconUnitInteractor(lexiconGW);
 const lexiconUnitsRetrievalUC = new RetrieveAllLexiconUnitsInteractor(lexiconGW);
-const lexiconUnitsSenderUC = new SendAllLexiconUnitsInteractor(lexiconGW);
+const lexiconUnitsSenderUC = new SendLexiconUnitsToExportInteractor(lexiconGW);
 const phraseCreationUC = new CreateNewPhraseInteractor(phraseGW);
 const phrasesRetrievalUC = new RetrieveAllPhrasesInteractor(phraseGW);
+const phrasesSenderUC = new SendPhrasesToExportInteractor(phraseGW);
 const lessonsCreationUC = new CreateNewLessonInteractor(lessonGW);
 const lessonsRetrievalUC = new RetrieveAllLessonsInteractor(lessonGW);
 
-export const lexiconUnitsSenderController = new SendAllLexiconUnitsController(lexiconUnitsSenderUC)
+export const lexiconUnitsSenderController = new SendLexiconUnitsToExportController(lexiconUnitsSenderUC)
 export const newLexiconUnitCreationController = new CreateNewLexiconUnitController(lexiconUnitCreationUC);
 export const newPhraseCreationController = new CreateNewPhraseController(phraseCreationUC);
 export const newLessonCreationController = new CreateNewLessonController(lessonsCreationUC);
 export const lexiconUnitsRetrievalController = new RetrieveAllLexiconUnitsController(lexiconUnitsRetrievalUC);
 export const phrasesRetrievalController = new RetrieveAllPhrasesController(phrasesRetrievalUC);
 export const lessonsRetrievalController = new RetrieveAllLessonsController(lessonsRetrievalUC);
+export const phrasesSenderController = new SendPhrasesToExportController(phrasesSenderUC)

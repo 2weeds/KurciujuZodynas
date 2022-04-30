@@ -4,5 +4,5 @@ import { LexiconUnit } from "../../domain/LexiconUnit";
 export interface LexiconGateway {
   createNewLexiconUnit(word: string, abbreviation: string, file: File, token: string | undefined): Observable<void>;
   retrieveAllLexiconUnits(): Observable<LexiconUnit[]>;
-  sendAllLexiconUnits(lexiconUnitsArray:LexiconUnit[]): Observable<void>;
+  sendLexiconUnitsToExport(lexiconUnitsArray:LexiconUnit[]): Observable<void>;
 }

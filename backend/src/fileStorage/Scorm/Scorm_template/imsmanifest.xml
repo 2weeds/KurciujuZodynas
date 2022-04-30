@@ -6,22 +6,18 @@
  <schemaversion>1.2</schemaversion> 
  <adlcp:location>imslrm.xml</adlcp:location> 
 </metadata> 
-<organizations default="{{IDENTIFIER}}">  
-    <organization identifier="{{IDENTIFIER}}" structure="hierarchical">
-        <title>Introduction to Software Engineering</title>
+<organizations default="introduction_1">  
+    <organization identifier="introduction_1" structure="hierarchical">
+        <title>Kurčiųjų žodynėlis</title>
 <item identifier="ITEM-introduction_2" isvisible="true" identifierref="RES-introduction_3">
-    <title>Introduction to Software Engineering</title>
+    <title>Kurčiųjų žodynėlis</title>
     <adlcp:masteryscore>50</adlcp:masteryscore>
 </item>
   </organization>
 </organizations>
 <resources>
   <resource identifier="RES-introduction_3" type="webcontent" adlcp:scormtype="sco" href="index.html"> 
-	{{MAIN_RSOURCES}}
-    <dependency identifierref="COMMON_FILES"/>
-  </resource>
-  <resource identifier="COMMON_FILES" type="webcontent" adlcp:scormtype="asset">
-	{{COMMON_RESOURSE}}
+	<file href="index.html"/>
   </resource>
 </resources>
 </manifest>

@@ -9,7 +9,7 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway {
     private readonly fs = require('fs');
 
 
-    sendAll(lexiconUnitsArray: LexiconUnit[]): void {
+    sendToExport(lexiconUnitsArray: LexiconUnit[]): void {
         try {
             this.fs.writeFileSync('LexiconUnitsToExport.json', JSON.stringify(lexiconUnitsArray));
             var readableStream = this.fs.createReadStream('../backend/src/fileStorage/Scorm/indexHtmlTemplate.txt', { encoding: 'utf-8' });
@@ -31,6 +31,11 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway {
                     var partialData = dataChunk.replace('TABLECONTENT', TABLECONTENT);
                     writableStream.write(partialData);
                 });
+                const zl = require("zip-lib");
+
+                zl.archiveFolder("./../backend/src/fileStorage/Scorm/Scorm_template", "../backend/src/fileStorage/Scorm/ZipToExport.txt",(function (err: any) {
+                    console.log(err);
+                }));
             }
         }
         catch (err) {

@@ -8,6 +8,10 @@ import { phrasesRetrievalController } from "../../../config/ControllerConfigurat
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { ViewPhrase } from "../../../controller/model/ViewPhrase";
 import usePhraseWindow from "../phrases-window/usePhraseWindow";
+import useAdminExportPhraseWindow from "./useAdminExportPhraseWindow";
+import { phrasesSenderController } from "../../../config/ControllerConfiguration";
+import FileDownload from 'js-file-download';
+import Axios from 'axios';
 
 interface Props {
     token: string | undefined
@@ -182,13 +186,18 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
     const phrase = usePhraseWindow(phrasesRetrievalController, setRows);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsToExport, updateItemsToExport] = useState<ViewPhrase[]>([]);
+    const phrasesArray = useAdminExportPhraseWindow(phrasesSenderController)
     const emptyLeftRows =
         leftTablePage > 0 ? Math.max(0, (1 + leftTablePage) * rowsPerLeftPage - rows.length) : 0;
     useEffect(() => {
         phrase();
     }, []);
+    useEffect(()=>{
+        phrasesArray(itemsToExport);
+    },[rows]);
     const emptyRightRows =
         rightTablePage > 0 ? Math.max(0, (1 + rightTablePage) * rowsPerRightPage - itemsToExport.length) : 0;
+
     const handleChangeLeftPage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
@@ -214,17 +223,24 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
         setRightPage(0);
     };
     const handleClickAdd = (word: ViewPhrase,) => {
-        setRows(rows.filter(val => val !== word));
         itemsToExport.push(word);
-        
+        setRows(rows.filter(val => val !== word))
     };
     const handleClickRemove = (word: ViewPhrase,) => {
-        updateItemsToExport(itemsToExport.filter(val => val !== word))
         rows.push(word);
-        
+        updateItemsToExport(itemsToExport.filter(val => val !== word))
     };
-    
-    
+    const downloadZip = (data: ViewPhrase[],) => {
+        Axios({
+            url: 'http://localhost:8000/zipDownload',
+            method: "GET",
+            responseType: "blob"
+        }).then((resp) => {
+            FileDownload(resp.data, 'ScormExample.zip')
+        })
+    };
+
+
     const styleClasses = useStyles();
     return (
         <Box>
@@ -362,7 +378,7 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
                     </Box>
                 </Box>
                 <Box className={styleClasses.form}>
-                    <Button className={styleClasses.submitButton} onClick={() => { }}>Eksportuoti</Button>
+                    <Button className={styleClasses.submitButton} onClick={() => {downloadZip(itemsToExport)}}>Eksportuoti</Button>
                 </Box>
             </Box>
         </Box>
