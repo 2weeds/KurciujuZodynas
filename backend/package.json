@@ -30,6 +30,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/file-saver": "^2.0.5",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.21",
     "babel-jest": "^27.5.1",
@@ -41,9 +42,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "file-saver": "^2.0.5",
     "firebase": "^9.6.10",
     "firebase-admin": "^10.0.2",
     "multer": "^1.4.4",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "zip-lib": "^0.7.3"
   }
 }

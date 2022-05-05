@@ -14,25 +14,36 @@ import { CreateNewLessonInteractor } from './use_case/implementation/CreateNewLe
 import { CreateNewLessonRoute } from './rest/implementation/CreateNewLessonRoute';
 import { RetrieveAllLessonsInteractor } from './use_case/implementation/RetrieveAllLessonsInteractor';
 import { RetrieveAllLessonsRoute } from './rest/implementation/RetrieveAllLessonsRoute';
+import { SendLexiconUnitsToExportInteractor } from './use_case/implementation/SendLexiconUnitsToExportInteractor';
+import { SendLexiconUnitsToExportRoute } from './rest/implementation/SendLexiconUnitsToExportRoute';
+import { SendPhrasesToExportInteractor } from './use_case/implementation/SendPhrasesToExportInteractor';
+import { SendPhrasesToExportRoute } from './rest/implementation/SendPhrasesToExportRoute';
+
+
 const cors = require('cors')({origin: true});
 const app = express();
 
-app.listen(8000, () => console.log("Listening to app at 8000"));
+const server = app.listen(8000, () => console.log("Listening to app at 8000"));
 app.use(cors);
 app.use(express.static('src'));
 app.use(express.json());
+
 
 const lexiconGW = new InMemoryLexiconUnitGateway();
 const createLexiconUnitUC = new CreateNewLexiconUnitInteractor(lexiconGW);
 const createLexiconUnitRoute = new CreateNewLexiconUnitRoute(createLexiconUnitUC);
 const retrieveAllLexiconUnitsInteractor = new RetrieveAllLexiconUnitsInteractor(lexiconGW);
 const retrieveAllLexiconUnitsRoute = new RetrieveAllLexiconUnitsRoute(retrieveAllLexiconUnitsInteractor);
+const sendLexiconUnitsToExportInteractor = new SendLexiconUnitsToExportInteractor(lexiconGW);
+const sendLexiconUnitsToExportRoute = new SendLexiconUnitsToExportRoute(sendLexiconUnitsToExportInteractor);
 
 const phraseGW = new InMemoryPhraseGateway();
 const createPhraseUC = new CreateNewPhraseInteractor(phraseGW);
 const createPhraseRoute = new CreateNewPhraseRoute(createPhraseUC);
 const retrieveAllPhrasesInteractor = new RetrieveAllPhrasesInteractor(phraseGW);
 const retrieveAllPhrasesRoute = new RetrieveAllPhrasesRoute(retrieveAllPhrasesInteractor);
+const sendPhrasesToExportInteractor = new SendPhrasesToExportInteractor(phraseGW);
+const sendPhrasesToExportRoute = new SendPhrasesToExportRoute(sendPhrasesToExportInteractor);
 
 const lessonGW = new InMemoryLessonGateway();
 const createLessonUC = new CreateNewLessonInteractor(lessonGW);
@@ -42,6 +53,21 @@ const retrieveAllLessonsRoute = new RetrieveAllLessonsRoute(retrieveAllLessonsUC
 
 app.post('/lexicon-units', (req, resp) => {
     createLexiconUnitRoute.create(req as RequestWithFile, resp);
+})
+app.post('/get-lexicon-units-to-export', (req,resp) => {
+    sendLexiconUnitsToExportRoute.send(req, resp);
+})
+app.post('/get-phrases-to-export', (req,resp)=>{
+    sendPhrasesToExportRoute.send(req,resp);
+})
+app.get('/zipDownload',(req,resp)=>{
+    try{
+        resp.download('../backend/src/fileStorage/Scorm/ZipToExport.txt');
+    }
+    catch(err){
+        console.log(err);
+    }
+    
 })
 
 app.get('/lexicon-units', (req, resp) => {

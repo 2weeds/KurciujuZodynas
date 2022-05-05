@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { styled } from '@mui/system';
 import TablePaginationUnstyled from '@mui/base/TablePaginationUnstyled';
@@ -8,7 +8,11 @@ import { ViewLexiconUnit } from "../../../controller/model/ViewLexiconUnit";
 import useLexiconWindow from "../lexicon-window/useLexiconWindow";
 import { lexiconUnitsRetrievalController } from "../../../config/ControllerConfiguration";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import JSZip from "jszip";
+import ReactPlayer from "react-player";
+import useAdminExportLexiconWindow from "./useAdminExportLexiconWindow";
+import { lexiconUnitsSenderController } from "../../../config/ControllerConfiguration";
+import Axios from 'axios';
+import FileDownload from 'js-file-download';
 
 interface Props {
     token: string | undefined
@@ -21,7 +25,8 @@ const useStyles = makeStyles({
         paddingTop: "10vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: 'flex-start',
     },
 
     form: {
@@ -36,6 +41,22 @@ const useStyles = makeStyles({
         boxShadow: "0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93",
         borderRadius: 10,
         clear: "both",
+
+    },
+    videoForm: {
+        display: "flex",
+        flexDirection: "row",
+        paddingLeft: "5vh",
+        paddingRight: "5vh",
+        width: "100vh",
+        height: "auto",
+        alignItems: "center",
+        background: "#EBEBEB",
+        boxShadow: "0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93",
+        borderRadius: 10,
+        clear: "both",
+        overflow: 'auto',
+
     },
 
     leftForm: {
@@ -142,7 +163,7 @@ const CustomTablePagination = styled(TablePaginationUnstyled)`
   & .MuiTablePaginationUnstyled-toolbar {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
 
     @media (min-width: 768px) {
@@ -175,6 +196,7 @@ const CustomTablePagination = styled(TablePaginationUnstyled)`
 
 
 export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => {
+
     const [leftTablePage, setLeftPage] = useState(0);
     const [rightTablePage, setRightPage] = useState(0);
     const [rowsPerLeftPage, setRowsPerLeftPage] = useState(5);
@@ -183,16 +205,19 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     const lexiconUnit = useLexiconWindow(lexiconUnitsRetrievalController, setRows);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsToExport, updateItemsToExport] = useState<ViewLexiconUnit[]>([]);
+    const lexiconUnitsArray = useAdminExportLexiconWindow(lexiconUnitsSenderController)
+
     const emptyLeftRows =
         leftTablePage > 0 ? Math.max(0, (1 + leftTablePage) * rowsPerLeftPage - rows.length) : 0;
     useEffect(() => {
         lexiconUnit();
     }, []);
+    useEffect(() => {
+        lexiconUnitsArray(itemsToExport);
+    }, [rows]);
     const emptyRightRows =
         rightTablePage > 0 ? Math.max(0, (1 + rightTablePage) * rowsPerRightPage - itemsToExport.length) : 0;
-    useEffect(() => {
-        lexiconUnit();
-    }, []);
+
     const handleChangeLeftPage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
@@ -223,21 +248,21 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     };
     const handleClickRemove = (word: ViewLexiconUnit,) => {
         rows.push(word);
-        updateItemsToExport(itemsToExport.filter(val => val !== word))
+        updateItemsToExport(itemsToExport.filter(val => val !== word));
     };
     const styleClasses = useStyles();
-    const downloadZip = (data: ViewLexiconUnit[],) =>{
-        var FileSaver = require('file-saver');
-        var zip = new JSZip();
-        var text = zip.folder("HelloFolder");
-        text?.file("hello.txt", "Hello world\n");
-        zip.file("hello.txt", "Hello world\n");
-        
-        zip.generateAsync({type:"blob"}).then(function(content) {
-            // see FileSaver.js
-            FileSaver.saveAs(content, "example.zip");
-        });
+
+    const downloadZip = (data: ViewLexiconUnit[],) => {
+        Axios({
+            url: 'http://localhost:8000/zipDownload',
+            method: "GET",
+            responseType: "blob"
+        }).then((resp) => {
+            FileDownload(resp.data, 'ScormExample.zip')
+        })
+
     };
+
     return (
         <Box>
             <Box className={styleClasses.formContainer}>
@@ -270,17 +295,15 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                                                 return val
                                             }
                                         }).map((row) => (
-                                            <tr key={row.word}>{
-                                                itemsToExport.includes(row) ?
-                                                    null :
-                                                    <td style={{ width: 500 }}>
-                                                        {row.word}
-                                                        <AddIcon
-                                                            className={styleClasses.addWordForExportationButton}
-                                                            onClick={() => handleClickAdd(row)}>
-                                                        </AddIcon>
-                                                    </td>
-                                            }
+                                            <tr key={row.word}>
+                                                <td style={{ width: 500 }}>
+                                                    {row.word}
+                                                    <AddIcon
+                                                        className={styleClasses.addWordForExportationButton}
+                                                        onClick={() => handleClickAdd(row)}>
+                                                    </AddIcon>
+                                                </td>
+
                                             </tr>
                                         ))
                                     }
@@ -374,7 +397,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                     </Box>
                 </Box>
                 <Box className={styleClasses.form}>
-                    <Button className={styleClasses.submitButton} onClick={() => { downloadZip(itemsToExport)}}>Eksportuoti</Button>
+                    <Button className={styleClasses.submitButton} onClick={() => { downloadZip(itemsToExport) }}>Eksportuoti</Button>
                 </Box>
             </Box>
         </Box>
