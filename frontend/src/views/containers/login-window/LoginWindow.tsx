@@ -9,6 +9,7 @@ import { useSnackbar } from "notistack";
 
 interface Props {
     setToken: (response: string) => void;
+    // setUserType: (responce: string) => void;
 }
 
 const useStyles = makeStyles({
@@ -95,7 +96,7 @@ function submitHandlerPreset(element: any, setUsernameErrors: (error: string | u
     setPasswordErrors(undefined);
   }
 
-export const AdminLoginWindow = ({ setToken }: Props) => {
+export const LoginWindow = ({ setToken }: Props) => {
     const [username, updateUsername] = useState<string | undefined>(undefined);
     const [password, updatePassword] = useState<string | undefined>(undefined);
     const [usernameErrors, setUsernameErrors] = useState<string | undefined>(undefined);
@@ -112,10 +113,10 @@ export const AdminLoginWindow = ({ setToken }: Props) => {
         
         if (isInputDataValid(username, password, setUsernameErrors, setPasswordErrors)) {
             const auth = getAuth();
-            signInWithEmailAndPassword(auth, username as string, password as string).then((userCredential) => {
+            signInWithEmailAndPassword(auth, username as string, password as string).then((userCredential: { user: { getIdToken: () => Promise<any>; }; }) => {
                 if (userCredential)
-                    userCredential.user.getIdToken().then((token) => setToken(token));
-            }).catch((err) => {
+                    userCredential.user.getIdToken().then((token: string) => setToken(token));
+            }).catch((err: any) => {
                 enqueueSnackbar("Error: Invalid user credentials", {
                 variant: "error",
                 preventDuplicate: true,
