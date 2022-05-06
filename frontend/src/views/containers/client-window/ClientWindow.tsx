@@ -2,13 +2,15 @@ import { Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import { AdminFunctionsWindow } from "../admin-functions-window/AdminFunctionsWindow";
-import { AdminLoginWindow } from "../admin-login-window/AdminLoginWindow";
+import { LoginWindow } from "../login-window/LoginWindow";
 
 interface Props {
   setToken: (response: string) => void;
-  token: string | undefined
-  page: string
-  pageSetter: (type: string) => void
+  token: string | undefined;
+  page: string;
+  pageSetter: (type: string) => void;
+  userType:string|undefined;
+  setUserType:(type:string) =>void;
 }
 
 const useStyles = makeStyles({
@@ -30,11 +32,16 @@ formContainer: {
 },
 });
 
-export const AdminWindow = ({setToken, token, page, pageSetter}: Props) => {
+export const ClientWindow = ({setToken, token, page, userType, pageSetter}: Props) => {
     const styleClasses = useStyles();
 
     const renderWindow = () => {
-      return token === undefined ? <AdminLoginWindow setToken={setToken} /> : <AdminFunctionsWindow token={token} page={page} pageSetter={pageSetter} />
+      if(token === undefined){
+        return <LoginWindow setToken={setToken} />
+      }
+        else{
+          return <AdminFunctionsWindow token={token} page={page} pageSetter={pageSetter} /> 
+      }
     }
 
     return (
