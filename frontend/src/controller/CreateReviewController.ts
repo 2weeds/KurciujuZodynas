@@ -1,13 +1,13 @@
 import { map, Observable } from "rxjs";
 import { SendPhrasesToExportUseCase} from '../use_case/api/SendPhrasesToExportUseCase';
-import { SendReviewUseCase } from "../use_case/api/SendReviewUseCase";
+import { CreateReviewUseCase } from "../use_case/api/CreateReviewUseCase";
 import { ViewReview } from "./model/ViewReview";
 
 
-export class SendReviewController {
-  private readonly uc: SendReviewUseCase;
+export class CreateReviewController {
+  private readonly uc: CreateReviewUseCase;
 
-  constructor(uc: SendReviewUseCase) {
+  constructor(uc: CreateReviewUseCase) {
     this.uc = uc;
   }
   sendReview(review:ViewReview): Observable<void> {

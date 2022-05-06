@@ -1,9 +1,9 @@
 import { Observable } from "rxjs";
 import { ViewReview } from "../../controller/model/ViewReview";
 import { ReviewGateway } from "../../gateway/api/ReviewGateway";
-import {SendReviewUseCase} from "./../api/SendReviewUseCase"
+import {CreateReviewUseCase} from "../api/CreateReviewUseCase"
 
-export class SendReviewInteractor implements SendReviewUseCase {
+export class CreateReviewInteractor implements CreateReviewUseCase {
     private readonly reviewGW: ReviewGateway;
 
     constructor(reviewGW: ReviewGateway){

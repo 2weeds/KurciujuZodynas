@@ -1,11 +1,11 @@
 export class BoundaryReview {
     readonly name: string;
-    readonly comment: string;
+    readonly reviewText: string;
     readonly rating: number;
 
-    constructor(name: string, comment: string, rating: number) {
+    constructor(name: string, reviewText: string, rating: number) {
         this.name = name;
-        this.comment = comment;
+        this.reviewText = reviewText;
         this.rating = rating;
     }
 }

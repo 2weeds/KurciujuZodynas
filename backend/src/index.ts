@@ -18,6 +18,11 @@ import { SendLexiconUnitsToExportInteractor } from './use_case/implementation/Se
 import { SendLexiconUnitsToExportRoute } from './rest/implementation/SendLexiconUnitsToExportRoute';
 import { SendPhrasesToExportInteractor } from './use_case/implementation/SendPhrasesToExportInteractor';
 import { SendPhrasesToExportRoute } from './rest/implementation/SendPhrasesToExportRoute';
+import { InMemoryReviewGateway } from './gateway/implementation/InMemoryReviewGateway';
+import { CreateNewReviewInteractor } from './use_case/implementation/CreateNewReviewInteractor';
+import { CreateNewReviewRoute } from './rest/implementation/CreateNewReviewRoute';
+import { RetrieveAllReviewsInteractor } from './use_case/implementation/RetrieveAllReviewsInteractor';
+import { RetrieveAllReviewsRoute } from './rest/implementation/RetrieveAllReviewsRoute';
 
 
 const cors = require('cors')({origin: true});
@@ -50,6 +55,12 @@ const createLessonUC = new CreateNewLessonInteractor(lessonGW);
 const createLessonRoute = new CreateNewLessonRoute(createLessonUC);
 const retrieveAllLessonsUC = new RetrieveAllLessonsInteractor(lessonGW);
 const retrieveAllLessonsRoute = new RetrieveAllLessonsRoute(retrieveAllLessonsUC);
+
+const reviewGW = new InMemoryReviewGateway();
+const createNewReviewInteractor = new CreateNewReviewInteractor(reviewGW);
+const createNewReviewRoute = new CreateNewReviewRoute(createNewReviewInteractor);
+const retrieveAllReviewsInteractor = new RetrieveAllReviewsInteractor(reviewGW);
+const retrieveAllReviewsRoute = new RetrieveAllReviewsRoute(retrieveAllReviewsInteractor);
 
 app.post('/lexicon-units', (req, resp) => {
     createLexiconUnitRoute.create(req as RequestWithFile, resp);
@@ -90,6 +101,12 @@ app.get('/lessons', (req, resp) => {
     retrieveAllLessonsRoute.retrieve(req, resp);
 })
 
+app.post('/reviews', (req,resp) => {
+    createNewReviewRoute.create(req,resp);
+})
+app.get('/reviews', (req, resp)=>{
+    retrieveAllReviewsRoute.retrieve(req,resp);
+})
 interface RequestWithFile extends express.Request {
     file: any,
 }
