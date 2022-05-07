@@ -8,6 +8,8 @@ describe("Testing lexicon gateway", () => {
     });
 
     test("Lexicon units retrieval", () => {
-        expect(lexiconGateway.retrieveAll()).not.toBeUndefined();
+        const gatewayResponse = lexiconGateway.retrieveAll();
+        expect(gatewayResponse).not.toBeUndefined();
+        expect(gatewayResponse).toBeInstanceOf(Array);
     })
 })

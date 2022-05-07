@@ -8,6 +8,8 @@ describe("Testing phrase gateway", () => {
     });
 
     test("Phrases retrieval", () => {
-        expect(phraseGateway.retrieveAll()).not.toBeUndefined();
+        const gatewayResponse = phraseGateway.retrieveAll();
+        expect(gatewayResponse).not.toBeUndefined();
+        expect(gatewayResponse).toBeInstanceOf(Array);
     })
 })
