@@ -140,7 +140,7 @@ export const AdminPhraseAdditionWindow = ({token}: Props) => {
 
   return (
           <Box className={styleClasses.form}>
-            <TextField value={phrase} error={phraseErrors !== undefined} className={styleClasses.inputField} onFocus={() => setPhraseShrink(true)} onBlur={() => setPhraseShrink(false)} InputLabelProps={{shrink: isInputEmpty(phrase) || phraseShrink ? true : false}} variant="outlined" label="Žodis/vienetas" size="small" multiline maxRows={5} onChange={handlePhraseFieldChange}></TextField>
+            <TextField value={phrase} error={phraseErrors !== undefined} className={styleClasses.inputField} onFocus={() => setPhraseShrink(true)} onBlur={() => setPhraseShrink(false)} InputLabelProps={{shrink: isInputEmpty(phrase) || phraseShrink ? true : false}} variant="outlined" label="Frazė" size="small" multiline maxRows={10} onChange={handlePhraseFieldChange}></TextField>
             {renderPhraseErrors()}
             <Box className={styleClasses.fileUploadContainer}>
               {renderUploadedFileName()}

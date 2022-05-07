@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     marginBottom: "2vh",
     marginRight: "2vh",
     marginLeft: "2vh",
-    width: "15vw",
+    width: "17vw",
     background: "linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%)",
     color: "#EBEBEB",
     fontWeight: 600,
@@ -34,10 +34,10 @@ export const AdminExportationWindow = ({ token, page, pageSetter }: Props) => {
   return (
     <Box className={styleClasses.form}>
       <Button className={styleClasses.submitButton} onClick={() => pageSetter("exportPhrase")}>
-        Eksportuoti frazę
+        Eksportuoti frazę (-es)
       </Button>
       <Button className={styleClasses.submitButton} onClick={() => pageSetter("exportLexicon")}>
-        Eksportuoti leksikos vienetą
+        Eksportuoti leksikos vienetą (-us)
       </Button>
     </Box>
   );
