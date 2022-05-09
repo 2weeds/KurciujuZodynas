@@ -1,10 +1,13 @@
 import { Phrase } from "../../domain/Phrase";
 import { PhraseGateway } from "../api/PhraseGateway";
 
-export class InMemoryPhraseGateway implements PhraseGateway
-{
-    
+export class InMemoryPhraseGateway implements PhraseGateway {
+    private readonly filename: string;
     private readonly fs = require('fs');
+
+    constructor(filename: string) {
+        this.filename = filename;
+    }
 
     sendToExport(phrasesArray: Phrase[]): void {
         try {
@@ -50,7 +53,7 @@ export class InMemoryPhraseGateway implements PhraseGateway
             } else {
                 jsonObj.phrases.push(newPhrase);
                 const json = JSON.stringify(jsonObj);
-                this.fs.writeFileSync('Phrases.json', json);
+                this.fs.writeFileSync(this.filename + '.json', json);
             }
         } catch (err) {
             const error = err as Error;
@@ -87,11 +90,11 @@ export class InMemoryPhraseGateway implements PhraseGateway
             phrases: []
         };
         try {
-            const readLines = this.fs.readFileSync('Phrases.json','utf8');
+            const readLines = this.fs.readFileSync(this.filename + '.json','utf8');
             obj = JSON.parse(readLines);
         } catch (err) {
             const json = JSON.stringify(obj);
-            this.fs.writeFileSync('Phrases.json', json);
+            this.fs.writeFileSync(this.filename + '.json', json);
         }
 
         return obj;

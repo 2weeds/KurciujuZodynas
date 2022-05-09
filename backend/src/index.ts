@@ -34,7 +34,7 @@ app.use(express.static('src'));
 app.use(express.json());
 
 
-const lexiconGW = new InMemoryLexiconUnitGateway();
+const lexiconGW = new InMemoryLexiconUnitGateway("LexiconUnits");
 const createLexiconUnitUC = new CreateNewLexiconUnitInteractor(lexiconGW);
 const createLexiconUnitRoute = new CreateNewLexiconUnitRoute(createLexiconUnitUC);
 const retrieveAllLexiconUnitsInteractor = new RetrieveAllLexiconUnitsInteractor(lexiconGW);
@@ -42,7 +42,7 @@ const retrieveAllLexiconUnitsRoute = new RetrieveAllLexiconUnitsRoute(retrieveAl
 const sendLexiconUnitsToExportInteractor = new SendLexiconUnitsToExportInteractor(lexiconGW);
 const sendLexiconUnitsToExportRoute = new SendLexiconUnitsToExportRoute(sendLexiconUnitsToExportInteractor);
 
-const phraseGW = new InMemoryPhraseGateway();
+const phraseGW = new InMemoryPhraseGateway("Phrases");
 const createPhraseUC = new CreateNewPhraseInteractor(phraseGW);
 const createPhraseRoute = new CreateNewPhraseRoute(createPhraseUC);
 const retrieveAllPhrasesInteractor = new RetrieveAllPhrasesInteractor(phraseGW);
@@ -50,13 +50,13 @@ const retrieveAllPhrasesRoute = new RetrieveAllPhrasesRoute(retrieveAllPhrasesIn
 const sendPhrasesToExportInteractor = new SendPhrasesToExportInteractor(phraseGW);
 const sendPhrasesToExportRoute = new SendPhrasesToExportRoute(sendPhrasesToExportInteractor);
 
-const lessonGW = new InMemoryLessonGateway();
+const lessonGW = new InMemoryLessonGateway("Lessons");
 const createLessonUC = new CreateNewLessonInteractor(lessonGW);
 const createLessonRoute = new CreateNewLessonRoute(createLessonUC);
 const retrieveAllLessonsUC = new RetrieveAllLessonsInteractor(lessonGW);
 const retrieveAllLessonsRoute = new RetrieveAllLessonsRoute(retrieveAllLessonsUC);
 
-const reviewGW = new InMemoryReviewGateway();
+const reviewGW = new InMemoryReviewGateway("Reviews");
 const createNewReviewInteractor = new CreateNewReviewInteractor(reviewGW);
 const createNewReviewRoute = new CreateNewReviewRoute(createNewReviewInteractor);
 const retrieveAllReviewsInteractor = new RetrieveAllReviewsInteractor(reviewGW);

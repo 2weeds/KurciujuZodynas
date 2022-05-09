@@ -2,14 +2,21 @@ import { Review } from "../../domain/Review";
 import { ReviewGateway } from "../api/ReviewGateway";
 import * as fs from 'fs';
 
-export class InMemoryReviewGateway implements ReviewGateway{
+export class InMemoryReviewGateway implements ReviewGateway {
+    private readonly filename: string;
+    private readonly fs = require('fs');
+
+    constructor(filename: string) {
+        this.filename = filename;
+    }
+
     addReview(name: string, reviewText: string, rating: number): void {
         const jsonObj = this.readFromFileOrCreateIfFileNotFound();
         const newReview = new Review(name, reviewText, rating);
         try {
             jsonObj.reviews.push(newReview);
             const json = JSON.stringify(jsonObj);
-            fs.writeFileSync('Reviews.json', json);
+            fs.writeFileSync(this.filename + '.json', json);
         } catch (err) {
             const error = err as Error;
             throw new Error(error.message);
@@ -33,11 +40,11 @@ export class InMemoryReviewGateway implements ReviewGateway{
             reviews: []
         };
         try {
-            const readLines = fs.readFileSync('Reviews.json','utf8');
+            const readLines = fs.readFileSync(this.filename + '.json','utf8');
             obj = JSON.parse(readLines);
         } catch (err) {
             const json = JSON.stringify(obj);
-            fs.writeFileSync('Reviews.json', json);
+            fs.writeFileSync(this.filename + '.json', json);
         }
 
         return obj;
