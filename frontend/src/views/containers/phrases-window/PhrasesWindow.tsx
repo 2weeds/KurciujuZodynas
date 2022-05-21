@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     },
 
     form: {
-        width: "55vw",
+        width: "60vw",
         height: "80vh",
         background: "#fff",
         display: "flex",
@@ -96,7 +96,23 @@ const useStyles = makeStyles({
     },
 
     elementTable: {
-        overflow: 'auto',
+        paddingTop: '2vh',
+    },
+
+    lessonButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        paddingTop: '1vh',
+        justifyContent: 'center'
+    },
+
+    lessonButtons: {
+        color: 'black',
+        fontWeight: 600,
+        fontSize: "13px",
+        "&:hover": {
+            background: "#D5D7D7"
+        }
     }
 })
 
@@ -123,7 +139,7 @@ function removeExtraWhitespaces(element: string) {
     return element.trim().split(/\s\s+/g).join(' ');
 }
 
-function filterUnits(searchValue: string, allPhrases: ViewPhrase[], setPhrasesToDisplay: (phrases: ViewPhrase[]) => void): void {
+function filterUnits(searchValue: string, allPhrases: ViewPhrase[]): ViewPhrase[] {
     const filteredPhrases: ViewPhrase[] = [];
 
     allPhrases.forEach(phrase => {
@@ -131,7 +147,24 @@ function filterUnits(searchValue: string, allPhrases: ViewPhrase[], setPhrasesTo
         filteredPhrases.push(phrase);
     });
 
-    setPhrasesToDisplay(filteredPhrases);
+    return filteredPhrases;
+}
+
+function setPageElements(pageNumber: number, phrasesToDisplay: ViewPhrase[], isLastPage: boolean,
+                         setPhrasesToDisplay: (phrases: ViewPhrase[]) => void,
+                         setPageBlocker: (isLastPage: boolean) => void): void {
+    const elementsPerPage = 12;
+    const firstElementIndex = (pageNumber - 1) * elementsPerPage;
+    const secondElementIndex = (pageNumber * elementsPerPage);
+    const phrasesInCurrentPage: ViewPhrase[] = phrasesToDisplay.slice(firstElementIndex, secondElementIndex);
+
+    if (secondElementIndex >= phrasesToDisplay.length) {
+        setPageBlocker(true);
+    } else if (isLastPage === true) {
+        setPageBlocker(false);
+    }
+
+    setPhrasesToDisplay(phrasesInCurrentPage);
 }
 
 function isIncluded(phrase: ViewPhrase, searchValue: string) {
@@ -144,6 +177,8 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
     const phrase = usePhraseWindow(phrasesRetrievalController, setAllPhrases);
     const [searchValue, setSearchValue] = useState<string>('');
     const [file, setFile] = useState<any>(new File([], 'empty'));
+    const [pageNumber, setPageNumber] = useState<number>(1); 
+    const [isLastPage, setIsLastPage] = useState<boolean>(false);
     const styleClasses = useStyles();
 
     useEffect(() => {
@@ -151,18 +186,32 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
     }, []);
 
     useEffect(() => {
-        filterUnits(searchValue, allPhrases, setPhrasesToDisplay);
-    }, [allPhrases, searchValue])
+        const filteredPhrases = filterUnits(searchValue, allPhrases);
+        setPageElements(pageNumber, filteredPhrases, isLastPage, setPhrasesToDisplay, setIsLastPage);
+    }, [allPhrases, searchValue, pageNumber])
 
     const handleSearchBarChange = (element: any) => {
         const inputValue = element.target.value.trim();
         const trimmedValue = removeExtraWhitespaces(inputValue);
         setSearchValue(trimmedValue);
+        setPageNumber(1);
     }
 
     const handleOutsideClick = () => {
         setFile(new File([], 'empty'));
-      }
+    }
+
+    const handleNavigationClick = (direction: string) => {
+        if (direction === "back") {
+            if (pageNumber > 1) {
+                setPageNumber(pageNumber - 1);
+            }
+        } else if (direction === "forward") {
+            if (!isLastPage) {
+                setPageNumber(pageNumber + 1);
+            }
+        }
+    }
 
     const renderVideoViewer = () => {
         if (file.name !== 'empty')
@@ -208,7 +257,7 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
                         <Typography variant="bookPageTitle"><b>FRAZĖS</b></Typography>
                         <TextField className={styleClasses.searchField} variant="outlined" label="Frazės paieška" size="small" onChange={handleSearchBarChange}></TextField>
                         <Box className={styleClasses.elementTable}>
-                            <Table>
+                            <Table size='small' padding='none'>
                                 <TableBody>
                                     {phrasesToDisplay.map((phrase, index) => (
                                         <TableRow key={index + "-row"}>
@@ -222,6 +271,10 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
                                     ))}
                                 </TableBody>
                             </Table>
+                        </Box>
+                        <Box className={styleClasses.lessonButtonContainer}>
+                            <Button id = 'backBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleNavigationClick("back")}>ATGAL</Button>
+                            <Button id = 'forwardBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleNavigationClick("forward")}>PIRMYN</Button>
                         </Box>
                     </Box>
                 </Box>
