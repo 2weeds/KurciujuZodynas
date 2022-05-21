@@ -245,9 +245,9 @@ export const GrammarWindow = ({ pageSetter, lesson, part, partSetter, lessonSett
                             <Typography sx={{paddingTop: '3vh', overflowWrap: 'anywhere'}}>{part?.subTopics.get('grammar').text}</Typography>
                         </Box>
                         <Box className={styleClasses.lessonButtonContainer}>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => pageSetter("lesson")}>Į pamoką</Button>
+                            <Button id = 'backBtn'  className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
+                            <Button id = 'forwardBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>
+                            <Button id = 'toLessonBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => pageSetter("lesson")}>Į pamoką</Button>
                         </Box>
                     </Box>
                 </Box>

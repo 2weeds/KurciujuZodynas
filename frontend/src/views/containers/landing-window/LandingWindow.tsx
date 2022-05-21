@@ -102,7 +102,7 @@ export const LandingWindow = ({ pageSetter, lessonSetter }: Props) => {
                             {
                                 allLessons.map((lesson: ViewLesson, index: number) => (
                                     <ListItem className={styleClasses.listItem} key={index + '-listItem'}>
-                                        <Button key={index + '-lessonBtn'} className={styleClasses.listItemButton} onClick={() => handleLessonClick(lesson)}>{lesson.name}</Button>
+                                        <Button id= {'lessonBtn'+index} key={index + '-lessonBtn'} className={styleClasses.listItemButton} onClick={() => handleLessonClick(lesson)}>{lesson.name}</Button>
                                     </ListItem>
                                 ))
                             }

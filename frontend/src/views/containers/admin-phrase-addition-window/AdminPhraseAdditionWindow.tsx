@@ -140,14 +140,14 @@ export const AdminPhraseAdditionWindow = ({token}: Props) => {
 
   return (
           <Box className={styleClasses.form}>
-            <TextField value={phrase} error={phraseErrors !== undefined} className={styleClasses.inputField} onFocus={() => setPhraseShrink(true)} onBlur={() => setPhraseShrink(false)} InputLabelProps={{shrink: isInputEmpty(phrase) || phraseShrink ? true : false}} variant="outlined" label="Frazė" size="small" multiline maxRows={10} onChange={handlePhraseFieldChange}></TextField>
+            <TextField id='phraseField' value={phrase} error={phraseErrors !== undefined} className={styleClasses.inputField} onFocus={() => setPhraseShrink(true)} onBlur={() => setPhraseShrink(false)} InputLabelProps={{shrink: isInputEmpty(phrase) || phraseShrink ? true : false}} variant="outlined" label="Frazė" size="small" multiline maxRows={10} onChange={handlePhraseFieldChange}></TextField>
             {renderPhraseErrors()}
             <Box className={styleClasses.fileUploadContainer}>
               {renderUploadedFileName()}
-              <Button variant="contained" component="label" className={styleClasses.uploadButton}>Įkelti failą<input type="file" hidden onChange={onFileInputChange}/></Button>
+              <Button id='uploadFileBtn' variant="contained" component="label" className={styleClasses.uploadButton}>Įkelti failą<input type="file" hidden onChange={onFileInputChange}/></Button>
               {renderFileErrors()}
             </Box>
-            <Button className={styleClasses.submitButton} onClick={handleSubmit}>Pridėti frazę</Button>
+            <Button id='addPhraseBtn' className={styleClasses.submitButton} onClick={handleSubmit}>Pridėti frazę</Button>
           </Box>
   )
 }

@@ -294,11 +294,11 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                                             else if (val.word.toLowerCase().includes(searchTerm.toLowerCase())) {
                                                 return val
                                             }
-                                        }).map((row) => (
+                                        }).map((row, index:number) => (
                                             <tr key={row.word}>
                                                 <td style={{ width: 500 }}>
                                                     {row.word}
-                                                    <AddIcon
+                                                    <AddIcon id={'addIcon'+index}
                                                         className={styleClasses.addWordForExportationButton}
                                                         onClick={() => handleClickAdd(row)}>
                                                     </AddIcon>
@@ -351,11 +351,11 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                                     {(rowsPerRightPage > 0
                                         ? itemsToExport.slice(rightTablePage * rowsPerRightPage, rightTablePage * rowsPerRightPage + rowsPerRightPage)
                                         : itemsToExport)
-                                        .map((row) => (
+                                        .map((row, index:number) => (
                                             <tr key={row.word}>
                                                 <td style={{ width: 500 }} align="right">
                                                     {row.word}
-                                                    <RemoveIcon
+                                                    <RemoveIcon id ={'removeIconBtn'+index}
                                                         className={styleClasses.removeWordFromExportationButton}
                                                         onClick={() => handleClickRemove(row)}>
                                                     </RemoveIcon>
@@ -397,7 +397,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                     </Box>
                 </Box>
                 <Box className={styleClasses.form}>
-                    <Button className={styleClasses.submitButton} onClick={() => { downloadZip(itemsToExport) }}>Eksportuoti</Button>
+                    <Button id='exportBtn' className={styleClasses.submitButton} onClick={() => { downloadZip(itemsToExport) }}>Eksportuoti</Button>
                 </Box>
             </Box>
         </Box>

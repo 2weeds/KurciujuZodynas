@@ -293,16 +293,16 @@ export const LexiconSubtopicWindow = ({ pageSetter, lesson, part, partSetter, le
                                             <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
                                         </TableCell>
                                         <TableCell key={index + "-cellPlay"}>
-                                            <PlayArrowRoundedIcon className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
+                                            <PlayArrowRoundedIcon id = {'videoPlayerBtn'+index} className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
                                         </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                         <Box className={styleClasses.lessonButtonContainer}>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => pageSetter("lesson")}>Į pamoką</Button>
+                            <Button id = 'backBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
+                            <Button id = 'forwardBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>
+                            <Button id = 'toLessonBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => pageSetter("lesson")}>Į pamoką</Button>
                         </Box>
                     </Box>
                 </Box>
