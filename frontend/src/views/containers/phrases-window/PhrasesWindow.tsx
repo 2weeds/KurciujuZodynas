@@ -94,6 +94,10 @@ const useStyles = makeStyles({
         color: 'green',
         fontSize: '36px',
     },
+
+    elementTable: {
+        overflow: 'auto',
+    }
 })
 
 const videoModal = {
@@ -203,20 +207,22 @@ export const PhrasesWindow = ({ pageSetter }: Props) => {
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>FRAZĖS</b></Typography>
                         <TextField className={styleClasses.searchField} variant="outlined" label="Frazės paieška" size="small" onChange={handleSearchBarChange}></TextField>
-                        <Table>
-                            <TableBody>
-                                {phrasesToDisplay.map((phrase, index) => (
-                                    <TableRow key={index + "-row"}>
-                                        <TableCell key={index + "-cell"}>
-                                            <Typography key={index + "-phrase"} pt="1vh" variant="aboutText">{phrase.phrase}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellPlay"}>
-                                            <PlayArrowRoundedIcon className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(phrase.file)}></PlayArrowRoundedIcon>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                        <Box className={styleClasses.elementTable}>
+                            <Table>
+                                <TableBody>
+                                    {phrasesToDisplay.map((phrase, index) => (
+                                        <TableRow key={index + "-row"}>
+                                            <TableCell sx={{width: '75%'}} key={index + "-cell"}>
+                                                <Typography key={index + "-phrase"} pt="1vh" variant="aboutText">{phrase.phrase}</Typography>
+                                            </TableCell>
+                                            <TableCell sx={{width: '25%'}} key={index + "-cellPlay"}>
+                                                <PlayArrowRoundedIcon className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(phrase.file)}></PlayArrowRoundedIcon>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
