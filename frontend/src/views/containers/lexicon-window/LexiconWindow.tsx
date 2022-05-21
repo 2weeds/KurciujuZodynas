@@ -94,6 +94,10 @@ const useStyles = makeStyles({
         color: 'green',
         fontSize: '36px',
     },
+
+    elementTable: {
+        overflow: 'auto',
+    }
 })
 
 const videoModal = {
@@ -203,23 +207,25 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>LEKSIKA</b></Typography>
                         <TextField className={styleClasses.searchField} variant="outlined" label="Žodžio paieška" size="small" onChange={handleSearchBarChange}></TextField>
-                        <Table>
-                            <TableBody>
-                                {unitsToDisplay.map((unit, index) => (
-                                    <TableRow key={index + "-row"}>
-                                        <TableCell key={index + "-cellWord"}>
-                                            <Typography key={index + "-word"} pt="1vh" variant="aboutText">{unit.word}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellAbbr"}>
-                                            <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellPlay"}>
-                                            <PlayArrowRoundedIcon id='playVideoBtn' className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                        <Box className={styleClasses.elementTable}>
+                            <Table>
+                                <TableBody>
+                                    {unitsToDisplay.map((unit, index) => (
+                                        <TableRow key={index + "-row"}>
+                                            <TableCell sx={{width: '45%'}} key={index + "-cellWord"}>
+                                                <Typography key={index + "-word"} pt="1vh" variant="aboutText">{unit.word}</Typography>
+                                            </TableCell>
+                                            <TableCell sx={{width: '30%'}} key={index + "-cellAbbr"}>
+                                                <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
+                                            </TableCell>
+                                            <TableCell sx={{width: '25%'}} key={index + "-cellPlay"}>
+                                                <PlayArrowRoundedIcon id='playVideoBtn' className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
