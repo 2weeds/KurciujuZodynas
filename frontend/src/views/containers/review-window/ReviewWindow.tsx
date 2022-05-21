@@ -133,6 +133,7 @@ export const ReviewWindow = ({ pageSetter }: Props) => {
                 <Box className={styleClasses.inputForm}>
                     <Typography component="legend" >Jūsų įvertinimas sistemai:</Typography>
                     <Rating
+                        id='ratingValue'
                         name="simple-controlled"
                         value={ratingValue}
                         onChange={(event, newValue) => {
@@ -140,6 +141,7 @@ export const ReviewWindow = ({ pageSetter }: Props) => {
                         }}
                     />
                     <TextField
+                        id = 'nameField'
                         label="Vardas"
                         sx={{backgroundColor: 'white', width: '25ch' }}
                         value={nameValue}

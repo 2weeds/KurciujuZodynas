@@ -33,11 +33,11 @@ export const AdminExportationWindow = ({ token, page, pageSetter }: Props) => {
   const styleClasses = useStyles();
   return (
     <Box className={styleClasses.form}>
-      <Button className={styleClasses.submitButton} onClick={() => pageSetter("exportPhrase")}>
-        Eksportuoti frazę
+      <Button id='phraseBtn' className={styleClasses.submitButton} onClick={() => pageSetter("exportPhrase")}>
+        Eksportuoti frazę (-es)
       </Button>
-      <Button className={styleClasses.submitButton} onClick={() => pageSetter("exportLexicon")}>
-        Eksportuoti leksikos vienetą
+      <Button id='lexiconUnitBtn' className={styleClasses.submitButton} onClick={() => pageSetter("exportLexicon")}>
+        Eksportuoti leksikos vienetą (-us)
       </Button>
     </Box>
   );
