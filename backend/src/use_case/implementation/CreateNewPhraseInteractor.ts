@@ -12,4 +12,5 @@ export class CreateNewPhraseInteractor implements CreateNewPhraseUseCase {
         const formattedPhrase = phrase[0].toUpperCase() + phrase.slice(1, phrase.length).toLowerCase();
         this.gateway.createPhrase(formattedPhrase, file);
     }
+
 }
