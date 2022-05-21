@@ -138,9 +138,9 @@ export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props)
                 <Button className={styleClasses.listItemButton} onClick={() => renderLessonSubtopic(part, Array.from(part.subTopics)[0][0])}>{part.name}</Button>
                 <List className={styleClasses.list}>
                     {
-                        Array.from(part.subTopics).map((arrayObject: any) => (
+                        Array.from(part.subTopics).map((arrayObject: any, index:number) => (
                             <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton} onClick={() => renderLessonSubtopic(part, arrayObject[0])}>
+                                <Button id = {"lessonBtn"+ index} className={styleClasses.listItemButton} onClick={() => renderLessonSubtopic(part, arrayObject[0])}>
                                     {transformToLithuanian(arrayObject[0])}
                                 </Button>
                             </ListItem>
@@ -172,7 +172,7 @@ export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props)
                             <Typography pt="2vh" variant="aboutText">Pamokos tikslas - {lessonToDisplay.goal}</Typography>
                         </Box>
                         <Box className={styleClasses.buttonContainer}>
-                            <Button className={styleClasses.submitButton} onClick={() => renderLessonSubtopic(lessonToDisplay.parts[0], Array.from(lessonToDisplay.parts[0].subTopics)[0][0])}>Pradėti pamoką</Button>
+                            <Button id='startLessonBtn' className={styleClasses.submitButton} onClick={() => renderLessonSubtopic(lessonToDisplay.parts[0], Array.from(lessonToDisplay.parts[0].subTopics)[0][0])}>Pradėti pamoką</Button>
                         </Box>
                     </Box>
                 </Box>

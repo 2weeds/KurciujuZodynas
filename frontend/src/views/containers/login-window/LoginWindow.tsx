@@ -133,9 +133,9 @@ export const LoginWindow = ({ setToken }: Props) => {
 
     return (
         <Box className={styleClasses.form}>
-            <TextField error={usernameErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="El. Paštas" onChange={handleUsernameFieldChange}></TextField>
+            <TextField id='ussernameField' error={usernameErrors !== undefined} className={styleClasses.inputField} variant="outlined" label="El. Paštas" onChange={handleUsernameFieldChange}></TextField>
             {renderUsernameErrors()}
-            <TextField error={passwordErrors !== undefined} type={showPassword ? "text" : "password"} className={styleClasses.inputField}
+            <TextField id = 'passwordField' error={passwordErrors !== undefined} type={showPassword ? "text" : "password"} className={styleClasses.inputField}
                 variant="outlined" label="Slaptažodis" onChange={handlePasswordFieldChange} 
                 InputProps={{
                     endAdornment: 
@@ -146,7 +146,7 @@ export const LoginWindow = ({ setToken }: Props) => {
                         </InputAdornment>}}>
             </TextField>
             {renderPasswordErrors()}
-            <Button className={styleClasses.submitButton} onClick={handleSubmit}>Prisijungti</Button>
+            <Button id = 'logInBtn' className={styleClasses.submitButton} onClick={handleSubmit}>Prisijungti</Button>
         </Box>
     )
 }

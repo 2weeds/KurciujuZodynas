@@ -254,12 +254,12 @@ export const TestWindow = ({ pageSetter, lesson, part, partSetter, lessonSetter 
                         <Divider sx={{paddingTop: '3vh'}} />
                         <Typography sx={{paddingTop: '3vh'}}>Jei norite atlikti užduotis, spauskite „Pradėti užduotį“. Baigę uždarykite užduočių langą ir pamoką tęskite toliau.</Typography>
                         <Box className={styleClasses.buttonContainer}>
-                            <Button className={styleClasses.submitButton} onClick={() => openUpExerciseWindow()}>Pradėti užduotį</Button>
+                            <Button id = 'startTestBtn' className={styleClasses.submitButton} onClick={() => openUpExerciseWindow()}>Pradėti užduotį</Button>
                         </Box>
                         <Box className={styleClasses.lessonButtonContainer}>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>
-                            <Button className={styleClasses.lessonButtons} variant="text" onClick={() => pageSetter("lesson")}>Į pamoką</Button>
+                            <Button id = 'backBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
+                            <Button id = 'forwardBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>
+                            <Button id = 'toLessonBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => pageSetter("lesson")}>Į pamoką</Button>
                         </Box>
                     </Box>
                 </Box>

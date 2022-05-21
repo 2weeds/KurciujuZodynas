@@ -194,13 +194,13 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
                         <Typography variant="bookPageTitle">KGMP struktūra:</Typography>
                         <List className={styleClasses.list}>
                             <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("landing")}>Pamokos</Button>
+                                <Button id='landingWindowBtn' className={styleClasses.listItemButton} onClick={() => pageSetter("landing")}>Pamokos</Button>
                             </ListItem>
                             <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("lexicon")}>Leksika</Button>
+                                <Button id='lexiconWindowBtn' className={styleClasses.listItemButton} onClick={() => pageSetter("lexicon")}>Leksika</Button>
                             </ListItem>
                             <ListItem className={styleClasses.listItem}>
-                                <Button className={styleClasses.listItemButton} onClick={() => pageSetter("phrases")}>Frazės</Button>
+                                <Button id='phrasesWindowBtn' className={styleClasses.listItemButton} onClick={() => pageSetter("phrases")}>Frazės</Button>
                             </ListItem>
                         </List>
                     </Box>
@@ -219,7 +219,7 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
                                                 <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
                                             </TableCell>
                                             <TableCell sx={{width: '25%'}} key={index + "-cellPlay"}>
-                                                <PlayArrowRoundedIcon className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
+                                                <PlayArrowRoundedIcon id='playVideoBtn' className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
                                             </TableCell>
                                         </TableRow>
                                     ))}

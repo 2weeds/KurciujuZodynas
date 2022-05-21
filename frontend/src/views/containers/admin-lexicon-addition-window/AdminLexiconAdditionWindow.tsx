@@ -10,7 +10,7 @@ interface Props {
 }
 
 const useStyles = makeStyles({
-form: {
+  form: {
     display: "flex",
     flexDirection: "column",
     width: "85%",
@@ -19,50 +19,50 @@ form: {
     background: "#EBEBEB",
     boxShadow: "0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93",
     borderRadius: 10,
-},
+  },
 
-inputField: {
+  inputField: {
     marginTop: "5vh",
     width: "15vw",
     "& label.Mui-focused": {
-        color: "black"
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          borderColor: "black"
-        }
+      color: "black"
+    },
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        borderColor: "black"
       }
-},
+    }
+  },
 
-submitButton: {
+  submitButton: {
     marginTop: "5vh",
     width: "15vw",
     background: "linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%)",
     color: "#EBEBEB",
     fontWeight: 600,
-},
+  },
 
-fileUploadContainer: {
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: '3vh',
-  alignItems: 'center'
-},
+  fileUploadContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '3vh',
+    alignItems: 'center'
+  },
 
-uploadButton: {
-  marginTop: '1vh',
-  background: "#3B429F",
-  color: "#EBEBEB",
-  fontWeight: 600,
-  "&:hover": {
-    background: "#6A70C8",
-  }
-},
+  uploadButton: {
+    marginTop: '1vh',
+    background: "#3B429F",
+    color: "#EBEBEB",
+    fontWeight: 600,
+    "&:hover": {
+      background: "#6A70C8",
+    }
+  },
 })
 
 function isInputDataValid(word: string | undefined, setWordErrors: (error: string) => void,
-                          abbr: string | undefined, setAbbrErrors: (error: string) => void,
-                          file: File | undefined, setFileErrors: (error: string) => void): boolean {
+  abbr: string | undefined, setAbbrErrors: (error: string) => void,
+  file: File | undefined, setFileErrors: (error: string) => void): boolean {
   const validInputs: boolean[] = [];
   const allowedFileTypes: string[] = ['video/mp4', 'audio/ogg', 'video/webm'];
 
@@ -96,15 +96,15 @@ function removeExtraWhitespaces(element: string) {
 }
 
 function submitHandlerPreset(element: any, setWordErrors: (error: string | undefined) => void,
-                                           setAbbrErrors: (error: string | undefined) => void,
-                                           setFileErrors: (error: string | undefined) => void): void {
+  setAbbrErrors: (error: string | undefined) => void,
+  setFileErrors: (error: string | undefined) => void): void {
   element.preventDefault();
   setWordErrors(undefined);
   setAbbrErrors(undefined);
   setFileErrors(undefined);
 }
 
-export const AdminLexiconAdditionWindow = ({token}: Props) => {
+export const AdminLexiconAdditionWindow = ({ token }: Props) => {
   const [word, updateWord] = useState<string | undefined>("");
   const [wordErrors, setWordErrors] = useState<string | undefined>(undefined);
   const [wordShrink, setWordShrink] = useState<boolean>(false);
@@ -119,34 +119,34 @@ export const AdminLexiconAdditionWindow = ({token}: Props) => {
   useEffect(() => {
   }, [uploadedFile])
 
-  const handleWordFieldChange = (element: any) => {updateWord(element.target.value)}
-  const handleAbbrFieldChange = (element: any) => {updateAbbr(element.target.value)}
+  const handleWordFieldChange = (element: any) => { updateWord(element.target.value) }
+  const handleAbbrFieldChange = (element: any) => { updateAbbr(element.target.value) }
   const onFileInputChange = (element: any) => {
     setUploadedFile(element.target.files[0]);
   }
   const handleSubmit = (element: any) => {
-      submitHandlerPreset(element, setWordErrors, setAbbrErrors, setFileErrors);
+    submitHandlerPreset(element, setWordErrors, setAbbrErrors, setFileErrors);
 
-      if (isInputDataValid(word?.trim(), setWordErrors, abbr?.trim(), setAbbrErrors, uploadedFile, setFileErrors)) {
-        const trimmedWord = removeExtraWhitespaces(word as string);
-        const trimmedAbbr = removeExtraWhitespaces(abbr as string);
-        lexiconUnit(trimmedWord, trimmedAbbr, uploadedFile as File, token);
-        updateWord("");
-        updateAbbr("");
-        setUploadedFile(undefined);
-      }
+    if (isInputDataValid(word?.trim(), setWordErrors, abbr?.trim(), setAbbrErrors, uploadedFile, setFileErrors)) {
+      const trimmedWord = removeExtraWhitespaces(word as string);
+      const trimmedAbbr = removeExtraWhitespaces(abbr as string);
+      lexiconUnit(trimmedWord, trimmedAbbr, uploadedFile as File, token);
+      updateWord("");
+      updateAbbr("");
+      setUploadedFile(undefined);
+    }
   }
   const renderWordErrors = () => {
     if (wordErrors !== undefined)
-        return <Typography variant="error">{wordErrors}</Typography>
+      return <Typography variant="error">{wordErrors}</Typography>
   }
   const renderAbbrErrors = () => {
     if (abbrErrors !== undefined)
-        return <Typography variant="error">{abbrErrors}</Typography>
+      return <Typography variant="error">{abbrErrors}</Typography>
   }
   const renderFileErrors = () => {
     if (fileErrors !== undefined)
-        return <Typography variant="error">{fileErrors}</Typography>
+      return <Typography variant="error">{fileErrors}</Typography>
   }
 
   const renderUploadedFileName = () => {
@@ -158,17 +158,17 @@ export const AdminLexiconAdditionWindow = ({token}: Props) => {
   }
 
   return (
-          <Box className={styleClasses.form}>
-            <TextField value={word} error={wordErrors !== undefined} className={styleClasses.inputField} onFocus={() => setWordShrink(true)} onBlur={() => setWordShrink(false)} InputLabelProps={{shrink: isInputEmpty(word) || wordShrink ? true : false}} variant="outlined" label="Žodis/vienetas" size="small" onChange={handleWordFieldChange}></TextField>
-            {renderWordErrors()}
-            <TextField value={abbr} error={abbrErrors !== undefined} className={styleClasses.inputField} onFocus={() => setPassShrink(true)} onBlur={() => setPassShrink(false)} InputLabelProps={{shrink: isInputEmpty(abbr) || passShrink ? true : false}} variant="outlined" label="Trumpinys" size="small" onChange={handleAbbrFieldChange}></TextField>
-            {renderAbbrErrors()}
-            <Box className={styleClasses.fileUploadContainer}>
-              {renderUploadedFileName()}
-              <Button variant="contained" component="label" className={styleClasses.uploadButton}>Įkelti failą<input type="file" hidden onChange={onFileInputChange}/></Button>
-              {renderFileErrors()}
-            </Box>
-            <Button className={styleClasses.submitButton} onClick={handleSubmit}>Pridėti leksikos elementą</Button>
-          </Box>
+    <Box className={styleClasses.form}>
+      <TextField id='unitField' value={word} error={wordErrors !== undefined} className={styleClasses.inputField} onFocus={() => setWordShrink(true)} onBlur={() => setWordShrink(false)} InputLabelProps={{ shrink: isInputEmpty(word) || wordShrink ? true : false }} variant="outlined" label="Žodis/vienetas" size="small" onChange={handleWordFieldChange}></TextField>
+      {renderWordErrors()}
+      <TextField id='abbrField' value={abbr} error={abbrErrors !== undefined} className={styleClasses.inputField} onFocus={() => setPassShrink(true)} onBlur={() => setPassShrink(false)} InputLabelProps={{ shrink: isInputEmpty(abbr) || passShrink ? true : false }} variant="outlined" label="Trumpinys" size="small" onChange={handleAbbrFieldChange}></TextField>
+      {renderAbbrErrors()}
+      <Box className={styleClasses.fileUploadContainer}>
+        {renderUploadedFileName()}
+        <Button id='uploadFileBtn' variant="contained" component="label" className={styleClasses.uploadButton}>Įkelti failą<input type="file" hidden onChange={onFileInputChange} /></Button>
+        {renderFileErrors()}
+      </Box>
+      <Button id='addLexiconUnitBtn' className={styleClasses.submitButton} onClick={handleSubmit}>Pridėti leksikos elementą</Button>
+    </Box>
   )
 }

@@ -12,7 +12,7 @@ import { LexiconSubtopicWindow } from "../lexicon-subtopic-window/LexiconSubtopi
 import { PhrasesSubtopicWindow } from "../phrases-subtopic-window/PhrasesSubtopicWindow";
 import { InformationWindow } from "../information-window/InformationWindow";
 import { TestWindow } from "../test-window/TestWindow";
-import { ReviewWindow} from "../review-window/ReviewWindow";
+import { ReviewWindow } from "../review-window/ReviewWindow";
 
 const appBar = {
   position: "static",
@@ -44,14 +44,14 @@ const registrationAppBarButton = {
   fontSize: "11px",
   fontWeight: 100,
   color: 'white',
-  backgroundColor:'#2196f3',
+  backgroundColor: '#2196f3',
   '&:hover': {
     backgroundColor: '#57a9eb',
-    color:'black',
+    color: 'black',
     '&:active': {
-        backgroundColor: '#57a9eb',
+      backgroundColor: '#57a9eb',
     }
-}
+  }
 }
 
 const pageTitle = {
@@ -66,28 +66,28 @@ export const MainWindow = () => {
   const [token, setToken] = useState<string | undefined>(undefined);
   const [lessonToDisplay, setLessonToDisplay] = useState<ViewLesson | undefined>(undefined);
   const [partToDisplay, setPartToDisplay] = useState<ViewLessonPart | undefined>(undefined);
-  const [userType, setUserType]= useState<string|undefined>(undefined);
+  const [userType, setUserType] = useState<string | undefined>(undefined);
 
   const renderClientButtons = () => {
     if (token !== undefined)
-        return (
+      return (
         <Box>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexiconAddition")}>Leksikos pridėjimas</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("phraseAddition")}>Frazių pridėjimas</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("lessonAddition")}>Pamokų pridėjimas</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("exportation")}>Eksportavimas</Button>
-        </Box> )
-    else if (token !== undefined&& userType==='user')
-        return (
+          <Button id='lexiconAdditionBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexiconAddition")}>Leksikos pridėjimas</Button>
+          <Button id='phraseAdditionBtn' sx={appBarButton} variant="text" onClick={() => setPage("phraseAddition")}>Frazių pridėjimas</Button>
+          <Button id='lessonAdditionBtn' sx={appBarButton} variant="text" onClick={() => setPage("lessonAddition")}>Pamokų pridėjimas</Button>
+          <Button id='eksportationBtn' sx={appBarButton} variant="text" onClick={() => setPage("exportation")}>Eksportavimas</Button>
+        </Box>)
+    else if (token !== undefined && userType === 'user')
+      return (
         <Box>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("review")}>Atsiliepimai</Button>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("review")}>Atsiliepimai</Button>
         </Box>
-        )
-    else 
-        return (<Box>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("admin")}>Administracija</Button>
-          </Box>)
-}
+      )
+    else
+      return (<Box>
+        <Button id='adminBtn' sx={appBarButton} variant="text" onClick={() => setPage("admin")}>Administracija</Button>
+      </Box>)
+  }
 
   return page === "landing" ? (
     <Box>
@@ -96,10 +96,10 @@ export const MainWindow = () => {
           {renderClientButtons()}
         </Box>
         <Box sx={userButtonsBox}>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
         </Box>
       </AppBar>
       <Box sx={pageTitle}>
@@ -110,25 +110,25 @@ export const MainWindow = () => {
       <LandingWindow pageSetter={setPage} lessonSetter={setLessonToDisplay} />
     </Box>
   ) : page === "lexicon" ? (
-      <Box>
-        <AppBar sx={appBar}>
-          <Box sx={adminButtonsBox}>
-            {renderClientButtons()}
-          </Box>
-          <Box sx={userButtonsBox}>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
-          </Box>
-        </AppBar>
-        <Box sx={pageTitle}>
-          <Typography variant="pageTitle">
-            Kompiuterinė lietuvių gestų kalbos mokymosi programa
-          </Typography>
+    <Box>
+      <AppBar sx={appBar}>
+        <Box sx={adminButtonsBox}>
+          {renderClientButtons()}
         </Box>
-        <LexiconWindow pageSetter={setPage} />
+        <Box sx={userButtonsBox}>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+        </Box>
+      </AppBar>
+      <Box sx={pageTitle}>
+        <Typography variant="pageTitle">
+          Kompiuterinė lietuvių gestų kalbos mokymosi programa
+        </Typography>
       </Box>
+      <LexiconWindow pageSetter={setPage} />
+    </Box>
   ) : page === "phrases" ? (
     <Box>
       <AppBar sx={appBar}>
@@ -136,10 +136,10 @@ export const MainWindow = () => {
           {renderClientButtons()}
         </Box>
         <Box sx={userButtonsBox}>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
         </Box>
       </AppBar>
       <Box sx={pageTitle}>
@@ -156,10 +156,10 @@ export const MainWindow = () => {
           {renderClientButtons()}
         </Box>
         <Box sx={userButtonsBox}>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
         </Box>
       </AppBar>
       <Box sx={pageTitle}>
@@ -169,17 +169,17 @@ export const MainWindow = () => {
       </Box>
       <ReviewWindow pageSetter={setPage} />
     </Box>
-    ) : page === "lesson" ? (
+  ) : page === "lesson" ? (
     <Box>
       <AppBar sx={appBar}>
         <Box sx={adminButtonsBox}>
           {renderClientButtons()}
         </Box>
         <Box sx={userButtonsBox}>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
         </Box>
       </AppBar>
       <Box sx={pageTitle}>
@@ -191,104 +191,104 @@ export const MainWindow = () => {
     </Box>
   ) : page === "grammar" ? (
     <Box>
-        <AppBar sx={appBar}>
-          <Box sx={adminButtonsBox}>
-            {renderClientButtons()}
-          </Box>
-          <Box sx={userButtonsBox}>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
-          </Box>
-        </AppBar>
-        <Box sx={pageTitle}>
-          <Typography variant="pageTitle">
-            Kompiuterinė lietuvių gestų kalbos mokymosi programa
-          </Typography>
+      <AppBar sx={appBar}>
+        <Box sx={adminButtonsBox}>
+          {renderClientButtons()}
         </Box>
-        <GrammarWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+        <Box sx={userButtonsBox}>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+        </Box>
+      </AppBar>
+      <Box sx={pageTitle}>
+        <Typography variant="pageTitle">
+          Kompiuterinė lietuvių gestų kalbos mokymosi programa
+        </Typography>
       </Box>
+      <GrammarWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+    </Box>
   ) : page === "information" ? (
     <Box>
-        <AppBar sx={appBar}>
-          <Box sx={adminButtonsBox}>
-            {renderClientButtons()}
-          </Box>
-          <Box sx={userButtonsBox}>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
-          </Box>
-        </AppBar>
-        <Box sx={pageTitle}>
-          <Typography variant="pageTitle">
-            Kompiuterinė lietuvių gestų kalbos mokymosi programa
-          </Typography>
+      <AppBar sx={appBar}>
+        <Box sx={adminButtonsBox}>
+          {renderClientButtons()}
         </Box>
-        <InformationWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+        <Box sx={userButtonsBox}>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+        </Box>
+      </AppBar>
+      <Box sx={pageTitle}>
+        <Typography variant="pageTitle">
+          Kompiuterinė lietuvių gestų kalbos mokymosi programa
+        </Typography>
       </Box>
+      <InformationWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+    </Box>
   ) : page === "test" ? (
     <Box>
-        <AppBar sx={appBar}>
-          <Box sx={adminButtonsBox}>
-            {renderClientButtons()}
-          </Box>
-          <Box sx={userButtonsBox}>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
-          </Box>
-        </AppBar>
-        <Box sx={pageTitle}>
-          <Typography variant="pageTitle">
-            Kompiuterinė lietuvių gestų kalbos mokymosi programa
-          </Typography>
+      <AppBar sx={appBar}>
+        <Box sx={adminButtonsBox}>
+          {renderClientButtons()}
         </Box>
-        <TestWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+        <Box sx={userButtonsBox}>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+        </Box>
+      </AppBar>
+      <Box sx={pageTitle}>
+        <Typography variant="pageTitle">
+          Kompiuterinė lietuvių gestų kalbos mokymosi programa
+        </Typography>
       </Box>
+      <TestWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+    </Box>
   ) : page === "lexiconSubtopic" ? (
     <Box>
-        <AppBar sx={appBar}>
-          <Box sx={adminButtonsBox}>
-            {renderClientButtons()}
-          </Box>
-          <Box sx={userButtonsBox}>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
-          </Box>
-        </AppBar>
-        <Box sx={pageTitle}>
-          <Typography variant="pageTitle">
-            Kompiuterinė lietuvių gestų kalbos mokymosi programa
-          </Typography>
+      <AppBar sx={appBar}>
+        <Box sx={adminButtonsBox}>
+          {renderClientButtons()}
         </Box>
-        <LexiconSubtopicWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+        <Box sx={userButtonsBox}>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+        </Box>
+      </AppBar>
+      <Box sx={pageTitle}>
+        <Typography variant="pageTitle">
+          Kompiuterinė lietuvių gestų kalbos mokymosi programa
+        </Typography>
       </Box>
+      <LexiconSubtopicWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+    </Box>
   ) : page === "phrasesSubtopic" ? (
     <Box>
-        <AppBar sx={appBar}>
-          <Box sx={adminButtonsBox}>
-            {renderClientButtons()}
-          </Box>
-          <Box sx={userButtonsBox}>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-            <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
-          </Box>
-        </AppBar>
-        <Box sx={pageTitle}>
-          <Typography variant="pageTitle">
-            Kompiuterinė lietuvių gestų kalbos mokymosi programa
-          </Typography>
+      <AppBar sx={appBar}>
+        <Box sx={adminButtonsBox}>
+          {renderClientButtons()}
         </Box>
-        <PhrasesSubtopicWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+        <Box sx={userButtonsBox}>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+        </Box>
+      </AppBar>
+      <Box sx={pageTitle}>
+        <Typography variant="pageTitle">
+          Kompiuterinė lietuvių gestų kalbos mokymosi programa
+        </Typography>
       </Box>
+      <PhrasesSubtopicWindow pageSetter={setPage} lesson={lessonToDisplay} part={partToDisplay} partSetter={setPartToDisplay} lessonSetter={setLessonToDisplay} />
+    </Box>
   ) : (
     <Box>
       <AppBar sx={appBar}>
@@ -296,10 +296,10 @@ export const MainWindow = () => {
           {renderClientButtons()}
         </Box>
         <Box sx={userButtonsBox}>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
-          <Button sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
+          <Button id='reviewBtn' sx={appBarButton} variant="text" onClick={() => setPage("reviews")}>Atsiliepimai</Button>
+          <Button id='landingBtn' sx={appBarButton} variant="text" onClick={() => setPage("landing")}>Pradžia</Button>
+          <Button id='lexiconBtn' sx={appBarButton} variant="text" onClick={() => setPage("lexicon")}>Leksika</Button>
+          <Button id='phrasesBtn' sx={appBarButton} variant="text" onClick={() => setPage("phrases")}>Frazės</Button>
         </Box>
       </AppBar>
       <Box sx={pageTitle}>
@@ -307,7 +307,7 @@ export const MainWindow = () => {
           Lietuvių gestų kalbos mokymosi programos administravimas
         </Typography>
       </Box>
-      <ClientWindow setToken={setToken} token={token} page={page}  pageSetter={setPage} setUserType={setUserType} userType={userType}/>
-  </Box>
+      <ClientWindow setToken={setToken} token={token} page={page} pageSetter={setPage} setUserType={setUserType} userType={userType} />
+    </Box>
   );
 };
