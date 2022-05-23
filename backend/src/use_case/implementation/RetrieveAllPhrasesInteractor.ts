@@ -11,7 +11,7 @@ export class RetrieveAllPhrasesInteractor implements RetrieveAllPhrasesUseCase {
     }
     
     retrieve(): BoundaryPhrase[] {
-        return this.phraseGW.retrieveAll().map(element => this.convertD2BPhrase(element));
+        return this.phraseGW.retrieveAll().sort((a, b) => a.getPhrase().localeCompare(b.getPhrase())).map(element => this.convertD2BPhrase(element));
     }
 
     private convertD2BPhrase(phrase: Phrase): BoundaryPhrase {
