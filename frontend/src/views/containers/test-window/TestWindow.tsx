@@ -55,7 +55,7 @@ const useStyles = makeStyles({
         borderBottom: "1px solid #8F8F8F",
         borderRight: "1px solid #8F8F8F",
         width: "70%",
-        position: 'relative'
+        position: 'relative',
     },
 
     searchField: {
@@ -100,9 +100,10 @@ const useStyles = makeStyles({
     lessonButtonContainer: {
         display: 'flex',
         flexDirection: 'row',
-        position: 'absolute',
-        bottom: '3vh',
-        right: '35%'
+        paddingTop: '1vh',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        height: '100%'
     },
 
     lessonButtons: {
@@ -117,7 +118,7 @@ const useStyles = makeStyles({
     buttonContainer: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     submitButton: {
