@@ -25,11 +25,6 @@ export class InMemoryPhraseGateway implements PhraseGateway {
         // });
     }
     
-
-    constructor(filename: string) {
-        this.filename = filename;
-    }
-
     sendToExport(phrasesArray: Phrase[]): void {
         try {
             this.fs.writeFileSync('LexiconUnitsToExport.json', JSON.stringify(phrasesArray));
