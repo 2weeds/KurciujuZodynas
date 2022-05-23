@@ -9,7 +9,6 @@ import { useSnackbar } from "notistack";
 
 interface Props {
     setToken: (response: string) => void;
-    // setUserType: (responce: string) => void;
 }
 
 const useStyles = makeStyles({
@@ -55,7 +54,7 @@ const useStyles = makeStyles({
     
     submitButton: {
         marginTop: "5vh",
-        width: "5vw",
+        width: "10vw",
         background: "linear-gradient(45deg, #2196f3 30%, #A9DDD6 90%)",
         color: "#EBEBEB",
         fontWeight: 600,

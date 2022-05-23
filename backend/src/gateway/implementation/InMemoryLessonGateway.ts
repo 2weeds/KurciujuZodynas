@@ -1,10 +1,13 @@
 import { Lesson } from "../../domain/Lesson";
-import { LessonPart } from "../../domain/LessonPart";
 import { LessonGateway } from "../api/LessonGateway";
 
 export class InMemoryLessonGateway implements LessonGateway {
-
+    private readonly filename: string;
     private readonly fs = require('fs');
+
+    constructor(filename: string) {
+        this.filename = filename;
+    }
 
     createLesson(lesson: Lesson): void {
         const jsonObj = this.readFromFileOrCreateIfFileNotFound();
@@ -14,7 +17,7 @@ export class InMemoryLessonGateway implements LessonGateway {
             } else {
                 jsonObj.lessons.push(lesson);
                 const json = JSON.stringify(jsonObj);
-                this.fs.writeFileSync('Lessons.json', json);
+                this.fs.writeFileSync(this.filename + '.json', json);
             }
         } catch (err) {
             const error = err as Error;
@@ -51,11 +54,11 @@ export class InMemoryLessonGateway implements LessonGateway {
             lessons: []
         };
         try {
-            const readLines = this.fs.readFileSync('Lessons.json','utf8');
+            const readLines = this.fs.readFileSync(this.filename + '.json','utf8');
             obj = JSON.parse(readLines);
         } catch (err) {
             const json = JSON.stringify(obj);
-            this.fs.writeFileSync('Lessons.json', json);
+            this.fs.writeFileSync(this.filename + '.json', json);
         }
 
         return obj;

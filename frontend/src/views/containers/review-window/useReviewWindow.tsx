@@ -1,12 +1,26 @@
 import { ViewPhrase } from "../../../controller/model/ViewPhrase";
 import { ViewReview } from "../../../controller/model/ViewReview";
-import { SendReviewController } from "../../../controller/SendReviewController";
+import { CreateReviewController } from "../../../controller/CreateReviewController";
+import { RetrieveAllReviewsController } from "../../../controller/RetrieveAllReviewsController";
+import { useRetrievalObserver } from "../observer/useRetrievalObserver";
 
-export default function useReviewWindow(
-    SendReviewController: SendReviewController,
+export function useSendReviewWindow(
+    CreateReviewController: CreateReviewController,
   ): (review: ViewReview) => void {
     const send = (review: ViewReview) => {
-        SendReviewController.sendReview(review).subscribe();
+        CreateReviewController.sendReview(review).subscribe();
     };
     return send;
   }
+
+
+export function useRetrieveReviewWindow(
+  retrieveAllReviewsController: RetrieveAllReviewsController,
+  setResponse: (reviews: ViewReview[]) => void
+): () => void {
+  const observer = useRetrievalObserver(setResponse);
+  const retrieve = () => {
+    retrieveAllReviewsController.retrieve().subscribe(observer);
+  };
+  return retrieve;
+}

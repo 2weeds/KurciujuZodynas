@@ -259,7 +259,7 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
                             <table aria-label="custom pagination table">
                                 <thead>
                                     <tr>
-                                        <th>Žodis</th>
+                                        <th>Frazė</th>
                                     </tr>
                                 </thead>
                                 <tbody>

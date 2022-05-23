@@ -94,6 +94,26 @@ const useStyles = makeStyles({
         color: 'green',
         fontSize: '36px',
     },
+
+    elementTable: {
+        paddingTop: '2vh',
+    },
+
+    lessonButtonContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        paddingTop: '1vh',
+        justifyContent: 'center'
+    },
+
+    lessonButtons: {
+        color: 'black',
+        fontWeight: 600,
+        fontSize: "13px",
+        "&:hover": {
+            background: "#D5D7D7"
+        }
+    }
 })
 
 const videoModal = {
@@ -119,7 +139,7 @@ function removeExtraWhitespaces(element: string) {
     return element.trim().split(/\s\s+/g).join(' ');
 }
 
-function filterUnits(searchValue: string, allUnits: ViewLexiconUnit[], setUnitsToDisplay: (units: ViewLexiconUnit[]) => void): void {
+function filterUnits(searchValue: string, allUnits: ViewLexiconUnit[]): ViewLexiconUnit[] {
     const filteredUnits: ViewLexiconUnit[] = [];
 
     allUnits.forEach(unit => {
@@ -127,7 +147,24 @@ function filterUnits(searchValue: string, allUnits: ViewLexiconUnit[], setUnitsT
             filteredUnits.push(unit);
     });
 
-    setUnitsToDisplay(filteredUnits);
+    return filteredUnits;
+}
+
+function setPageElements(pageNumber: number, unitsToDisplay: ViewLexiconUnit[], isLastPage: boolean,
+                         setUnitsToDisplay: (units: ViewLexiconUnit[]) => void,
+                         setPageBlocker: (isLastPage: boolean) => void): void {
+    const elementsPerPage = 12;
+    const firstElementIndex = (pageNumber - 1) * elementsPerPage;
+    const secondElementIndex = (pageNumber * elementsPerPage);
+    const unitsInCurrentPage: ViewLexiconUnit[] = unitsToDisplay.slice(firstElementIndex, secondElementIndex);
+
+    if (secondElementIndex >= unitsToDisplay.length) {
+        setPageBlocker(true);
+    } else if (isLastPage === true) {
+        setPageBlocker(false);
+    }
+
+    setUnitsToDisplay(unitsInCurrentPage);
 }
 
 function isIncluded(unit: ViewLexiconUnit, searchValue: string) {
@@ -140,6 +177,8 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
     const lexiconUnit = useLexiconWindow(lexiconUnitsRetrievalController, setAllUnits);
     const [searchValue, setSearchValue] = useState<string>('');
     const [file, setFile] = useState<any>(new File([], 'empty'));
+    const [pageNumber, setPageNumber] = useState<number>(1); 
+    const [isLastPage, setIsLastPage] = useState<boolean>(false);
     const styleClasses = useStyles();
 
     useEffect(() => {
@@ -147,17 +186,31 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
     }, []);
 
     useEffect(() => {
-        filterUnits(searchValue, allUnits, setUnitsToDisplay);
-    }, [allUnits, searchValue])
+        const filteredUnits = filterUnits(searchValue, allUnits);
+        setPageElements(pageNumber, filteredUnits, isLastPage, setUnitsToDisplay, setIsLastPage);
+    }, [allUnits, searchValue, pageNumber])
 
     const handleSearchBarChange = (element: any) => {
         const inputValue = element.target.value.trim();
         const trimmedValue = removeExtraWhitespaces(inputValue);
         setSearchValue(trimmedValue);
+        setPageNumber(1);
     }
 
     const handleOutsideClick = () => {
         setFile(new File([], 'empty'));
+    }
+
+    const handleNavigationClick = (direction: string) => {
+        if (direction === "back") {
+            if (pageNumber > 1) {
+                setPageNumber(pageNumber - 1);
+            }
+        } else if (direction === "forward") {
+            if (!isLastPage) {
+                setPageNumber(pageNumber + 1);
+            }
+        }
     }
 
     const renderVideoViewer = () => {
@@ -203,23 +256,29 @@ export const LexiconWindow = ({ pageSetter }: Props) => {
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>LEKSIKA</b></Typography>
                         <TextField className={styleClasses.searchField} variant="outlined" label="Žodžio paieška" size="small" onChange={handleSearchBarChange}></TextField>
-                        <Table>
-                            <TableBody>
-                                {unitsToDisplay.map((unit, index) => (
-                                    <TableRow key={index + "-row"}>
-                                        <TableCell key={index + "-cellWord"}>
-                                            <Typography key={index + "-word"} pt="1vh" variant="aboutText">{unit.word}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellAbbr"}>
-                                            <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellPlay"}>
-                                            <PlayArrowRoundedIcon id='playVideoBtn' className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                        <Box className={styleClasses.elementTable}>
+                            <Table size='small' padding='none'>
+                                <TableBody>
+                                    {unitsToDisplay.map((unit, index) => (
+                                        <TableRow key={index + "-row"}>
+                                            <TableCell sx={{width: '45%'}} key={index + "-cellWord"}>
+                                                <Typography key={index + "-word"} pt="1vh" variant="aboutText">{unit.word}</Typography>
+                                            </TableCell>
+                                            <TableCell sx={{width: '30%'}} key={index + "-cellAbbr"}>
+                                                <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
+                                            </TableCell>
+                                            <TableCell sx={{width: '25%'}} key={index + "-cellPlay"}>
+                                                <PlayArrowRoundedIcon id='playVideoBtn' className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
+                        <Box className={styleClasses.lessonButtonContainer}>
+                            <Button id = 'backBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleNavigationClick("back")}>ATGAL</Button>
+                            <Button id = 'forwardBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleNavigationClick("forward")}>PIRMYN</Button>
+                        </Box>
                     </Box>
                 </Box>
             </Box>

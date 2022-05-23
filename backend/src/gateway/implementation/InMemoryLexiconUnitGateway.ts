@@ -3,11 +3,12 @@ import { LexiconUnitGateway } from "../api/LexiconUnitGateway";
 import JSZip from 'jszip';
 
 export class InMemoryLexiconUnitGateway implements LexiconUnitGateway {
-
-
-
+    private readonly filename: string;
     private readonly fs = require('fs');
 
+    constructor(filename: string) {
+        this.filename = filename;
+    }
 
     sendToExport(lexiconUnitsArray: LexiconUnit[]): void {
         try {
@@ -54,7 +55,7 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway {
             } else {
                 jsonObj.lexiconUnits.push(lexiconUnit);
                 const json = JSON.stringify(jsonObj);
-                this.fs.writeFileSync('LexiconUnits.json', json);
+                this.fs.writeFileSync(this.filename + '.json', json);
             }
         } catch (err) {
             const error = err as Error;
@@ -91,11 +92,11 @@ export class InMemoryLexiconUnitGateway implements LexiconUnitGateway {
             lexiconUnits: []
         };
         try {
-            const readLines = this.fs.readFileSync('LexiconUnits.json', 'utf8');
+            const readLines = this.fs.readFileSync(this.filename + '.json', 'utf8');
             obj = JSON.parse(readLines);
         } catch (err) {
             const json = JSON.stringify(obj);
-            this.fs.writeFileSync('LexiconUnits.json', json);
+            this.fs.writeFileSync(this.filename + '.json', json);
         }
 
         return obj;

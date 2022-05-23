@@ -1,7 +1,9 @@
 import { Box, Button, IconButton, InputAdornment, Rating, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ViewReview } from "../../../controller/model/ViewReview";
+import { reviewCreationController, reviewRetrievalController } from "../../../config/ControllerConfiguration";
+import {useSendReviewWindow, useRetrieveReviewWindow} from "./useReviewWindow";
 
 
 interface Props {
@@ -92,18 +94,28 @@ export const ReviewWindow = ({ pageSetter }: Props) => {
     const [ratingValue, setRatingValue] = useState<number | null>(null);
     const [reviewText, setReviewText] = useState<string>("");
     const [nameValue, setNameValue] = useState<string>("");
+    const sendReview = useSendReviewWindow(reviewCreationController)
+    const [reviews, setReviews] = useState<ViewReview[]>([]);
+    const retrieveReviews = useRetrieveReviewWindow(reviewRetrievalController,setReviews);
     const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setReviewText(event.target.value);
     };
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNameValue(event.target.value);
     };
+    const [submitStatus, setSubmitStatus] = useState<boolean>(false);
     const handleSubmitReview = () => {
-        const review = new ViewReview(nameValue, reviewText, ratingValue);
-
+        sendReview(new ViewReview(nameValue, reviewText, ratingValue));
+        setRatingValue(null);
+        setReviewText('');
+        setNameValue('');
+        setSubmitStatus(!submitStatus);
     };
-
+    useEffect(()=>{
+        retrieveReviews();
+    },[submitStatus])
     return (
+
         <Box className={styleClasses.formBox}
             sx={{
                 '& .MuiTextField-root': { m: 1 },
@@ -111,21 +123,33 @@ export const ReviewWindow = ({ pageSetter }: Props) => {
         >
             <Box className={styleClasses.form}>
                 <Box className={styleClasses.reviewForm} sx={{ overflow: 'auto' }}>
-                <Box sx={{ display: "flex", flexDirection: 'row', height: '55px', backgroundColor: 'white', borderRadius: 10, paddingLeft: '40px', margin: '5px' }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column',  width: '50%', justifyContent: 'flex-start' }}>
+                    {
+                        reviews.map(review =>(
+                            <Box sx={{ display: "flex", flexDirection: 'row', height: '55px', backgroundColor: 'white', borderRadius: 10, paddingLeft: '40px', margin: '5px' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', justifyContent: 'flex-start' }}>
+                            <Typography sx={{ height: "20px", display: 'flex', fontWeight: 'bold', marginTop: '5px', marginBottom: '5px' }}>{review.name} sako:</Typography>
+                            <Typography>{review.reviewText}</Typography>
+                        </Box>
+                        <Rating sx={{ display: 'flex', width: '50%', paddingRight: '20px', justifyContent: 'flex-end' }} name="read-only" value={review.rating} readOnly />
+                        </Box>
+                        )
+                        )
+                    }
+                    {/* <Box sx={{ display: "flex", flexDirection: 'row', height: '55px', backgroundColor: 'white', borderRadius: 10, paddingLeft: '40px', margin: '5px' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', justifyContent: 'flex-start' }}>
                             <Typography sx={{ height: "20px", display: 'flex', fontWeight: 'bold', marginTop: '5px', marginBottom: '5px' }}>Dovydas sako:</Typography>
                             <Typography>Nuostabi sistema!</Typography>
                         </Box>
-                        <Rating sx={{ display: 'flex', width: '50%', paddingRight:'20px', justifyContent: 'flex-end' }} name="read-only" value={5} readOnly />
+                        <Rating sx={{ display: 'flex', width: '50%', paddingRight: '20px', justifyContent: 'flex-end' }} name="read-only" value={5} readOnly />
                     </Box>
 
                     <Box sx={{ display: "flex", flexDirection: 'row', height: 'auto', backgroundColor: 'white', borderRadius: 10, paddingLeft: '40px', margin: '5px' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', width: '85%', justifyContent: 'flex-start' }}>
                             <Typography sx={{ height: "20px", display: 'flex', fontWeight: 'bold', marginTop: '5px', marginBottom: '5px' }} align='center'>Tomas sako:</Typography>
-                            <Typography sx={{wordWrap: "break-word" }} align='left'>Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu! Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!</Typography>
+                            <Typography sx={{ wordWrap: "break-word" }} align='left'>Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu! Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!Pritariu!</Typography>
                         </Box>
-                        <Rating  sx={{ display: 'flex', width: '20%',paddingRight:'20px', justifyContent: 'flex-end' }} name="read-only" value={3} readOnly />
-                    </Box>
+                        <Rating sx={{ display: 'flex', width: '20%', paddingRight: '20px', justifyContent: 'flex-end' }} name="read-only" value={3} readOnly />
+                    </Box> */}
 
 
 
@@ -143,13 +167,13 @@ export const ReviewWindow = ({ pageSetter }: Props) => {
                     <TextField
                         id = 'nameField'
                         label="Vardas"
-                        sx={{backgroundColor: 'white', width: '25ch' }}
+                        sx={{ backgroundColor: 'white', width: '25ch' }}
                         value={nameValue}
                         onChange={handleNameChange}
                     />
                     <TextField
                         id="outlined-multiline-flexible"
-                        sx={{backgroundColor: 'white', width: '84%' }}
+                        sx={{ backgroundColor: 'white', width: '84%' }}
                         label="Komentaras:"
                         multiline
                         minRows={5}
