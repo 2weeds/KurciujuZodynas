@@ -97,6 +97,7 @@ const useStyles = makeStyles({
 
     elementTable: {
         paddingTop: '2vh',
+        height: '100%',
     },
 
     lessonButtonContainer: {
@@ -153,7 +154,7 @@ function filterUnits(searchValue: string, allUnits: ViewLexiconUnit[]): ViewLexi
 function setPageElements(pageNumber: number, unitsToDisplay: ViewLexiconUnit[], isLastPage: boolean,
                          setUnitsToDisplay: (units: ViewLexiconUnit[]) => void,
                          setPageBlocker: (isLastPage: boolean) => void): void {
-    const elementsPerPage = 12;
+    const elementsPerPage = 11;
     const firstElementIndex = (pageNumber - 1) * elementsPerPage;
     const secondElementIndex = (pageNumber * elementsPerPage);
     const unitsInCurrentPage: ViewLexiconUnit[] = unitsToDisplay.slice(firstElementIndex, secondElementIndex);

@@ -9,7 +9,7 @@ export class CreateNewPhraseInteractor implements CreateNewPhraseUseCase {
     }
 
     create(phrase: string, file: any): void {
-        const formattedPhrase = phrase[0].toUpperCase() + phrase.slice(1, phrase.length).toLowerCase();
+        const formattedPhrase = phrase[0].toUpperCase() + phrase.slice(1, phrase.length);
         this.gateway.createPhrase(formattedPhrase, file);
     }
 

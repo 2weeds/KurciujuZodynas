@@ -100,9 +100,8 @@ const useStyles = makeStyles({
     lessonButtonContainer: {
         display: 'flex',
         flexDirection: 'row',
-        position: 'absolute',
-        bottom: '3vh',
-        right: '35%'
+        paddingTop: '1vh',
+        justifyContent: 'center'
     },
 
     lessonButtons: {
@@ -116,7 +115,8 @@ const useStyles = makeStyles({
 
     grammarText: {
         overflow: 'auto',
-        marginBottom: '3vh'
+        marginBottom: '3vh',
+        height: '100%'
     }
 })
 
