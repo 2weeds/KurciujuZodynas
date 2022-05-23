@@ -99,12 +99,16 @@ const useStyles = makeStyles({
         fontSize: '36px',
     },
 
+    elementTable: {
+        overflow: 'auto',
+        height: '100%'
+    },
+
     lessonButtonContainer: {
         display: 'flex',
         flexDirection: 'row',
-        position: 'absolute',
-        bottom: '3vh',
-        right: '35%'
+        paddingTop: '1vh',
+        justifyContent: 'center'
     },
 
     lessonButtons: {
@@ -281,24 +285,26 @@ export const LexiconSubtopicWindow = ({ pageSetter, lesson, part, partSetter, le
                     </Modal>
                     <Box className={clsx(styleClasses.sides, styleClasses.rightSide)}>
                         <Typography variant="bookPageTitle"><b>LEKSIKA</b></Typography>
-                        <Divider sx={{paddingTop: '3vh'}} />
-                        <Table>
-                            <TableBody>
-                                {part?.subTopics.get('lexicon').map((unit: any, index: number) => (
-                                    <TableRow key={index + "-row"}>
-                                        <TableCell key={index + "-cellWord"}>
-                                            <Typography key={index + "-word"} pt="1vh" variant="aboutText">{unit.word}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellAbbr"}>
-                                            <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
-                                        </TableCell>
-                                        <TableCell key={index + "-cellPlay"}>
-                                            <PlayArrowRoundedIcon id = {'videoPlayerBtn'+index} className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                        <Divider sx={{paddingTop: '3vh', marginBottom: '2vh'}} />
+                        <Box className={styleClasses.elementTable}>
+                            <Table size='small' padding='none'>
+                                <TableBody>
+                                    {part?.subTopics.get('lexicon').map((unit: any, index: number) => (
+                                        <TableRow key={index + "-row"}>
+                                            <TableCell key={index + "-cellWord"}>
+                                                <Typography key={index + "-word"} pt="1vh" variant="aboutText">{unit.word}</Typography>
+                                            </TableCell>
+                                            <TableCell key={index + "-cellAbbr"}>
+                                                <Typography key={index + "-abbr"} pt="1vh" variant="aboutText">{unit.abbreviation}</Typography>
+                                            </TableCell>
+                                            <TableCell key={index + "-cellPlay"}>
+                                                <PlayArrowRoundedIcon id = {'videoPlayerBtn'+index} className={styleClasses.playButton} key={index + "-playIcon"} onClick={() => setFile(unit.file)}></PlayArrowRoundedIcon>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
                         <Box className={styleClasses.lessonButtonContainer}>
                             <Button id = 'backBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleBackClick()}>Atgal</Button>
                             <Button id = 'forwardBtn' className={styleClasses.lessonButtons} variant="text" onClick={() => handleForwardClick()}>Pirmyn</Button>

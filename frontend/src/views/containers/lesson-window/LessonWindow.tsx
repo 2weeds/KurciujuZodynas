@@ -45,7 +45,6 @@ const useStyles = makeStyles({
         borderBottom: "1px solid #074E88",
         borderLeft: "1px solid #074E88",
         boxShadow: "-4px 0px 5px 0px #0A6FC2, -8px 0px 0px 0px #0087FF, -12px 0px 5px 0px #0A6FC2, -16px 0px 0px 0px #0087FF, 0px 6px 5px 0px #908C93",
-        overflow: 'auto'
     },
 
     rightPage: {
@@ -58,7 +57,6 @@ const useStyles = makeStyles({
     },
 
     list: {
-        paddingTop: "2vh",
         paddingLeft: "3vw",
         listStyle: "disc",
     },
@@ -139,7 +137,7 @@ export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props)
                 <List className={styleClasses.list}>
                     {
                         Array.from(part.subTopics).map((arrayObject: any, index:number) => (
-                            <ListItem className={styleClasses.listItem}>
+                            <ListItem className={styleClasses.listItem} disablePadding>
                                 <Button id = {"lessonBtn"+ index} className={styleClasses.listItemButton} onClick={() => renderLessonSubtopic(part, arrayObject[0])}>
                                     {transformToLithuanian(arrayObject[0])}
                                 </Button>
@@ -169,7 +167,7 @@ export const LessonWindow = ({ pageSetter, lessonToDisplay, partSetter }: Props)
                     <Box className={clsx(styleClasses.pages, styleClasses.rightPage)}>
                         <Typography variant="bookPageTitle"><b>{lessonToDisplay.name}</b></Typography>
                         <Box className={styleClasses.lessonGoal}>
-                            <Typography pt="2vh" variant="aboutText">Pamokos tikslas - {lessonToDisplay.goal}</Typography>
+                            <Typography pt="2vh" variant="aboutText">Pamokos tikslas - {lessonToDisplay.goal.toLocaleLowerCase()}.</Typography>
                         </Box>
                         <Box className={styleClasses.buttonContainer}>
                             <Button id='startLessonBtn' className={styleClasses.submitButton} onClick={() => renderLessonSubtopic(lessonToDisplay.parts[0], Array.from(lessonToDisplay.parts[0].subTopics)[0][0])}>Pradėti pamoką</Button>

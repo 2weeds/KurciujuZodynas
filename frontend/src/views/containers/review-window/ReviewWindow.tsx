@@ -30,8 +30,8 @@ const useStyles = makeStyles({
     form: {
         display: "flex",
         flexDirection: "column",
-        width: "85%",
-        height: "85%",
+        width: "60vw",
+        height: "80vh",
         alignItems: "left",
         background: "#EBEBEB",
         boxShadow: "0px 5px 5px 0px #908C93, -10px 5px 5px -5px #908C93, 10px 5px 5px -5px #908C93",
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     reviewForm: {
         margin: '3vh',
         width: "85%",
-        height: "400px",
+        height: "85%",
         alignItems: "left",
         background: "#EBEBEB",
         overflow: "auto",

@@ -9,7 +9,7 @@ export class CreateNewLexiconUnitInteractor implements CreateNewLexiconUnitUseCa
     }
 
     create(unit: string, abbreviation: string, file: any): void {
-        const formattedUnit = unit[0].toUpperCase() + unit.slice(1, unit.length).toLowerCase();
+        const formattedUnit = unit[0].toUpperCase() + unit.slice(1, unit.length);
         this.gateway.createUnit(formattedUnit, abbreviation.toLowerCase(), file);
     }
 }
