@@ -11,7 +11,7 @@ export class RetrieveAllLexiconUnitsInteractor implements RetrieveAllLexiconUnit
     }
     
     retrieve(): BoundaryLexiconUnit[] {
-        return this.lexiconGW.retrieveAll().map(element => this.convertD2BUnit(element));
+        return this.lexiconGW.retrieveAll().sort((a, b) => a.getWord().localeCompare(b.getWord())).map(element => this.convertD2BUnit(element));
     }
 
     private convertD2BUnit(unit: LexiconUnit): BoundaryLexiconUnit {
