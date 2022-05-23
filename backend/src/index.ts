@@ -67,7 +67,6 @@ app.get('/zipDownload',(req,resp)=>{
     catch(err){
         console.log(err);
     }
-    
 })
 
 app.get('/lexicon-units', (req, resp) => {
@@ -90,6 +89,15 @@ app.get('/lessons', (req, resp) => {
     retrieveAllLessonsRoute.retrieve(req, resp);
 })
 
+app.post('/reviews', (req,resp) => {
+    createNewReviewRoute.create(req,resp);
+})
+app.get('/reviews', (req, resp)=>{
+    retrieveAllReviewsRoute.retrieve(req,resp);
+})
+app.post('/scormProps', (req,resp) => {
+    sendPhrasesToExportRoute.receiveScormProps(req,resp);
+})
 interface RequestWithFile extends express.Request {
     file: any,
 }

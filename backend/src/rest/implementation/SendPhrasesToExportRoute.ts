@@ -18,4 +18,19 @@ export class SendPhrasesToExportRoute {
             res.status(400).json(err.message);
         }
     }
+    async receiveScormProps(req:Request, res: Response):Promise<void>{
+        try{
+            var obj = {
+                authorsName:"",
+                generalInformation:"",
+            }
+            obj = req.body;
+            this.useCase.create(obj);
+            res.sendStatus(201);
+        }
+        catch (e){
+            const err = e as Error;
+            res.status(400).json(err.message);
+        }
+    }
 }

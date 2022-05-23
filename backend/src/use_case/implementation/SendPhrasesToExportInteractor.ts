@@ -8,6 +8,9 @@ export class SendPhrasesToExportInteractor implements SendPhrasesToExportUseCase
     constructor(gateway: PhraseGateway) {
         this.gateway = gateway;
     }
+    create(scormProps: {authorsName:string,generalInformation:string}): void {
+        this.gateway.createScormProps(scormProps)
+    }
     send(phrasesArray: Phrase[]): void {
         this.gateway.sendToExport(phrasesArray);
     }
