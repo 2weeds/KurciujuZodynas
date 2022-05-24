@@ -260,7 +260,6 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
         }).then((resp) => {
             FileDownload(resp.data, 'ScormExample.zip')
         })
-
     };
 
     return (

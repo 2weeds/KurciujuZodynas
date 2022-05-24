@@ -73,12 +73,11 @@ app.post('/get-phrases-to-export', (req,resp)=>{
 })
 app.get('/zipDownload',(req,resp)=>{
     try{
-        resp.download('../backend/src/fileStorage/Scorm/ZipToExport.txt');
+        resp.download('../backend/src/fileStorage/ZipToExportScorm.txt');
     }
     catch(err){
         console.log(err);
     }
-    
 })
 
 app.get('/lexicon-units', (req, resp) => {
@@ -106,6 +105,12 @@ app.post('/reviews', (req,resp) => {
 })
 app.get('/reviews', (req, resp)=>{
     retrieveAllReviewsRoute.retrieve(req,resp);
+})
+app.post('/phraseScormProps', (req,resp) => {
+    sendPhrasesToExportRoute.receiveScormProps(req,resp);
+})
+app.post('/lexiconUnitScormProps', (req,resp) => {
+    sendPhrasesToExportRoute.receiveScormProps(req,resp);
 })
 interface RequestWithFile extends express.Request {
     file: any,

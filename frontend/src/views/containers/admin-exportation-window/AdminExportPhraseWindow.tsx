@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { styled } from '@mui/system';
 import TablePaginationUnstyled from '@mui/base/TablePaginationUnstyled';
@@ -186,15 +186,17 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
     const phrase = usePhraseWindow(phrasesRetrievalController, setRows);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsToExport, updateItemsToExport] = useState<ViewPhrase[]>([]);
-    const phrasesArray = useAdminExportPhraseWindow(phrasesSenderController)
+    const phrasesArray = useAdminExportPhraseWindow(phrasesSenderController);
+    const [itemsToExportStatus, setItemsToExportStatus]=useState<boolean>(true);
     const emptyLeftRows =
         leftTablePage > 0 ? Math.max(0, (1 + leftTablePage) * rowsPerLeftPage - rows.length) : 0;
     useEffect(() => {
         phrase();
     }, []);
     useEffect(()=>{
+        itemsToExportCheck();
         phrasesArray(itemsToExport);
-    },[rows]);
+    },[itemsToExport,rows]);
     const emptyRightRows =
         rightTablePage > 0 ? Math.max(0, (1 + rightTablePage) * rowsPerRightPage - itemsToExport.length) : 0;
 
@@ -229,6 +231,7 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
     const handleClickRemove = (word: ViewPhrase,) => {
         rows.push(word);
         updateItemsToExport(itemsToExport.filter(val => val !== word))
+        console.log(itemsToExport);
     };
     const downloadZip = (data: ViewPhrase[],) => {
         Axios({
@@ -239,7 +242,14 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
             FileDownload(resp.data, 'ScormExample.zip')
         })
     };
-
+    const itemsToExportCheck = ()=>{
+        if(itemsToExport.length>0){
+            setItemsToExportStatus(false);
+        }
+        else{
+            setItemsToExportStatus(true);
+        }
+    }
 
     const styleClasses = useStyles();
     return (
@@ -378,7 +388,13 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
                     </Box>
                 </Box>
                 <Box className={styleClasses.form}>
-                    <Button id='exportBtn' className={styleClasses.submitButton} onClick={() => {downloadZip(itemsToExport)}}>Eksportuoti</Button>
+                    <Box sx={{display:'flex',flexDirection:'column'}}>
+                        {itemsToExportStatus?
+                        <Typography variant="caption" sx={{color:'red'}}>
+                        Pasirinkite bent vieną elementą*
+                        </Typography>:null}
+                        <Button id='exportBtn' className={styleClasses.submitButton} disabled = {itemsToExportStatus} onClick={() => {downloadZip(itemsToExport)}}>Eksportuoti</Button>
+                    </Box>
                 </Box>
             </Box>
         </Box>

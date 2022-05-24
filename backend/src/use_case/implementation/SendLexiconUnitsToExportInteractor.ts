@@ -8,6 +8,9 @@ export class SendLexiconUnitsToExportInteractor implements SendLexiconUnitsToExp
     constructor(gateway: LexiconUnitGateway) {
         this.gateway = gateway;
     }
+    create(scormProps: {authorsName:string,generalInformation:string}): void {
+        this.gateway.createScormProps(scormProps)
+    }
     send(lexiconUnitsArray: LexiconUnit[]): void {
         this.gateway.sendToExport(lexiconUnitsArray);
     }

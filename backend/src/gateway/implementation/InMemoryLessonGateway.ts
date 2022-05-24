@@ -8,7 +8,7 @@ export class InMemoryLessonGateway implements LessonGateway {
     constructor(filename: string) {
         this.filename = filename;
     }
-
+    
     createLesson(lesson: Lesson): void {
         const jsonObj = this.readFromFileOrCreateIfFileNotFound();
         try {
