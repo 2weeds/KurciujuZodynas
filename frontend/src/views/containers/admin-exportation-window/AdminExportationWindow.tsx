@@ -80,11 +80,16 @@ export const AdminExportationWindow = ({ token, page, pageSetter }: Props) => {
       setFieldsState(true);
     }
   };
-  const sendScormProps = () => {
+  const sendPhraseScormProps = () => {
     scormProps.authorsName = authorsName;
     scormProps.generalInformation = generalInformation;
-    Axios.post('http://localhost:8000/scormProps', scormProps)
+    Axios.post('http://localhost:8000/phraseScormProps', scormProps)
 };
+  const sendLexiconUnitScormProps = () => {
+    scormProps.authorsName = authorsName;
+    scormProps.generalInformation = generalInformation;
+    Axios.post('http://localhost:8000/lexiconUnitScormProps', scormProps)
+  };
   useEffect(()=>{fieldsChecker(authorsName,generalInformation)},[]);
   useEffect(()=>{fieldsChecker(authorsName,generalInformation)},[authorsName,generalInformation]);
   return (
@@ -113,7 +118,7 @@ export const AdminExportationWindow = ({ token, page, pageSetter }: Props) => {
       <Box className={styleClasses.form}>
         <Button id='phraseBtn' className={styleClasses.submitButton} disabled={fieldsState} onClick={() => 
         {
-          sendScormProps();
+          sendPhraseScormProps();
           pageSetter("exportPhrase");
         }
         }>
@@ -121,7 +126,7 @@ export const AdminExportationWindow = ({ token, page, pageSetter }: Props) => {
         </Button>
         <Button id='lexiconUnitBtn' className={styleClasses.submitButton} disabled={fieldsState} onClick={() => 
         {
-          sendScormProps();
+          sendLexiconUnitScormProps();
           pageSetter("exportLexicon");
         }
         }>

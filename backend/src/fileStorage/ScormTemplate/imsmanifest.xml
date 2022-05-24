@@ -9,46 +9,11 @@
 <organizations default="eXem_template60c9975c267adb22552">  
     <organization identifier="eXem_template60c9975c267adb22552" structure="hierarchical">
         <title>Aišku</title>
-<item isvisible="true" identifierref="Index_id">
-    <title>Lietuvių gestų kalbos mokymosi programa</title>
-<item identifier="ITEMID1" isvisible="true" identifierref="Res_id_1">
-    <title>Aišku</title>
-</item>
-<item identifier="ITEMID2" isvisible="true" identifierref="Res_id_2">
-    <title>Apkurtęs</title>
-</item>
-<item identifier="ITEMID3" isvisible="true" identifierref="Res_id_3">
-    <title>Apkurtęss</title>
-</item>
-</item>
+ITEMS
   </organization>
 </organizations>
 <resources>
-  <resource identifier="Index_id" type="webcontent" adlcp:scormtype="sco" href="index.html"> 
-    <file href="index.html"/> 
-    <file href="exe_html5.js"/>
-    <file href="udl-content.css"/>
-    <file href="udl-content.js"/>
-    <dependency identifierref="COMMON_FILES"/>
-  </resource>
-  <resource identifier="Res_id_1" type="webcontent" adlcp:scormtype="sco" href="1_zodis.html"> 
-    <file href="1_zodis.html"/> 
-    <file href="exe_html5.js"/>
-    <file href="Aisku.ogg"/>
-    <dependency identifierref="COMMON_FILES"/>
-  </resource>
-  <resource identifier="Res_id_2" type="webcontent" adlcp:scormtype="sco" href="2_zodis.html"> 
-    <file href="2_zodis.html"/> 
-    <file href="exe_html5.js"/>
-    <file href="Apkurtes.ogg"/>
-    <dependency identifierref="COMMON_FILES"/>
-  </resource>
-  <resource identifier="Res_id_3" type="webcontent" adlcp:scormtype="sco" href="2_zodis.html"> 
-    <file href="2_zodis.html"/> 
-    <file href="exe_html5.js"/>
-    <file href="Apkurtes.ogg"/>
-    <dependency identifierref="COMMON_FILES"/>
-  </resource>
+  RESOURCES
   <resource identifier="COMMON_FILES" type="webcontent" adlcp:scormtype="asset">
     <file href="config.xml"/>
     <file href="content.css"/>

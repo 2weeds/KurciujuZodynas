@@ -11,7 +11,7 @@
   <string role="key" value="_addSearchBox"></string>
   <bool value="0"></bool>
   <string role="key" value="_author"></string>
-  <unicode value="AUTHOR_NAME"></unicode>
+  <unicode value= "" ></unicode>
   <string role="key" value="_backgroundImg"></string>
   <unicode value=""></unicode>
   <string role="key" value="_contextMode"></string>
@@ -19,7 +19,7 @@
   <string role="key" value="_contextPlace"></string>
   <unicode value="classroom"></unicode>
   <string role="key" value="_description"></string>
-  <unicode value="GENERAL_DESCRIPTION"></unicode>
+  <unicode value=""></unicode>
   <string role="key" value="_docType"></string>
   <unicode value="HTML5"></unicode>
   <string role="key" value="_exportElp"></string>
@@ -702,11 +702,11 @@
     <string role="key" value="coverage"></string>
     <unicode value=""></unicode>
     <string role="key" value="creator"></string>
-    <unicode value="AUTHOR_NAME"></unicode>
+    <unicode value= "" ></unicode>
     <string role="key" value="date"></string>
     <unicode value="2022-05-16"></unicode>
     <string role="key" value="description"></string>
-    <unicode value="GENERAL_DESCRIPTION"></unicode>
+    <unicode value=""></unicode>
     <string role="key" value="format"></string>
     <unicode value=""></unicode>
     <string role="key" value="identifier"></string>
@@ -714,7 +714,7 @@
     <string role="key" value="language"></string>
     <unicode value="en"></unicode>
     <string role="key" value="publisher"></string>
-    <unicode value="AUTHOR_NAME"></unicode>
+    <unicode value= "" ></unicode>
     <string role="key" value="relation"></string>
     <unicode value=""></unicode>
     <string role="key" value="rights"></string>
@@ -1074,7 +1074,7 @@
             <string role="key" value="extensiontype_"></string>
             <none></none>
             <string role="key" value="valueOf_"></string>
-            <string value="BEGIN:VCARD VERSION:3.0 FN:AUTHOR_NAME EMAIL;TYPE=INTERNET: ORG: END:VCARD"></string>
+            <string value="BEGIN:VCARD VERSION:3.0 FN: EMAIL;TYPE=INTERNET: ORG: END:VCARD"></string>
            </dictionary>
           </instance>
          </list>
@@ -1581,7 +1581,7 @@
             <string role="key" value="extensiontype_"></string>
             <none></none>
             <string role="key" value="valueOf_"></string>
-            <string value="BEGIN:VCARD VERSION:3.0 FN:AUTHOR_NAME EMAIL;TYPE=INTERNET: ORG: END:VCARD"></string>
+            <string value="BEGIN:VCARD VERSION:3.0 FN: EMAIL;TYPE=INTERNET: ORG: END:VCARD"></string>
            </dictionary>
           </instance>
          </list>
