@@ -205,6 +205,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     const lexiconUnit = useLexiconWindow(lexiconUnitsRetrievalController, setRows);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsToExport, updateItemsToExport] = useState<ViewLexiconUnit[]>([]);
+    const [itemsToExportStatus, setItemsToExportStatus]=useState<boolean>(true);
     const lexiconUnitsArray = useAdminExportLexiconWindow(lexiconUnitsSenderController)
 
     const emptyLeftRows =
@@ -213,6 +214,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
         lexiconUnit();
     }, []);
     useEffect(() => {
+        itemsToExportCheck();
         lexiconUnitsArray(itemsToExport);
     }, [rows]);
     const emptyRightRows =
@@ -230,6 +232,14 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     ) => {
         setRightPage(newPage);
     };
+    const itemsToExportCheck = ()=>{
+        if(itemsToExport.length>0){
+            setItemsToExportStatus(false);
+        }
+        else{
+            setItemsToExportStatus(true);
+        }
+    }
     const handleChangeRowsPerLeftPage = (
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -396,7 +406,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                     </Box>
                 </Box>
                 <Box className={styleClasses.form}>
-                    <Button id='exportBtn' className={styleClasses.submitButton} onClick={() => { downloadZip(itemsToExport) }}>Eksportuoti</Button>
+                    <Button id='exportBtn' className={styleClasses.submitButton} disabled = {itemsToExportStatus} onClick={() => { downloadZip(itemsToExport) }}>Eksportuoti</Button>
                 </Box>
             </Box>
         </Box>

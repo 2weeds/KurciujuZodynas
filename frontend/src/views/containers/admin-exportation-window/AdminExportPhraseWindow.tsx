@@ -196,7 +196,7 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
     useEffect(()=>{
         itemsToExportCheck();
         phrasesArray(itemsToExport);
-    },[itemsToExport,rows]);
+    },[rows,itemsToExport]);
     const emptyRightRows =
         rightTablePage > 0 ? Math.max(0, (1 + rightTablePage) * rowsPerRightPage - itemsToExport.length) : 0;
 
