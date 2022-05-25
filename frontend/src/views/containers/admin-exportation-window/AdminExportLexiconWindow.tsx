@@ -205,7 +205,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     const lexiconUnit = useLexiconWindow(lexiconUnitsRetrievalController, setRows);
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsToExport, updateItemsToExport] = useState<ViewLexiconUnit[]>([]);
-    const [itemsToExportStatus, setItemsToExportStatus]=useState<boolean>(true);
+    const [itemsToExportStatus, setItemsToExportStatus] = useState<boolean>(true);
     const lexiconUnitsArray = useAdminExportLexiconWindow(lexiconUnitsSenderController)
 
     const emptyLeftRows =
@@ -216,7 +216,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     useEffect(() => {
         itemsToExportCheck();
         lexiconUnitsArray(itemsToExport);
-    }, [rows]);
+    }, [rows, itemsToExport]);
     const emptyRightRows =
         rightTablePage > 0 ? Math.max(0, (1 + rightTablePage) * rowsPerRightPage - itemsToExport.length) : 0;
 
@@ -232,11 +232,11 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
     ) => {
         setRightPage(newPage);
     };
-    const itemsToExportCheck = ()=>{
-        if(itemsToExport.length>0){
+    const itemsToExportCheck = () => {
+        if (itemsToExport.length > 0) {
             setItemsToExportStatus(false);
         }
-        else{
+        else {
             setItemsToExportStatus(true);
         }
     }
@@ -303,11 +303,11 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                                             else if (val.word.toLowerCase().includes(searchTerm.toLowerCase())) {
                                                 return val
                                             }
-                                        }).map((row, index:number) => (
+                                        }).map((row, index: number) => (
                                             <tr key={row.word}>
                                                 <td style={{ width: 500 }}>
                                                     {row.word}
-                                                    <AddIcon id={'addIcon'+index}
+                                                    <AddIcon id={'addIcon' + index}
                                                         className={styleClasses.addWordForExportationButton}
                                                         onClick={() => handleClickAdd(row)}>
                                                     </AddIcon>
@@ -360,11 +360,11 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                                     {(rowsPerRightPage > 0
                                         ? itemsToExport.slice(rightTablePage * rowsPerRightPage, rightTablePage * rowsPerRightPage + rowsPerRightPage)
                                         : itemsToExport)
-                                        .map((row, index:number) => (
+                                        .map((row, index: number) => (
                                             <tr key={row.word}>
                                                 <td style={{ width: 500 }} align="right">
                                                     {row.word}
-                                                    <RemoveIcon id ={'removeIconBtn'+index}
+                                                    <RemoveIcon id={'removeIconBtn' + index}
                                                         className={styleClasses.removeWordFromExportationButton}
                                                         onClick={() => handleClickRemove(row)}>
                                                     </RemoveIcon>
@@ -406,7 +406,7 @@ export const AdminExportLexiconWindow = ({ token, page, pageSetter }: Props) => 
                     </Box>
                 </Box>
                 <Box className={styleClasses.form}>
-                    <Button id='exportBtn' className={styleClasses.submitButton} disabled = {itemsToExportStatus} onClick={() => { downloadZip(itemsToExport) }}>Eksportuoti</Button>
+                    <Button id='exportBtn' className={styleClasses.submitButton} disabled={itemsToExportStatus} onClick={() => { downloadZip(itemsToExport) }}>Eksportuoti</Button>
                 </Box>
             </Box>
         </Box>

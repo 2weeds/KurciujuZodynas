@@ -187,16 +187,16 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsToExport, updateItemsToExport] = useState<ViewPhrase[]>([]);
     const phrasesArray = useAdminExportPhraseWindow(phrasesSenderController);
-    const [itemsToExportStatus, setItemsToExportStatus]=useState<boolean>(true);
+    const [itemsToExportStatus, setItemsToExportStatus] = useState<boolean>(true);
     const emptyLeftRows =
         leftTablePage > 0 ? Math.max(0, (1 + leftTablePage) * rowsPerLeftPage - rows.length) : 0;
     useEffect(() => {
         phrase();
     }, []);
-    useEffect(()=>{
+    useEffect(() => {
         itemsToExportCheck();
         phrasesArray(itemsToExport);
-    },[rows,itemsToExport]);
+    }, [rows, itemsToExport]);
     const emptyRightRows =
         rightTablePage > 0 ? Math.max(0, (1 + rightTablePage) * rowsPerRightPage - itemsToExport.length) : 0;
 
@@ -242,11 +242,11 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
             FileDownload(resp.data, 'ScormExample.zip')
         })
     };
-    const itemsToExportCheck = ()=>{
-        if(itemsToExport.length>0){
+    const itemsToExportCheck = () => {
+        if (itemsToExport.length > 0) {
             setItemsToExportStatus(false);
         }
-        else{
+        else {
             setItemsToExportStatus(true);
         }
     }
@@ -283,13 +283,13 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
                                             else if (val.phrase.toLowerCase().includes(searchTerm.toLowerCase())) {
                                                 return val
                                             }
-                                        }).map((row, index:number) => (
+                                        }).map((row, index: number) => (
                                             <tr key={row.phrase}>{
                                                 itemsToExport.includes(row) ?
                                                     null :
                                                     <td style={{ width: 500 }}>
                                                         {row.phrase}
-                                                        <AddIcon id = {'addIconBtn'+index}
+                                                        <AddIcon id={'addIconBtn' + index}
                                                             className={styleClasses.addWordForExportationButton}
                                                             onClick={() => handleClickAdd(row)}>
                                                         </AddIcon>
@@ -342,11 +342,11 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
                                     {(rowsPerRightPage > 0
                                         ? itemsToExport.slice(rightTablePage * rowsPerRightPage, rightTablePage * rowsPerRightPage + rowsPerRightPage)
                                         : itemsToExport)
-                                        .map((row, index:number) => (
+                                        .map((row, index: number) => (
                                             <tr key={row.phrase}>
                                                 <td style={{ width: 500 }} align="right">
                                                     {row.phrase}
-                                                    <RemoveIcon id = {'removeIconBtn'+index}
+                                                    <RemoveIcon id={'removeIconBtn' + index}
                                                         className={styleClasses.removeWordFromExportationButton}
                                                         onClick={() => handleClickRemove(row)}>
                                                     </RemoveIcon>
@@ -388,12 +388,12 @@ export const AdminExportPhraseWindow = ({ token, page, pageSetter }: Props) => {
                     </Box>
                 </Box>
                 <Box className={styleClasses.form}>
-                    <Box sx={{display:'flex',flexDirection:'column'}}>
-                        {itemsToExportStatus?
-                        <Typography variant="caption" sx={{color:'red'}}>
-                        Pasirinkite bent vieną elementą*
-                        </Typography>:null}
-                        <Button id='exportBtn' className={styleClasses.submitButton} disabled = {itemsToExportStatus} onClick={() => {downloadZip(itemsToExport)}}>Eksportuoti</Button>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        {itemsToExportStatus ?
+                            <Typography variant="caption" sx={{ color: 'red' }}>
+                                Pasirinkite bent vieną elementą*
+                            </Typography> : null}
+                        <Button id='exportBtn' className={styleClasses.submitButton} disabled={itemsToExportStatus} onClick={() => { downloadZip(itemsToExport) }}>Eksportuoti</Button>
                     </Box>
                 </Box>
             </Box>

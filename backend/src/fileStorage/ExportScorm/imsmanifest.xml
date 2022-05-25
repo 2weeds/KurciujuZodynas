@@ -9,12 +9,16 @@
 <organizations default="eXem_template60c9975c267adb22552">  
     <organization identifier="eXem_template60c9975c267adb22552" structure="hierarchical">
         <title>Aišku</title>
-<item identifier="ITEMID0" isvisible="true" identifierref="1653136736740-IP_9_pam_posak_01.og"><title>Ar mes galime bendrauti interneto kameromis?</title></item>
+<item identifier="ITEMID0" isvisible="true" identifierref="1653136202836-IP_7_pam_posak_3-4_06.og"><title>„Snickers“ kainuoja du litus.</title></item>
+<item identifier="ITEMID1" isvisible="true" identifierref="1653135968623-IP_7_pam_posak_1-5_06.og"><title>11 val. aš suvalgau didelę kriaušę ir mažą jogurto indelį.</title></item>
+<item identifier="ITEMID2" isvisible="true" identifierref="1653136252208-IP_7_pam_posak_01.og"><title>12 val. aš jau pietavau.</title></item>
 
   </organization>
 </organizations>
 <resources>
-  <resource identifier="1653136736740-IP_9_pam_posak_01.og" type="webcontent" adlcp:scormtype="sco" href="1653136736740-IP_9_pam_posak_01.og.html"><file href="1653136736740-IP_9_pam_posak_01.og.html"/> <file href="exe_html5.js"/><file href="1653136736740-IP_9_pam_posak_01.ogg.ogg"/><dependency identifierref="COMMON_FILES"/></resource>
+  <resource identifier="1653136202836-IP_7_pam_posak_3-4_06.og" type="webcontent" adlcp:scormtype="sco" href="1653136202836-IP_7_pam_posak_3-4_06.og.html"><file href="1653136202836-IP_7_pam_posak_3-4_06.og.html"/> <file href="exe_html5.js"/><file href="1653136202836-IP_7_pam_posak_3-4_06.ogg.ogg"/><dependency identifierref="COMMON_FILES"/></resource>
+<resource identifier="1653135968623-IP_7_pam_posak_1-5_06.og" type="webcontent" adlcp:scormtype="sco" href="1653135968623-IP_7_pam_posak_1-5_06.og.html"><file href="1653135968623-IP_7_pam_posak_1-5_06.og.html"/> <file href="exe_html5.js"/><file href="1653135968623-IP_7_pam_posak_1-5_06.ogg.ogg"/><dependency identifierref="COMMON_FILES"/></resource>
+<resource identifier="1653136252208-IP_7_pam_posak_01.og" type="webcontent" adlcp:scormtype="sco" href="1653136252208-IP_7_pam_posak_01.og.html"><file href="1653136252208-IP_7_pam_posak_01.og.html"/> <file href="exe_html5.js"/><file href="1653136252208-IP_7_pam_posak_01.ogg.ogg"/><dependency identifierref="COMMON_FILES"/></resource>
 
   <resource identifier="COMMON_FILES" type="webcontent" adlcp:scormtype="asset">
     <file href="config.xml"/>
